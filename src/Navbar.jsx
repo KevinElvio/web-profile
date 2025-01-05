@@ -6,10 +6,9 @@ export default function Navbar() {
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
-        {/* Logo */}
+
         <div className="text-2xl font-bold text-orange-600">Kevin Elvio</div>
 
-        {/* Desktop Menu */}
         <nav className="hidden md:flex space-x-8">
           <a href="#home" className="text-gray-700 hover:text-orange-600">Beranda</a>
           <a href="#about" className="text-gray-700 hover:text-orange-600">Tentang Saya</a>
@@ -18,7 +17,6 @@ export default function Navbar() {
           <a href="#experience" className="text-gray-700 hover:text-orange-600">Pengalaman</a>
         </nav>
 
-        {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden text-gray-700 focus:outline-none"
@@ -40,7 +38,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <nav className="md:hidden bg-white shadow-md">
           <a href="#home" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Beranda</a>
