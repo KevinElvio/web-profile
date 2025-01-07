@@ -4,10 +4,10 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header className="bg-white sticky top-0 z-50">
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
 
-        <div className="text-2xl font-bold text-orange-600">Kevin Elvio</div>
+        <div className="text-xl font-bold text-orange-600">Kevin Elvio</div>
 
         <nav className="hidden md:flex space-x-8">
           <a href="#home" className="text-gray-700 hover:text-orange-600">Beranda</a>
