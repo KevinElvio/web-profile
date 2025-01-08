@@ -5,6 +5,7 @@ import Navbar from './Navbar.jsx'
 import Biodata from './Biodata.jsx'
 import Project from './Project.jsx'
 import Skills from './Skills.jsx'
+import Experience from './Experience.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -12,5 +13,6 @@ createRoot(document.getElementById('root')).render(
     <Biodata/>
     <Project/>
     <Skills/>
+    <Experience/>
   </StrictMode>,
 )

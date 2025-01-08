@@ -1,27 +1,8 @@
-import html from "./assets/skills/html.png"
-
 const skills = [
-    { src: {html}, alt: 'HTML' },
-    { src: {html}, alt: 'CSS3' },
+    { src: './assets/skills/html.png', alt: 'HTML' },
+    { src: './assets/skills/html.png', alt: 'CSS3' },
   ];
-// export default function Skills(){
-
-//     return (
-//         <div className="bg-gray-800 text-white p-10">
-//           <h1 className="text-center text-3xl font-bold mb-4">Keahlian</h1>
-//           <p className="text-center mb-8">Pemahaman dan pengalaman</p>
-//           <div className="flex flex-wrap justify-center">
-//             {skills.map((skill, index) => (
-//               <div key={index} className="m-4">
-//                 <img src={skill.src} alt={skill.alt} className="h-16 w-16" />
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       );
-// }
-
-const SkillsSection = () => {
+export default function Skills(){
   return (
     <section id="clients" className="pt-36 pb-32 bg-slate-700">
       <div className="container mx-auto">
@@ -56,6 +37,5 @@ const SkillsSection = () => {
       </div>
     </section>
   );
-};
+}
 
-export default SkillsSection;
