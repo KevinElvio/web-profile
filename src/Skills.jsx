@@ -8,7 +8,7 @@ export default function Skills(){
       <div className="container mx-auto">
         {/* Header */}
         <div className="w-full px-4 text-center mb-16">
-          <h4 className="font-semibold text-lg text-primary mb-2">Skill</h4>
+          <h4 className="font-semibold text-lg text-orange-600 mb-2">Skill</h4>
           <h2 className="font-bold text-white text-3xl mb-4 sm:text-4xl lg:text-5xl">Keahlian</h2>
           <p className="font-medium text-md text-secondary md:text-lg">
             Pernah menggunakan dan mengoperasikan

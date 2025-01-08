@@ -40,10 +40,9 @@ const ExperienceSection = () => {
   return (
     <section id="blog" className="pt-36 pb-16 bg-slate-100">
       <div className="container mx-auto">
-        {/* Header */}
         <div className="w-full px-4">
           <div className="max-w-xl mx-auto text-center mb-16">
-            <h4 className="font-semibold text-lg text-primary mb-2">Pengalaman</h4>
+            <h4 className="font-semibold text-lg text-orange-600 mb-2">Pengalaman</h4>
             <h2 className="font-bold text-dark text-3xl mb-4 sm:text-4xl lg:text-5xl">
               Pengalaman Saya
             </h2>
@@ -53,7 +52,6 @@ const ExperienceSection = () => {
           </div>
         </div>
 
-        {/* Experiences */}
         <div className="w-full px-4 flex flex-wrap justify-center">
           {experiences.map((exp, index) => (
             <div key={index} className="mb-12 p-4 md:w-1/2">
