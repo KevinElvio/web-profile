@@ -17,7 +17,7 @@ export default function Biodata() {
               </div>
     
               <div className="w-full self-center px-4 lg:w-1/2">
-                <h1 className="text-base font-semibold text-orange-600 md:text-xl">
+                <h1 className="text-base font-semibold text-orange-500 md:text-xl">
                   Hai Semua 👋, Saya{" "}
                   <span className="block font-bold text-black text-4xl mt-1 lg:text-5xl">
                     Kevin Elvio Chrisselin P

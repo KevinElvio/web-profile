@@ -1,8 +1,14 @@
+import html from './assets/skills/html.png'
+import css from './assets/skills/css.png'
+
 const skills = [
-    { src: './assets/skills/html.png', alt: 'HTML' },
-    { src: './assets/skills/html.png', alt: 'CSS3' },
+    { src: html, alt: 'HTML' },
+    { src: css, alt: 'CSS3' },
   ];
 export default function Skills(){
+  
+
+
   return (
     <section id="clients" className="pt-36 pb-32 bg-slate-700">
       <div className="container mx-auto">

@@ -4,7 +4,7 @@ export default function About(){
           <div className="flex flex-wrap">
             {/* Content Section */}
             <div className="w-full px-4 mb-10 lg:w-1/2">
-              <h4 className="font-bold uppercase text-primary text-lg mb-3">
+              <h4 className="font-bold uppercase text-orange-500 text-lg mb-3">
                 Tentang Saya
               </h4>
               <h2 className="font-bold text-dark text-3xl mb-5 lg:text-4xl">
