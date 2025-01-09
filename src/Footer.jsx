@@ -37,7 +37,6 @@ const Footer = () => {
         {/* Social Media and Copyright */}
         <div className="w-full pt-10 border-t border-slate-700">
           <div className="flex items-center justify-center mb-5">
-            {/* Social Media Links */}
             <a
               href="https://www.instagram.com/kevin_elvio1774/"
               target="_blank"

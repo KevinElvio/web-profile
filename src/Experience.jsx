@@ -1,36 +1,32 @@
-
+import portofolio2 from './assets/portofolio/2.jpg'
+import portofolio3 from './assets/portofolio/3.jpg'
+import portofolio4 from './assets/portofolio/4.jpg'
+import portofolio5 from './assets/portofolio/5.jpeg'
 
 const experiences = [
   {
-    imgSrc: "./assets/portofolio/1.jpg",
-    imgAlt: "Home Page_Info Event",
-    title: "Tim Pengembang Aplikasi EasyGo",
-    description:
-      "Ini merupakan dokumentasi tim pengembang website EasyGo, yang mana website ini dibuat dengan PHP native dan juga menggunakan CSS native. Sangat memakan waktu, tetapi dengan begitu saya dapat belajar banyak hal.",
-  },
-  {
-    imgSrc: "./assets/portofolio/2.jpg",
+    imgSrc: portofolio2,
     imgAlt: "Login Register_Info Event",
     title: "Kelompok MKWU MOISHI",
     description:
       "Saya sebagai CFO dari kelompok MKWU ini. Kami menjual aneka macam sushi yang dikemas dan diberi nama MOISHI. Kami sangat senang sekali mendapatkan untung dari mata kuliah MKWU.",
   },
   {
-    imgSrc: "./assets/portofolio/3.jpg",
+    imgSrc: portofolio3,
     imgAlt: "Home Page_Pocalories",
     title: "Asisten Praktikum Mata Kuliah Sistem Operasi",
     description:
       "Menjadi asisten praktikum untuk mata kuliah sistem operasi sangat banyak tantangan yang dihadapi. Tetapi saya bersyukur karena semuanya berjalan dengan sangat baik dan luar biasa.",
   },
   {
-    imgSrc: "./assets/portofolio/4.jpg",
+    imgSrc: portofolio4,
     imgAlt: "Login Register_Pocalories",
     title: "Kelompok Pengembangan Perangkat Lunak (DryoPro)",
     description:
       "Tim pengembang DryoPro, saya sebagai programmer sangat bersyukur karena pengalaman pertama saya mencoba membuat sebuah produk berbasis website yang terintegrasi dengan IoT. Saya mengembangkan website ini menggunakan Laravel dan Tailwind CSS, dan untuk perangkat IoT-nya saya menggunakan ESP32.",
   },
   {
-    imgSrc: "./assets/portofolio/5.jpeg",
+    imgSrc: portofolio5,
     imgAlt: "Portofolio",
     title: "Juara 1 Lomba TIC 5.0",
     description:
