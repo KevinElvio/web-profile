@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 // import portofolio3 from './assets/portofolio/3.jpg'
 // import portofolio4 from './assets/portofolio/4.jpg'
 // import portofolio5 from '../public/portofolio/5.jpeg'
-import { getExperience } from './services/experience.service';
+import { getExperience } from '../../services/experience.service';
 
 // const experiences = [
 //   {
