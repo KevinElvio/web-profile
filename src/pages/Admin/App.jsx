@@ -1,5 +1,5 @@
-import Sidebar from "../Admin/Sidebar";
-import Dashboard from "../Admin/Dashboard";
+import Sidebar from "./Sidebar";
+import Dashboard from "./Dashboard";
 import Header from "./Header";
 
 const App = () => {

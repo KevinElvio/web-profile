@@ -1,5 +1,5 @@
-import html from './assets/skills/html.png'
-import css from './assets/skills/css.png'
+import html from '../../assets/skills/html.png'
+import css from '../../assets/skills/css.png'
 
 const skills = [
     { src: html, alt: 'HTML' },
