@@ -1,4 +1,4 @@
-import Sidebar from "./Sidebar";
+import Sidebar from "../../../components/admin/Sidebar";
 import Dashboard from "./Dashboard";
 import Header from "./Header";
 
