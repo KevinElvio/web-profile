@@ -78,11 +78,6 @@ function Login() {
         <div className="bg-white rounded-2xl shadow-xl p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            </div>
             <h2 className="text-3xl font-bold text-gray-900">Admin Login</h2>
             <p className="text-gray-600 mt-2">Sign in to access admin dashboard</p>
           </div>
@@ -157,23 +152,6 @@ function Login() {
               {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
             </div>
 
-            {/* Remember Me & Forgot Password */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember"
-                  name="remember"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label htmlFor="remember" className="ml-2 block text-sm text-gray-700">
-                  Remember me
-                </label>
-              </div>
-              <button type="button" className="text-sm text-indigo-600 hover:text-indigo-500">
-                Forgot password?
-              </button>
-            </div>
 
             {/* Submit Button */}
             <button
@@ -194,17 +172,11 @@ function Login() {
                   Signing in...
                 </>
               ) : (
-                'Sign in'
+                'Login'
               )}
             </button>
           </form>
 
-          {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600 mb-2">Demo credentials:</p>
-            <p className="text-xs text-gray-500">Email: admin@example.com</p>
-            <p className="text-xs text-gray-500">Password: admin123</p>
-          </div>
         </div>
 
         {/* Back to Home */}
