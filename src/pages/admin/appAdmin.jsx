@@ -1,5 +1,4 @@
 import Sidebar from "../../components/admin/Sidebar";
-import Dashboard from "../layouts/Admin/Dashboard";
 import Header from "../layouts/Admin/Header";
 
 const AppAdmin = () => {
@@ -8,7 +7,6 @@ const AppAdmin = () => {
       <Sidebar />
       <div className="flex-grow">
         <Header/>
-        <Dashboard/>
       </div>
     </div>
   );

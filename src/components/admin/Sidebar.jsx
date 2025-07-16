@@ -5,7 +5,7 @@ const Sidebar = () => {
         Admin Panel
       </div>
       <nav className="flex-1 p-4 space-y-4">
-        <a href="/" className="block py-2 px-4 rounded hover:bg-gray-700">
+        <a href="#" className="block py-2 px-4 rounded hover:bg-gray-700">
           Dashboard
         </a>
         <a href="/projects" className="block py-2 px-4 rounded hover:bg-gray-700">
