@@ -1,30 +1,3 @@
-// import About from "./layouts/About";
-// import Biodata from "./layouts/Biodata";
-// import Experience from "./layouts/Experience";
-// import Footer from "../components/Footer";
-// import Navbar from "../components/Navbar";
-// import Project from "./layouts/Project";
-// import Skills from "./layouts/Skills";
-
-// import { StrictMode } from 'react';
-
-// function LandingPage() {
-//     return (
-//         <StrictMode>
-//             <Navbar />
-//             <Biodata />
-//             <About />
-//             <Project />
-//             <Skills />
-//             <Experience />
-//             <Footer />
-//         </StrictMode>
-//     );
-// }
-
-// export default LandingPage;
-
-
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 
@@ -54,7 +27,7 @@ const Portfolio = () => {
         else if (isSkillsInView) setActiveSection('skills');
     }, [isHeroInView, isAboutInView, isBiodataInView, isExperienceInView, isProjectInView, isSkillsInView]);
 
-    const floatingElements = Array.from({ length: 15 }, (_, i) => ({
+    const floatingElements = Array.from({ length: 50 }, (_, i) => ({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
@@ -225,7 +198,14 @@ const Portfolio = () => {
                             >
                                 Kevin{' '}
                                 <motion.span
-                                    className="text-yellow-400 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent"
+                                    className="text-white bg-clip-text text-transparent"
+                                    style={{
+                                        backgroundImage: 'linear-gradient(to right, #facc15, #fb923c)',
+                                        backgroundSize: '200% 100%',
+                                        backgroundPosition: '0%',
+                                        WebkitBackgroundClip: 'text',
+                                        WebkitTextFillColor: 'transparent',
+                                    }}
                                     animate={{
                                         backgroundPosition: ['0%', '100%'],
                                     }}
@@ -234,13 +214,10 @@ const Portfolio = () => {
                                         repeat: Infinity,
                                         repeatType: 'reverse',
                                     }}
-                                    style={{
-                                        backgroundSize: '200% 100%',
-                                    }}
                                 >
                                     Elvio
                                 </motion.span>
-                            </motion.h1>
+                            </motion.h1>        
 
                             <motion.p
                                 className="text-xl text-gray-300 mb-8 max-w-2xl"
