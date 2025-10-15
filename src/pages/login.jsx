@@ -111,9 +111,9 @@ function Login() {
         {/* Login Card */}
         <div className="bg-gray-900/80 backdrop-blur-md rounded-2xl shadow-xl p-8">
           {/* Header */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 flex justify-center space-x-2">
             <h2 className="text-3xl font-bold text-yellow-400">Welcome</h2>
-            <h2 className="text-3xl font-bold text-yellow-400">Back</h2>
+            <h2 className="text-3xl font-bold text-white">Back</h2>
           </div>
 
           {/* Error Message */}
@@ -137,7 +137,7 @@ function Login() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors
+                  className={`w-full px-4 py-3 border rounded-lg text-black focus:ring-2 focus:ring-yellow-600 focus:border-yellow-600 transition-colors
                     ${errors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'}`}
                   placeholder="Enter your email"
                 />
@@ -162,7 +162,7 @@ function Login() {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors pr-12
+                  className={`w-full px-4 py-3 border text-black rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors pr-12
                     ${errors.password ? 'border-red-300 bg-red-50' : 'border-gray-300'}`}
                   placeholder="Enter your password"
                 />
@@ -191,10 +191,10 @@ function Login() {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white 
+              className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-black 
                 ${isLoading
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                  ? 'bg-yellow-800 cursor-not-allowed'
+                  : 'bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-yellow-500'
                 } transition-colors`}
             >
               {isLoading ? (
