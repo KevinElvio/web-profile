@@ -27,7 +27,7 @@ const Portfolio = () => {
         else if (isSkillsInView) setActiveSection('skills');
     }, [isHeroInView, isAboutInView, isBiodataInView, isExperienceInView, isProjectInView, isSkillsInView]);
 
-    const floatingElements = Array.from({ length: 15 }, (_, i) => ({
+    const floatingElements = Array.from({ length: 50 }, (_, i) => ({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
@@ -64,6 +64,7 @@ const Portfolio = () => {
             image: "/project3.jpg"
         }
     ];
+
 
     const experiences = [
         {
@@ -126,11 +127,10 @@ const Portfolio = () => {
                             {['home', 'about', 'experience', 'projects', 'skills'].map((item) => (
                                 <motion.button
                                     key={item}
-                                    className={`capitalize px-3 py-2 rounded-lg transition-all ${
-                                        activeSection === item
-                                            ? 'text-yellow-400 bg-yellow-400/10'
-                                            : 'text-gray-300 hover:text-yellow-400'
-                                    }`}
+                                    className={`capitalize px-3 py-2 rounded-lg transition-all ${activeSection === item
+                                        ? 'text-yellow-400 bg-yellow-400/10'
+                                        : 'text-gray-300 hover:text-yellow-400'
+                                        }`}
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                 >
@@ -165,11 +165,10 @@ const Portfolio = () => {
                                 {['home', 'about', 'experience', 'projects', 'skills'].map((item) => (
                                     <motion.button
                                         key={item}
-                                        className={`block w-full text-left capitalize px-4 py-3 rounded-lg transition-all ${
-                                            activeSection === item
-                                                ? 'text-yellow-400 bg-yellow-400/10'
-                                                : 'text-gray-300 hover:text-yellow-400'
-                                        }`}
+                                        className={`block w-full text-left capitalize px-4 py-3 rounded-lg transition-all ${activeSection === item
+                                            ? 'text-yellow-400 bg-yellow-400/10'
+                                            : 'text-gray-300 hover:text-yellow-400'
+                                            }`}
                                         whileHover={{ x: 10 }}
                                     >
                                         {item}
@@ -197,9 +196,16 @@ const Portfolio = () => {
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.2 }}
                             >
-                                Kevin Elvio{' '}
+                                Kevin{' '}
                                 <motion.span
-                                    className="text-yellow-400 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent"
+                                    className="text-white bg-clip-text text-transparent"
+                                    style={{
+                                        backgroundImage: 'linear-gradient(to right, #facc15, #fb923c)',
+                                        backgroundSize: '200% 100%',
+                                        backgroundPosition: '0%',
+                                        WebkitBackgroundClip: 'text',
+                                        WebkitTextFillColor: 'transparent',
+                                    }}
                                     animate={{
                                         backgroundPosition: ['0%', '100%'],
                                     }}
@@ -208,14 +214,11 @@ const Portfolio = () => {
                                         repeat: Infinity,
                                         repeatType: 'reverse',
                                     }}
-                                    style={{
-                                        backgroundSize: '200% 100%',
-                                    }}
                                 >
-                                    Purwanto
+                                    Elvio
                                 </motion.span>
-                            </motion.h1>
-                            
+                            </motion.h1>        
+
                             <motion.p
                                 className="text-xl text-gray-300 mb-8 max-w-2xl"
                                 initial={{ opacity: 0 }}
@@ -225,7 +228,7 @@ const Portfolio = () => {
                                 Full Stack Developer & Designer passionate about crafting interactive,
                                 aesthetic, and scalable web experiences.
                             </motion.p>
-                            
+
                             <motion.div
                                 className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
                                 initial={{ opacity: 0 }}
@@ -248,7 +251,7 @@ const Portfolio = () => {
                                 </motion.button>
                             </motion.div>
                         </motion.div>
-                        
+
                         <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -268,10 +271,10 @@ const Portfolio = () => {
                                     }}
                                 />
                                 <motion.img
-                                    src="/profile.png"
+                                    src="/Kevin.png"
                                     alt="Profile"
-                                    className="relative rounded-3xl shadow-2xl w-64 md:w-80 border-4 border-gray-800"
-                                    whileHover={{ y: -10, rotate: 2 }}
+                                    className="relative rounded-3xl bg-white/10 backdrop-blur-md shadow-2xl w-64 md:w-80 border-2 border-gray-800"
+                                    whileHover={{ y: -20, rotate: 2 }}
                                     transition={{ type: "spring", stiffness: 300 }}
                                 />
                             </div>
@@ -293,11 +296,10 @@ const Portfolio = () => {
                             About <span className="text-yellow-400">Me</span>
                         </h2>
                         <div className="bg-gray-800/50 backdrop-blur-sm rounded-3xl p-8 border border-gray-700">
-                            <p className="text-lg text-gray-300 leading-relaxed">
-                                I'm a passionate developer focused on creating beautiful and efficient
-                                web experiences. I love experimenting with design systems, animation, and
-                                new technologies. With over 3 years of experience, I've helped numerous
-                                clients bring their ideas to life through clean code and innovative design.
+                            <p className="text-lg text-gray-300 leading-relaxed text-center">
+                                I&#39;m a web developer who believes that bug-free code can save the world.
+                                For over 3 years, I&#39;ve been playing around with design and experimenting with new technologies — because if I stop coding, my brain might just timeout.
+                                Sometimes the results are awesome, sometimes... it&#39;s just a 500 error 😒
                             </p>
                         </div>
                     </motion.div>
@@ -314,7 +316,7 @@ const Portfolio = () => {
                     >
                         Work <span className="text-yellow-400">Experience</span>
                     </motion.h2>
-                    
+
                     <div className="max-w-4xl mx-auto space-y-8">
                         {experiences.map((exp, index) => (
                             <motion.div
@@ -357,7 +359,7 @@ const Portfolio = () => {
                     >
                         Featured <span className="text-yellow-400">Projects</span>
                     </motion.h2>
-                    
+
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {projects.map((project, index) => (
                             <motion.div
@@ -401,7 +403,7 @@ const Portfolio = () => {
                     >
                         Technical <span className="text-yellow-400">Skills</span>
                     </motion.h2>
-                    
+
                     <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
                         {skills.map((skill, index) => (
                             <motion.div

@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 function Login() {
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -9,7 +11,7 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [errors, setErrors] = useState({})
-  
+
   const navigate = useNavigate()
 
   const handleInputChange = (e) => {
@@ -29,34 +31,34 @@ function Login() {
 
   const validateForm = () => {
     const newErrors = {}
-    
+
     if (!formData.email) {
       newErrors.email = 'Email is required'
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid'
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required'
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters'
     }
-    
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!validateForm()) return
-    
+
     setIsLoading(true)
-    
+
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000))
-      
+
       // For demo purposes - replace with actual authentication
       if (formData.email === 'admin@example.com' && formData.password === 'admin123') {
         localStorage.setItem('isAuthenticated', 'true')
@@ -71,15 +73,47 @@ function Login() {
     }
   }
 
+
+  const floatingElements = Array.from({ length: 300 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    delay: Math.random() * 5,
+    size: Math.random() * 4 + 1
+  }));
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-gray-200 flex items-center justify-center p-4">
+      <div className="fixed inset-0 pointer-events-none">
+        {floatingElements.map((dot) => (
+          <motion.div
+            key={dot.id}
+            className="absolute rounded-full bg-purple-500 opacity-20"
+            style={{
+              width: dot.size,
+              height: dot.size,
+              left: `${dot.x}%`,
+              top: `${dot.y}%`,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.2, 0.5, 0.2],
+            }}
+            transition={{
+              duration: 3 + dot.delay,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
       <div className="w-full max-w-md">
         {/* Login Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-gray-900/80 backdrop-blur-md rounded-2xl shadow-xl p-8">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">Admin Login</h2>
-            <p className="text-gray-600 mt-2">Sign in to access admin dashboard</p>
+          <div className="text-center mb-8 flex justify-center space-x-2">
+            <h2 className="text-3xl font-bold text-yellow-400">Welcome</h2>
+            <h2 className="text-3xl font-bold text-white">Back</h2>
           </div>
 
           {/* Error Message */}
@@ -93,7 +127,7 @@ function Login() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-2">
                 Email Address
               </label>
               <div className="relative">
@@ -103,7 +137,7 @@ function Login() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors
+                  className={`w-full px-4 py-3 border rounded-lg text-black focus:ring-2 focus:ring-yellow-600 focus:border-yellow-600 transition-colors
                     ${errors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'}`}
                   placeholder="Enter your email"
                 />
@@ -118,7 +152,7 @@ function Login() {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-200 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -128,7 +162,7 @@ function Login() {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors pr-12
+                  className={`w-full px-4 py-3 border text-black rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors pr-12
                     ${errors.password ? 'border-red-300 bg-red-50' : 'border-gray-300'}`}
                   placeholder="Enter your password"
                 />
@@ -157,10 +191,10 @@ function Login() {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white 
-                ${isLoading 
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+              className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-black 
+                ${isLoading
+                  ? 'bg-yellow-800 cursor-not-allowed'
+                  : 'bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-yellow-500'
                 } transition-colors`}
             >
               {isLoading ? (
@@ -183,7 +217,7 @@ function Login() {
         <div className="text-center mt-6">
           <button
             onClick={() => navigate('/')}
-            className="text-indigo-600 hover:text-indigo-500 text-sm font-medium"
+            className="text-yellow-500 hover:text-yellow-40 text-sm font-medium"
           >
             ← Back to Home
           </button>
