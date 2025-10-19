@@ -18,5 +18,11 @@ export const SuccessNotif = async (title, text = '') => {
         title: title,
         text: text
     })
-    
+}
+export const FailedNotif = async (title, text = '') => {
+    await Toast.fire({
+        icon: 'Failed',
+        title: title,
+        text: text
+    })
 }
