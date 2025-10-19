@@ -1,9 +1,14 @@
-import axios from "axios";
+import ApiHelper from "../helper/ApiHelper"
 
-export const getExperience = (callback) => {
-    axios.get("http://localhost:4000/experiences").then((res)=>{
-        callback(res.data)
-    }).catch((err) => {
-        console.log(err)
-    })
+const getExperience = () => {
+    return ApiHelper.get("/experience")
+        .then((res) => res.data)
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+
+export default {
+    getExperience,
 }

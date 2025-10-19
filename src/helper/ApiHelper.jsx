@@ -11,7 +11,7 @@ const ApiHelper = axios.create({
     },
 })
 
-apiHelper.interceptors.response.use(
+ApiHelper.interceptors.response.use(
     (config) => {
         const token = Cookie.get('Auth');
         if (token) {
