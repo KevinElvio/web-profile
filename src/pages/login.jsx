@@ -20,7 +20,6 @@ function Login() {
       ...prev,
       [name]: value
     }))
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -56,10 +55,8 @@ function Login() {
     setIsLoading(true)
 
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000))
 
-      // For demo purposes - replace with actual authentication
       if (formData.email === 'admin@example.com' && formData.password === 'admin123') {
         localStorage.setItem('isAuthenticated', 'true')
         navigate('/admin')
@@ -83,7 +80,8 @@ function Login() {
   }));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-gray-200 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center bg-gray-950 justify-center p-4">
+      {/* Floating Background Elements */}
       <div className="fixed inset-0 pointer-events-none">
         {floatingElements.map((dot) => (
           <motion.div
@@ -107,25 +105,22 @@ function Login() {
           />
         ))}
       </div>
+      <div className="fixed inset-0 pointer-events-none">
+      </div>
       <div className="w-full max-w-md">
-        {/* Login Card */}
-        <div className="bg-gray-900/80 backdrop-blur-md rounded-2xl shadow-xl p-8">
-          {/* Header */}
+        <div className="bg-gray-900/100 backdrop-blur-md rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8 flex justify-center space-x-2">
             <h2 className="text-3xl font-bold text-yellow-400">Welcome</h2>
             <h2 className="text-3xl font-bold text-white">Back</h2>
           </div>
 
-          {/* Error Message */}
           {errors.general && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-red-600 text-sm">{errors.general}</p>
             </div>
           )}
 
-          {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-2">
                 Email Address
@@ -150,7 +145,7 @@ function Login() {
               {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
             </div>
 
-            {/* Password Field */}
+
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-200 mb-2">
                 Password
@@ -187,7 +182,6 @@ function Login() {
             </div>
 
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
@@ -213,7 +207,6 @@ function Login() {
 
         </div>
 
-        {/* Back to Home */}
         <div className="text-center mt-6">
           <button
             onClick={() => navigate('/')}
