@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { 
-  FiImage, 
-  FiUser, 
-  FiFileText, 
-  FiMail, 
-  FiBriefcase, 
-  FiFolder, 
+import {
+  FiImage,
+  FiUser,
+  FiFileText,
+  FiMail,
+  FiBriefcase,
+  FiFolder,
   FiAward,
   FiSave,
   // FiUpload,
@@ -95,7 +95,7 @@ const AdminPage = () => {
   const handleArrayUpdate = (section, index, updatedItem) => {
     setFormData(prev => ({
       ...prev,
-      [section]: prev[section].map((item, i) => 
+      [section]: prev[section].map((item, i) =>
         i === index ? updatedItem : item
       )
     }));
@@ -137,8 +137,8 @@ const AdminPage = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
-          <p className="text-gray-600">Kelola konten web profile Anda</p>
+          <h1 className="text-3xl font-bold text-gray-800">Welcome Admin</h1>
+          <p className="text-gray-600">Kelola konten web profile</p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
@@ -158,11 +158,10 @@ const AdminPage = () => {
                   <button
                     key={item.id}
                     onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-colors ${
-                      activeTab === item.id
-                        ? 'bg-blue-100 text-blue-600'
-                        : 'text-gray-600 hover:bg-gray-100'
-                    }`}
+                    className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-colors ${activeTab === item.id
+                      ? 'bg-blue-100 text-blue-600'
+                      : 'text-gray-600 hover:bg-gray-100'
+                      }`}
                   >
                     <item.icon className="w-5 h-5" />
                     <span>{item.name}</span>
@@ -185,7 +184,7 @@ const AdminPage = () => {
           <div className="lg:w-3/4">
             <div className="bg-white rounded-lg shadow-md p-6">
               {activeTab === 'about' && (
-                <AboutSection 
+                <AboutSection
                   data={formData.about}
                   onChange={handleInputChange}
                   onImageUpload={handleImageUpload}
@@ -193,21 +192,21 @@ const AdminPage = () => {
               )}
 
               {activeTab === 'contact' && (
-                <ContactSection 
+                <ContactSection
                   data={formData.contact}
                   onChange={handleInputChange}
                 />
               )}
 
               {activeTab === 'cv' && (
-                <CVSection 
+                <CVSection
                   data={formData.cv}
                   onFileUpload={handleFileUpload}
                 />
               )}
 
               {activeTab === 'experience' && (
-                <ExperienceSection 
+                <ExperienceSection
                   data={formData.experiences}
                   onAdd={handleArrayAdd}
                   onUpdate={handleArrayUpdate}
@@ -216,7 +215,7 @@ const AdminPage = () => {
               )}
 
               {activeTab === 'projects' && (
-                <ProjectsSection 
+                <ProjectsSection
                   data={formData.projects}
                   onAdd={handleArrayAdd}
                   onUpdate={handleArrayUpdate}
@@ -226,7 +225,7 @@ const AdminPage = () => {
               )}
 
               {activeTab === 'skills' && (
-                <SkillsSection 
+                <SkillsSection
                   data={formData.skills}
                   onAdd={handleArrayAdd}
                   onUpdate={handleArrayUpdate}
@@ -236,7 +235,7 @@ const AdminPage = () => {
               )}
 
               {activeTab === 'images' && (
-                <ImageGallerySection 
+                <ImageGallerySection
                   data={formData}
                   onImageUpload={handleImageUpload}
                 />

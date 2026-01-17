@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import PropTypes from 'prop-types';
 
 export default function About({ aboutRef }) {
     return (
@@ -24,4 +25,8 @@ export default function About({ aboutRef }) {
             </div>
         </section>
     )
+}
+
+About.propTypes = {
+  aboutRef: PropTypes.object.isRequired
 }

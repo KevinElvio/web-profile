@@ -1,5 +1,5 @@
-// SkillsSection.jsx
-import React, { useState } from 'react';
+
+import { useState } from 'react';
 import { FiPlus, FiEdit, FiTrash2, FiUpload } from 'react-icons/fi';
 
 const SkillsSection = ({ data, onAdd, onUpdate, onDelete, onImageUpload }) => {

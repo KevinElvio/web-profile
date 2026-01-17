@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
 
-
-const ExperienceSection = ({ experienceRef }) => {
+export default function ExperienceSection({ experienceRef }) {
   const experiences = [
     {
       role: "Frontend Developer",
@@ -64,4 +64,7 @@ const ExperienceSection = ({ experienceRef }) => {
   );
 };
 
-export default ExperienceSection;
+ExperienceSection.propTypes = {
+  experienceRef: PropTypes.object.isRequired
+}
+

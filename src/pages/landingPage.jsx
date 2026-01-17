@@ -7,18 +7,17 @@ import Experience from '../components/Experience';
 import Project from '../components/Project';
 import Skills from '../components/Skills';
 
+
 const Portfolio = () => {
     const [activeSection, setActiveSection] = useState('home');
     const heroRef = useRef(null);
     const aboutRef = useRef(null);
-    // const biodataRef = useRef(null);
     const experienceRef = useRef(null);
     const projectRef = useRef(null);
     const skillsRef = useRef(null);
 
     const isHeroInView = useInView(heroRef, { threshold: 0.5 });
     const isAboutInView = useInView(aboutRef, { threshold: 0.5 });
-    // const isBiodataInView = useInView(biodataRef, { threshold: 0.5 });
     const isExperienceInView = useInView(experienceRef, { threshold: 0.5 });
     const isProjectInView = useInView(projectRef, { threshold: 0.5 });
     const isSkillsInView = useInView(skillsRef, { threshold: 0.5 });
@@ -26,7 +25,6 @@ const Portfolio = () => {
     useEffect(() => {
         if (isHeroInView) setActiveSection('home');
         else if (isAboutInView) setActiveSection('about');
-        // else if (isBiodataInView) setActiveSection('biodata');
         else if (isExperienceInView) setActiveSection('experience');
         else if (isProjectInView) setActiveSection('projects');
         else if (isSkillsInView) setActiveSection('skills');
@@ -40,13 +38,9 @@ const Portfolio = () => {
         size: Math.random() * 4 + 1
     }));
 
-    
-
-    
 
     return (
         <div className="bg-gradient-to-br from-gray-900 via-gray-950 to-gray-900 text-gray-200 min-h-screen font-sans overflow-hidden relative">
-            {/* Floating Background Elements */}
             <div className="fixed inset-0 pointer-events-none">
                 {floatingElements.map((dot) => (
                     <motion.div

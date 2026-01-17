@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 export default function Navbar({ activeSection }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -74,3 +75,8 @@ export default function Navbar({ activeSection }) {
             </nav>
     );   
 }
+
+Navbar.propTypes = {
+  activeSection: PropTypes.string.isRequired
+}
+

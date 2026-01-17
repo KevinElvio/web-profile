@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
 
 export default function Project({ projectRef }) {
   const projects = [
@@ -66,3 +67,8 @@ export default function Project({ projectRef }) {
     </section>
   );
 }
+
+Project.propTypes = {
+  projectRef: PropTypes.object.isRequired
+}
+

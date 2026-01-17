@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import PropTypes from 'prop-types';
 
 export default function Hero({ heroRef }) {
     return (
@@ -76,4 +77,8 @@ export default function Hero({ heroRef }) {
             </div>
         </section>
     );
+}
+
+Hero.propTypes = {
+  heroRef: PropTypes.object.isRequired
 }
