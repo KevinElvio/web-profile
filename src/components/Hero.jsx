@@ -11,7 +11,6 @@ export default function Hero({ heroRef }) {
             try {
                 const data = await ReadUser();
                 SetBioUser(data)
-                console.log(data);
             } catch (error) {
                 console.log(error);
                 
@@ -20,6 +19,9 @@ export default function Hero({ heroRef }) {
 
         fetchBioUser()
     },[])
+
+   
+    
 
 
     return (
@@ -38,7 +40,7 @@ export default function Hero({ heroRef }) {
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.2 }}
                         >
-                            Kevin{' '}
+                            {BioUser?.data?.data?.name?.split(' ')[0]}{' '}
                             <motion.span
                                 className="text-white bg-clip-text text-transparent"
                                 style={{
@@ -57,7 +59,7 @@ export default function Hero({ heroRef }) {
                                     repeatType: 'reverse',
                                 }}
                             >
-                                Elvio
+                                {BioUser?.data?.data?.name?.split(' ')[1]}
                             </motion.span>
                         </motion.h1>
 
