@@ -1,5 +1,5 @@
 import axios from "axios";
-import Cookie from 'cookie-universal'
+import Cookies from 'js-cookie';
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -11,9 +11,9 @@ const ApiHelper = axios.create({
     },
 })
 
-ApiHelper.interceptors.response.use(
+ApiHelper.interceptors.request.use(
     (config) => {
-        const token = Cookie.get('Auth');
+        const token = Cookies.get('Auth');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }

@@ -1,13 +1,12 @@
 import ApiHelper from "../helper/ApiHelper";
 import { FailedNotif } from "../components/notification/Notification";
 
-export const login = (data) => {
-    return ApiHelper.post('/loginAdmin', data)
-        .then((res) => res.data)
-        .catch(err => {
-            FailedNotif(
-                "Gagal",
-                err
-            )
-        })
+export const ReadUser = () => {
+    try {
+        const response = ApiHelper.get("/user")
+        return response
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
 }

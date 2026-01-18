@@ -1,7 +1,27 @@
 import { motion } from 'framer-motion'
 import PropTypes from 'prop-types';
+import { ReadUser } from '../services/userService';
+import { useState, useEffect } from 'react';
 
 export default function Hero({ heroRef }) {
+    const [BioUser, SetBioUser] = useState([])
+
+    useEffect(()=>{
+        const fetchBioUser = async () => {
+            try {
+                const data = await ReadUser();
+                SetBioUser(data)
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+                
+            }
+        }
+
+        fetchBioUser()
+    },[])
+
+
     return (
         <section ref={heroRef} className="min-h-screen flex items-center justify-center px-6">
             <div className="container mx-auto">
