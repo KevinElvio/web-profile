@@ -68,10 +68,7 @@ export default function Hero({ heroRef }) {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.4 }}
-                        >
-                            Full Stack Developer & Designer passionate about crafting interactive,
-                            aesthetic, and scalable web experiences.
-                        </motion.p>
+                        >{BioUser?.data?.data?.description}</motion.p>
 
                         <motion.div
                             className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
