@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
 import { ReadExperience } from '../services/experienceService';
 import { useState, useEffect } from 'react';
+import { formatDate } from '../helper/DateHelper';
 
 export default function ExperienceSection({ experienceRef }) {
   const [experience, setExperience] = useState([]);
@@ -17,22 +18,6 @@ export default function ExperienceSection({ experienceRef }) {
     }
     fetchExperience()
   }, [])
-  // const experiences = [
-  //   {
-  //     role: "Frontend Developer",
-  //     company: "PT Digital Kreatif",
-  //     period: "2023 - Present",
-  //     description: "Building interactive dashboards and animation-driven web experiences using React and GSAP.",
-  //     achievements: ["Improved performance by 40%", "Led UI/UX redesign", "Mentored 2 junior developers"]
-  //   },
-  //   {
-  //     role: "UI Designer",
-  //     company: "Freelance",
-  //     period: "2021 - 2023",
-  //     description: "Designed landing pages, brand kits, and product interfaces for startups.",
-  //     achievements: ["Completed 50+ projects", "95% client satisfaction", "Awarded 'Best Design 2022'"]
-  //   }
-  // ];
 
   return (
     <section ref={experienceRef} className="py-20 px-6 my-40">
@@ -57,7 +42,7 @@ export default function ExperienceSection({ experienceRef }) {
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                 <h3 className="text-2xl font-semibold text-yellow-400">{exp?.position}</h3>
                 <span className="text-gray-400 bg-gray-700 px-4 py-1 rounded-full">
-                  {exp?.start_date}
+                  {formatDate(exp?.start_date)+' - '+formatDate(exp?.end_date)}
                 </span>
               </div>
               <p className="text-gray-300 mb-4">{exp?.description_job}</p>
