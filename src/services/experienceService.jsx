@@ -1,14 +1,15 @@
 import ApiHelper from "../helper/ApiHelper"
 
-const getExperience = () => {
-    return ApiHelper.get("/experience")
-        .then((res) => res.data)
-        .catch((err) => {
-            console.log(err)
-        })
+const ReadExperience = () => {
+    try {
+        const data = ApiHelper.get('/experiences')
+        return data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
 }
 
-
-export default {
-    getExperience,
+export {
+    ReadExperience
 }

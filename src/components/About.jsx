@@ -16,9 +16,7 @@ export default function About({ aboutRef }) {
                     </h2>
                     <div className="bg-gray-800/50 backdrop-blur-sm rounded-3xl p-8 border border-gray-700">
                         <p className="text-lg text-gray-300 leading-relaxed text-center">
-                            I&#39;m a web developer who believes that bug-free code can save the world.
-                            For over 3 years, I&#39;ve been playing around with design and experimenting with new technologies — because if I stop coding, my brain might just timeout.
-                            Sometimes the results are awesome, sometimes... it&#39;s just a 500 error 😒
+                            I am a Junior Backend Developer with a strong interest in backend system development, data processing, and the practical application of machine learning. I enjoy working with programming logic, building APIs, and integrating backend services with frontend applications.
                         </p>
                     </div>
                 </motion.div>

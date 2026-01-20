@@ -4,16 +4,15 @@ import { ReadUser } from '../services/userService';
 import { useState, useEffect } from 'react';
 
 export default function Hero({ heroRef }) {
-    const [BioUser, SetBioUser] = useState([])
+    const [bioUser, setBioUser] = useState([])
 
     useEffect(()=>{
         const fetchBioUser = async () => {
             try {
                 const data = await ReadUser();
-                SetBioUser(data)
+                setBioUser(data)
             } catch (error) {
                 console.log(error);
-                
             }
         }
 
@@ -40,7 +39,7 @@ export default function Hero({ heroRef }) {
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.2 }}
                         >
-                            {BioUser?.data?.data?.name?.split(' ')[0]}{' '}
+                            {bioUser?.data?.data?.name?.split(' ')[0] || "Kevin"}{' '}
                             <motion.span
                                 className="text-white bg-clip-text text-transparent"
                                 style={{
@@ -59,7 +58,7 @@ export default function Hero({ heroRef }) {
                                     repeatType: 'reverse',
                                 }}
                             >
-                                {BioUser?.data?.data?.name?.split(' ')[1]}
+                                {bioUser?.data?.data?.name?.split(' ')[1] || "Elvio"}
                             </motion.span>
                         </motion.h1>
 
@@ -68,7 +67,7 @@ export default function Hero({ heroRef }) {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.4 }}
-                        >{BioUser?.data?.data?.description}</motion.p>
+                        >{bioUser?.data?.data?.description || "Full Stack Developer & Designer passionate about crafting interactive, aesthetic, and scalable web experiences."}</motion.p>
 
                         <motion.div
                             className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
@@ -82,13 +81,6 @@ export default function Hero({ heroRef }) {
                                 whileTap={{ scale: 0.95 }}
                             >
                                 Contact Me
-                            </motion.button>
-                            <motion.button
-                                className="border border-yellow-500 text-yellow-500 px-8 py-3 rounded-xl font-semibold hover:bg-yellow-500/10 transition-all"
-                                whileHover={{ scale: 1.05, y: -2 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                Download CV
                             </motion.button>
                         </motion.div>
                     </motion.div>
