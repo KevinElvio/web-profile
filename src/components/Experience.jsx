@@ -42,7 +42,7 @@ export default function ExperienceSection({ experienceRef }) {
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                 <h3 className="text-2xl font-semibold text-yellow-400">{exp?.position}</h3>
                 <span className="text-gray-400 bg-gray-700 px-4 py-1 rounded-full">
-                  {formatDate(exp?.start_date)+' - '+formatDate(exp?.end_date)}
+                  {exp?.still_working == true? formatDate(exp?.start_date)+' - Sekarang' : formatDate(exp?.start_date)+' - '+formatDate(exp?.end_date)}
                 </span>
               </div>
               <p className="text-gray-300 mb-4">{exp?.description_job}</p>
