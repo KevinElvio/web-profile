@@ -1,9 +1,15 @@
 import ApiHelper from "../helper/ApiHelper"
 
-export const getAllProjects = () => {
-    return ApiHelper.get("/projects")
-        .then((res) => res.data)
-        .catch((err) => {
-            console.log(err)
-        })
+const readProject = () => {
+    try {
+        const data = ApiHelper.get('/projects')
+        return data
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+export {
+    readProject
 }

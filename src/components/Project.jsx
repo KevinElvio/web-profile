@@ -1,25 +1,43 @@
 import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
+import { readProject } from '../services/projectService';
+import { useState, useEffect } from 'react';
 
 export default function Project({ projectRef }) {
+  const [project, setProject] = useState([]);
+  useEffect(() => {
+    const fetchProject = () => {
+      try {
+        const data = readProject()
+        setProject(data.data.data)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchProject()
+  }, [])
+
   const projects = [
         {
             title: "Portfolio Website",
             description: "Modern, responsive portfolio with smooth animations and interactive elements.",
             tech: ["React", "Framer Motion", "Tailwind"],
-            image: "/project1.jpg"
+            image: "/project1.jpg",
+            githubLink: "https://example.com/project-1",
         },
         {
             title: "Dashboard App",
             description: "Real-time analytics dashboard with data visualization and dark mode.",
             tech: ["Next.js", "Chart.js", "TypeScript"],
-            image: "/project2.jpg"
+            image: "/project2.jpg",
+            githubLink: "https://example.com/project-1",
         },
         {
             title: "E-Commerce UI",
             description: "Beautiful e-commerce interface with seamless user experience and animations.",
             tech: ["React", "GSAP", "Styled Components"],
-            image: "/project3.jpg"
+            image: "/project3.jpg",
+            githubLink: "https://example.com/project-1",
         }
     ];
   return (
@@ -58,6 +76,7 @@ export default function Project({ projectRef }) {
                       {tech}
                     </span>
                   ))}
+                  <h5 className='font-bold mt-5'>Github Link : <a className='text-blue-400' href={project.githubLink}>{project.githubLink}</a></h5>
                 </div>
               </div>
             </motion.div>
