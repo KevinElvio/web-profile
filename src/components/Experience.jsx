@@ -11,7 +11,6 @@ export default function ExperienceSection({ experienceRef }) {
       try {
         const data = await ReadExperience();
         setExperience(data.data.data)
-        console.log(data.data.data);
       } catch (error) {
         console.log(error);
       }

@@ -1,13 +1,22 @@
 import { motion } from "framer-motion";
 import Logo from "./Logo";
 import PropTypes from 'prop-types';
+import { readSkill } from "../services/skillService";
+import { useState, useEffect } from 'react';
 export default function Skills({ skillsRef }) {
-  const skills = [
-    { domain: <Logo domain="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" /> },
-    { domain: <Logo domain="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" /> },
+  const [skills, setSkills] = useState([]);
+  useEffect(() => {
+    const fetchSkills = async ()  =>{
+      try {
+        const data = await readSkill();
+        setSkills(data.data.data)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchSkills()
+  } ,[])
 
-
-  ];
   return (
     <section ref={skillsRef} className="py-20 px-6 my-40">
       <div className="container mx-auto">
@@ -26,7 +35,7 @@ export default function Skills({ skillsRef }) {
               className="mb-6">
 
               <div className="flex justify-between items-center mb-2">
-                <span>{skill.domain}</span>
+                <span><Logo domain={skill.link_image} alt={skill.name}/></span>
               </div>
               <div className="">
                 <motion.div />
