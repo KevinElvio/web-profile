@@ -6,9 +6,11 @@ import { useState, useEffect } from 'react';
 export default function Project({ projectRef }) {
   const [project, setProject] = useState([]);
   useEffect(() => {
-    const fetchProject = () => {
+    const fetchProject = async () => {
       try {
-        const data = readProject()
+        const data = await readProject()
+        console.log(data.data.data);
+        
         setProject(data.data.data)
       } catch (error) {
         console.log(error);
