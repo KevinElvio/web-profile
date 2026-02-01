@@ -4,13 +4,13 @@ import { readProject } from '../services/projectService';
 import { useState, useEffect } from 'react';
 
 export default function Project({ projectRef }) {
-  const [project, setProject] = useState([]);
+  const [projects, setProject] = useState([]);
   useEffect(() => {
     const fetchProject = async () => {
       try {
         const data = await readProject()
         console.log(data.data.data);
-        
+
         setProject(data.data.data)
       } catch (error) {
         console.log(error);
@@ -19,29 +19,6 @@ export default function Project({ projectRef }) {
     fetchProject()
   }, [])
 
-  const projects = [
-        {
-            title: "Portfolio Website",
-            description: "Modern, responsive portfolio with smooth animations and interactive elements.",
-            tech: ["React", "Framer Motion", "Tailwind"],
-            image: "/project1.jpg",
-            githubLink: "https://example.com/project-1",
-        },
-        {
-            title: "Dashboard App",
-            description: "Real-time analytics dashboard with data visualization and dark mode.",
-            tech: ["Next.js", "Chart.js", "TypeScript"],
-            image: "/project2.jpg",
-            githubLink: "https://example.com/project-1",
-        },
-        {
-            title: "E-Commerce UI",
-            description: "Beautiful e-commerce interface with seamless user experience and animations.",
-            tech: ["React", "GSAP", "Styled Components"],
-            image: "/project3.jpg",
-            githubLink: "https://example.com/project-1",
-        }
-    ];
   return (
     <section ref={projectRef} className="py-20 px-6 my-80">
       <div className="container mx-auto">
@@ -70,12 +47,12 @@ export default function Project({ projectRef }) {
                 <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
                 <p className="text-gray-300 mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech, i) => (
+                  {project.techUsed.map((tech, i) => (
                     <span
                       key={i}
                       className="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm"
                     >
-                      {tech}
+                      {tech.name}
                     </span>
                   ))}
                   <h5 className='font-bold mt-5'>Github Link : <a className='text-blue-400' href={project.githubLink}>{project.githubLink}</a></h5>
