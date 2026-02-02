@@ -1,32 +1,13 @@
-import { Children, createContext, useEffect, useState } from "react";
-import { login } from "../../services/userService";
-import { FailedNotif } from "../notification/Notification";
+import {createContext, useEffect, useState } from "react";
+import Cookies from 'js-cookie';
 
 export const UserContext = createContext();
 
-export const UserContextProvider = () => {
-    const [user, setUser] = useState(null)
+export const UserContextProvider = ({ children }) => {
+    const [token, setToken] = useState(null);
+    const [user, setUser] = useState(null);
 
-    useEffect((email, password) => {
-        if(!email || !password){
-            return FailedNotif("Gagal", "Gagal Login");
-        }
-        async () => {
-            await login(email, password)
-            .then((res) => {
-                res.data
-                setUser(res.data)
-            })
-            .catch((err) => {
-                return FailedNotif("Gagal", err)
-            })
-        }
-
-    },[user])
-
-    return(
-        <UserContext.Provider value={user}>
-            {Children}
-        </UserContext.Provider>
-    )
-}
+    useEffect(()=> {
+        const token = Cookies.get('Auth');
+    })
+}   

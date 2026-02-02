@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { FailedNotif } from '../components/notification/Notification'
 
 function Login() {
 
@@ -61,28 +62,30 @@ function Login() {
         localStorage.setItem('isAuthenticated', 'true')
         navigate('/admin')
       } else {
-        setErrors({ general: 'Invalid email or password' })
+        // setErrors({ general: 'Invalid email or password' })
+        FailedNotif("Error", "Invalid email or password")
       }
     } catch (error) {
-      setErrors({ general: 'Login failed. Please try again.' })
+      // setErrors({ general: 'Login failed. Please try again.' })
+      FailedNotif("Error", "Login failed. Please try again.")
     } finally {
       setIsLoading(false)
     }
   }
 
 
-  const floatingElements = Array.from({ length: 300 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    delay: Math.random() * 5,
-    size: Math.random() * 4 + 1
-  }));
+  // const floatingElements = Array.from({ length: 300 }, (_, i) => ({
+  //   id: i,
+  //   x: Math.random() * 100,
+  //   y: Math.random() * 100,
+  //   delay: Math.random() * 5,
+  //   size: Math.random() * 4 + 1
+  // }));
 
   return (
     <div className="min-h-screen flex items-center bg-gray-950 justify-center p-4">
       {/* Floating Background Elements */}
-      <div className="fixed inset-0 pointer-events-none">
+      {/* <div className="fixed inset-0 pointer-events-none">
         {floatingElements.map((dot) => (
           <motion.div
             key={dot.id}
@@ -104,7 +107,7 @@ function Login() {
             }}
           />
         ))}
-      </div>
+      </div> */}
       <div className="fixed inset-0 pointer-events-none">
       </div>
       <div className="w-full max-w-md">
@@ -120,7 +123,7 @@ function Login() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-2">
                 Email Address
@@ -132,7 +135,7 @@ function Login() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg text-black focus:ring-2 focus:ring-yellow-600 focus:border-yellow-600 transition-colors
+                  className={`w-full px-4 py-2 border rounded-lg text-black focus:ring-2 focus:ring-yellow-600 focus:border-yellow-600 transition-colors
                     ${errors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'}`}
                   placeholder="Enter your email"
                 />
@@ -157,7 +160,7 @@ function Login() {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border text-black rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors pr-12
+                  className={`w-full px-4 py-2 border text-black rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors pr-12
                     ${errors.password ? 'border-red-300 bg-red-50' : 'border-gray-300'}`}
                   placeholder="Enter your password"
                 />
