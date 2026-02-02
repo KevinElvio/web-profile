@@ -13,7 +13,7 @@ const ApiHelper = axios.create({
 
 ApiHelper.interceptors.request.use(
     (config) => {
-        const token = Cookies.get('Auth');
+        const token = Cookies.get('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }

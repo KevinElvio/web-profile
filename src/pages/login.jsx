@@ -69,6 +69,7 @@ function Login() {
         navigate('/admin')
       } else {
         FailedNotif("Error", "Invalid email or password")
+        navigate('/login')
       }
     } catch (error) {
       FailedNotif("Error", "Login failed. Please try again.")
