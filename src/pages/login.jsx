@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FailedNotif } from '../components/notification/Notification'
+import { login } from '../services/authService'
+import Cookies from 'js-cookie';
 
 function Login() {
 
@@ -56,17 +58,19 @@ function Login() {
     setIsLoading(true)
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      const data = await login(formData.email, formData.password)
 
-      if (formData.email === 'admin@example.com' && formData.password === 'admin123') {
-        localStorage.setItem('isAuthenticated', 'true')
+      if (data.status === 200 && data.data.token) {
+        Cookies.set('token', data.data.token, {
+          expires: 1/24,
+          secure: true,
+          sameSite: 'Strict'
+        })
         navigate('/admin')
       } else {
-        // setErrors({ general: 'Invalid email or password' })
         FailedNotif("Error", "Invalid email or password")
       }
     } catch (error) {
-      // setErrors({ general: 'Login failed. Please try again.' })
       FailedNotif("Error", "Login failed. Please try again.")
     } finally {
       setIsLoading(false)
