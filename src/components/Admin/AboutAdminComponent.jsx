@@ -1,12 +1,12 @@
 // AboutSection.jsx
 import React from 'react';
-import { FiUpload } from 'react-icons/fi';
+import { FiUpload, FiSave } from 'react-icons/fi';
 
 const AboutSection = ({ data, onChange, onImageUpload }) => {
   return (
     <div>
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Tentang Saya</h2>
-      
+
       <div className="space-y-6">
         {/* Image Upload */}
         <div>
@@ -15,9 +15,9 @@ const AboutSection = ({ data, onChange, onImageUpload }) => {
           </label>
           <div className="flex items-center space-x-4">
             {data.image && (
-              <img 
-                src={data.image} 
-                alt="Profile" 
+              <img
+                src={data.image}
+                alt="Profile"
                 className="w-32 h-32 rounded-full object-cover border-4 border-gray-200"
               />
             )}
@@ -67,6 +67,17 @@ const AboutSection = ({ data, onChange, onImageUpload }) => {
             placeholder="Tulis deskripsi tentang diri Anda..."
           />
         </div>
+        <div className='flex justify-end'>
+          <button
+            // onClick={saveData}
+            // disabled={isLoading}
+            className="mt-6 bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2 disabled:opacity-50"
+          >
+            <FiSave className="w-5 h-5" />
+            <span>{'Simpan'}</span>
+          </button>
+        </div>
+
       </div>
     </div>
   );
