@@ -21,6 +21,7 @@ import ProjectsSection from '../components/Admin/ProjectAdminComponent.jsx';
 import SkillsSection from '../components/Admin/SkillAdminComponent.jsx';
 import ImageGallerySection from '../components/Admin/GalleryAdminComponent.jsx';
 
+
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('about');
   const [isLoading, setIsLoading] = useState(false);

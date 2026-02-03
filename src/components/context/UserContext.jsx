@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
 import Cookies from 'js-cookie';
 import { Navigate } from 'react-router-dom'
 import { ReadMe } from "../../services/userService";
@@ -11,9 +11,9 @@ export const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        const token = Cookies.get('token');
-        if (token) {
-            setToken(token)
+        const tokenCookies = Cookies.get('token');
+        if (tokenCookies) {
+            setToken(tokenCookies)
         }
     }, [])
 
@@ -22,9 +22,10 @@ export const UserContextProvider = ({ children }) => {
             const data = await ReadMe();
             if (data.status === 200) {
                 setUser(data.data)
-            } else (
+            } else {
                 setUser(null)
-            )
+                Cookies.remove('token')
+            }
         } catch (error) {
             console.log(error);
             throw error;
@@ -44,4 +45,8 @@ export const UserContextProvider = ({ children }) => {
             {children}
         </UserContext.Provider>
     )
-}   
+}
+
+export const useUser = () => {
+    return useContext(UserContext)
+};
