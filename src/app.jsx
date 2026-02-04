@@ -1,17 +1,22 @@
 import Portfolio from './pages/landingPage.jsx';
 import Admin from './pages/AdminPage.jsx';
 import Login from './pages/login.jsx';
+import PrivateRoute from './components/PrivateRoute.jsx';
 import { Route, Routes } from 'react-router-dom';
-import { useUser } from '../components/context/UserContext.jsx';
+import { useUser } from "../src/components/context/UserContext.jsx";
 
 function App() {
-  console.log(useUser);
-  
+  const {user} = useUser();
+
   return (
     <Routes>
       <Route path='/' element={<Portfolio />} />
-      <Route path='/admin' element={<Admin />} />
-      <Route path='/login' element={<Login />} />
+      <Route path='/login' element={!user ? <Login /> : <Admin />} />
+      <Route element={<PrivateRoute />}>
+        <Route path='/admin' element={<Admin />} />
+      </Route>
+
+
     </Routes>
   );
 }

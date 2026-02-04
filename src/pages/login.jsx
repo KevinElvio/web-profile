@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { FailedNotif } from '../components/notification/Notification'
 import { login } from '../services/authService'
 import Cookies from 'js-cookie';
+import { useUser } from '../components/context/UserContext';
 
 function Login() {
 
@@ -14,7 +15,7 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [errors, setErrors] = useState({})
-
+  const { setUser } = useUser();
   const navigate = useNavigate()
 
   const handleInputChange = (e) => {
@@ -51,6 +52,7 @@ function Login() {
   }
 
   const handleSubmit = async (e) => {
+
     e.preventDefault()
 
     if (!validateForm()) return
@@ -62,10 +64,11 @@ function Login() {
 
       if (data.status === 200 && data.data.token) {
         Cookies.set('token', data.data.token, {
-          expires: 1/24,
+          expires: 1 / 24,
           secure: true,
           sameSite: 'Strict'
         })
+        setUser(data.data)
         navigate('/admin')
       } else {
         FailedNotif("Error", "Invalid email or password")
