@@ -1,8 +1,21 @@
-# React + Vite
+# Backend Engineer Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Website ini merupakan **web profile personal** yang menampilkan identitas, skill, dan portofolio saya sebagai **Backend Engineer**.  
+Dibuat sebagai media profesional untuk keperluan **portofolio, lamaran kerja, dan personal branding**.
 
-Currently, two official plugins are available:
+## 🚀 Tech Stack
+- **Backend**: Golang / Node.js / PHP (sesuaikan)
+- **Database**: MySQL, PostgreSQL
+- **API**: RESTful API
+- **Authentication**: JWT
+- **Tools**: Docker, Git, Postman
+- **Deployment**: VPS / Nginx
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 Features
+- Profil singkat & career summary
+- Daftar skill backend
+- Showcase project backend
+- Tech stack yang digunakan di setiap project
+- Kontak & social links
+
+## 🏗️ Project Structure
