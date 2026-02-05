@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Navigate } from 'react';
 import {
   FiImage,
   FiUser,
@@ -8,9 +8,7 @@ import {
   FiFolder,
   FiAward,
   FiSave,
-  // FiUpload,
-  // FiTrash2,
-  // FiEdit
+  FiLogOut,
 } from 'react-icons/fi';
 
 import AboutSection from '../components/Admin/AboutAdminComponent.jsx';
@@ -20,11 +18,15 @@ import ExperienceSection from '../components/Admin/ExperienceAdminComponent.jsx'
 import ProjectsSection from '../components/Admin/ProjectAdminComponent.jsx';
 import SkillsSection from '../components/Admin/SkillAdminComponent.jsx';
 import ImageGallerySection from '../components/Admin/GalleryAdminComponent.jsx';
+import { useUser } from '../components/context/UserContext.jsx';
+import { FailedNotif } from '../components/notification/Notification.jsx';
+import Cookies from 'js-cookie';
 
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('about');
   const [isLoading, setIsLoading] = useState(false);
+  const { user, setUser } = useUser();
 
   // Initial state untuk semua data
   const [formData, setFormData] = useState({
@@ -133,13 +135,29 @@ const AdminPage = () => {
     }
   };
 
+  const logout = () => {
+    Cookies.remove('token')
+    setUser(null);
+    <Navigate to="/login" replace />
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Welcome Admin</h1>
-          <p className="text-gray-600">Kelola konten web profile</p>
+        <div className="bg-white rounded-lg shadow-md px-6 pt-8 pb-12 mb-6 flex justify-between items-start">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800">Welcome Admin</h1>
+            <p className="text-gray-600">Kelola konten web profile</p>
+          </div>
+          <button
+            onClick={logout}
+            disabled={isLoading}
+            className="bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors font-medium flex items-center justify-center space-x-2 disabled:opacity-50"
+          >
+            <span>{isLoading ? 'Proses...' : 'Logout'}</span>
+            <FiLogOut className="w-5 h-5" />
+          </button>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
