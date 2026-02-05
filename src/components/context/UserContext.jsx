@@ -1,8 +1,6 @@
 import { createContext, useEffect, useState, useContext } from "react";
 import Cookies from 'js-cookie';
-import { Navigate } from 'react-router-dom'
 import { ReadMe } from "../../services/userService";
-import { login } from "../../services/authService";
 
 export const UserContext = createContext();
 
@@ -39,6 +37,8 @@ export const UserContextProvider = ({ children }) => {
             setUser(null)
         }
     }, [token])
+
+
 
     return (
         <UserContext.Provider value={{ user, setUser }}>

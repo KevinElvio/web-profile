@@ -6,7 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useUser } from "../src/components/context/UserContext.jsx";
 
 function App() {
-  const {user} = useUser();
+  const { user } = useUser();
 
   return (
     <Routes>
@@ -15,8 +15,6 @@ function App() {
       <Route element={<PrivateRoute />}>
         <Route path='/admin' element={<Admin />} />
       </Route>
-
-
     </Routes>
   );
 }
