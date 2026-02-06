@@ -161,7 +161,7 @@ const AdminPage = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Sidebar */}
+          {/* Sidebar */} 
           <div className="lg:w-1/4">
             <div className="bg-white rounded-lg shadow-md p-4">
               <nav className="space-y-2">
