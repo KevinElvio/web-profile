@@ -2,7 +2,9 @@
 import React from 'react';
 import { FiUpload, FiSave } from 'react-icons/fi';
 
-const AboutSection = ({ data, onChange, onImageUpload }) => {
+const AboutSection = ({data, onChange, onImageUpload }) => {
+
+
   return (
     <div>
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Tentang Saya</h2>

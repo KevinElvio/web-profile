@@ -6,10 +6,18 @@ import About from '../components/About';
 import Experience from '../components/Experience';
 import Project from '../components/Project';
 import Skills from '../components/Skills';
+import { ReadUser } from '../services/userService';
 
 
 const Portfolio = () => {
     const [activeSection, setActiveSection] = useState('home');
+    const [User, setUser] = useState({
+        name: '',
+        email: '',
+        title: '',
+        description: '',
+        image: ''
+    })
     const heroRef = useRef(null);
     const aboutRef = useRef(null);
     const experienceRef = useRef(null);
@@ -37,6 +45,22 @@ const Portfolio = () => {
         delay: Math.random() * 5,
         size: Math.random() * 4 + 1
     }));
+
+    useEffect(() => {
+        const fetchBioUser = async () => {
+            try {
+                const data = await ReadUser();
+                if (data) {
+                    setUser(data.data.data)
+                    // console.log(data.data.data.name);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchBioUser()
+    }, [])
 
 
     return (
@@ -66,20 +90,20 @@ const Portfolio = () => {
             </div>
 
             {/* Navigation */}
-            <Navbar activeSection={activeSection}/>
+            <Navbar activeSection={activeSection} />
 
             {/* Hero Section */}
-            <Hero heroRef={heroRef}/>
+            <Hero heroRef={heroRef} dataUser = {User} />
 
             {/* About Section */}
-            <About aboutRef={aboutRef}/>
+            <About aboutRef={aboutRef} dataUser = {User} />
 
             {/* Experience Section */}
             <Experience experienceRef={experienceRef} />
 
             {/* Projects Section */}
             <Project projectRef={projectRef} />
-            
+
 
             {/* Skills Section */}
             <Skills skillsRef={skillsRef} />

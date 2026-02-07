@@ -1,5 +1,6 @@
 import ApiHelper from "../helper/ApiHelper";
 import { FailedNotif } from "../components/notification/Notification";
+import { data } from "autoprefixer";
 
 export const ReadUser = () => {
     try {
@@ -20,3 +21,13 @@ export const ReadMe = () => {
         throw error;
     }
 };
+
+export const UpdateUser = (data) => {
+    try {
+        const response = ApiHelper.put(`/user/1`, data);
+        return response;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}

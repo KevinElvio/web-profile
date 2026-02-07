@@ -1,28 +1,8 @@
 import { motion } from 'framer-motion'
 import PropTypes from 'prop-types';
-import { ReadUser } from '../services/userService';
-import { useState, useEffect } from 'react';
 
-export default function Hero({ heroRef }) {
-    const [bioUser, setBioUser] = useState([])
-
-    useEffect(()=>{
-        const fetchBioUser = async () => {
-            try {
-                const data = await ReadUser();
-                setBioUser(data)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        fetchBioUser()
-    },[])
-
-   
+export default function Hero({ heroRef, dataUser }) {
     
-
-
     return (
         <section ref={heroRef} className="min-h-screen flex items-center justify-center px-6">
             <div className="container mx-auto">
@@ -39,7 +19,7 @@ export default function Hero({ heroRef }) {
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.2 }}
                         >
-                            {bioUser?.data?.data?.name?.split(' ')[0] || "Kevin"}{' '}
+                            {dataUser?.name?.split(' ')[0] || "Kevin"}{' '}
                             <motion.span
                                 className="text-white bg-clip-text text-transparent"
                                 style={{
@@ -58,7 +38,7 @@ export default function Hero({ heroRef }) {
                                     repeatType: 'reverse',
                                 }}
                             >
-                                {bioUser?.data?.data?.name?.split(' ')[1] || "Elvio"}
+                                {dataUser?.name?.split(' ')[1] || "Elvio"}
                             </motion.span>
                         </motion.h1>
 
@@ -67,7 +47,7 @@ export default function Hero({ heroRef }) {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.4 }}
-                        >{bioUser?.data?.data?.description || "Full Stack Developer & Designer passionate about crafting interactive, aesthetic, and scalable web experiences."}</motion.p>
+                        >{dataUser?.title || "Full Stack Developer & Designer passionate about crafting interactive, aesthetic, and scalable web experiences."}</motion.p>
 
                         <motion.div
                             className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"

@@ -21,6 +21,7 @@ import ImageGallerySection from '../components/Admin/GalleryAdminComponent.jsx';
 import { useUser } from '../components/context/UserContext.jsx';
 import { FailedNotif } from '../components/notification/Notification.jsx';
 import Cookies from 'js-cookie';
+import { UpdateUser, ReadUser } from '../services/userService.jsx';
 
 
 const AdminPage = () => {
@@ -50,33 +51,48 @@ const AdminPage = () => {
     projects: [],
     skills: []
   });
+  const [formDataAbout, setFormDataAbout] = useState({
+    title: '',
+    description: '',
+    image: ''
+  });
 
   // Temporary state untuk form input
-  const [tempData, setTempData] = useState({});
-  const [editingIndex, setEditingIndex] = useState(null);
+  // const [tempData, setTempData] = useState({});
+  // const [editingIndex, setEditingIndex] = useState(null);
 
   useEffect(() => {
-    // Load data dari localStorage atau API
-    loadData();
+    loadDataAbout();
   }, []);
 
-  const loadData = () => {
-    // Simulasi load data
-    const savedData = localStorage.getItem('profileData');
-    if (savedData) {
-      setFormData(JSON.parse(savedData));
+  const loadDataAbout = async () => {
+    try {
+      const savedData = await ReadUser();
+      if (savedData) {
+        setFormDataAbout(savedData.data.data);
+      }
+    } catch (error) {
+      FailedNotif('Error', error)
     }
   };
 
-  const saveData = () => {
-    setIsLoading(true);
-    // Simpan ke localStorage atau API
-    localStorage.setItem('profileData', JSON.stringify(formData));
-    setTimeout(() => {
-      setIsLoading(false);
-      alert('Data berhasil disimpan!');
-    }, 1000);
-  };
+  const saveDataAbout = () => {
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+
+  // const saveData = () => {
+  //   setIsLoading(true);
+  //   // Simpan ke localStorage atau API
+  //   localStorage.setItem('profileData', JSON.stringify(formData));
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //     alert('Data berhasil disimpan!');
+  //   }, 1000);
+  // };
 
   const handleInputChange = (section, field, value) => {
     setFormData(prev => ({
@@ -161,7 +177,7 @@ const AdminPage = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Sidebar */} 
+          {/* Sidebar */}
           <div className="lg:w-1/4">
             <div className="bg-white rounded-lg shadow-md p-4">
               <nav className="space-y-2">
@@ -187,15 +203,6 @@ const AdminPage = () => {
                   </button>
                 ))}
               </nav>
-
-              <button
-                onClick={saveData}
-                disabled={isLoading}
-                className="w-full mt-6 bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2 disabled:opacity-50"
-              >
-                <FiSave className="w-5 h-5" />
-                <span>{isLoading ? 'Menyimpan...' : 'Simpan Semua'}</span>
-              </button>
             </div>
           </div>
 
@@ -204,7 +211,7 @@ const AdminPage = () => {
             <div className="bg-white rounded-lg shadow-md p-6">
               {activeTab === 'about' && (
                 <AboutSection
-                  data={formData.about}
+                  data={formDataAbout}
                   onChange={handleInputChange}
                   onImageUpload={handleImageUpload}
                 />
