@@ -19,9 +19,10 @@ import ProjectsSection from '../components/Admin/ProjectAdminComponent.jsx';
 import SkillsSection from '../components/Admin/SkillAdminComponent.jsx';
 import ImageGallerySection from '../components/Admin/GalleryAdminComponent.jsx';
 import { useUser } from '../components/context/UserContext.jsx';
-import { FailedNotif } from '../components/notification/Notification.jsx';
+import { FailedNotif, SuccessNotif } from '../components/notification/Notification.jsx';
 import Cookies from 'js-cookie';
-import { UpdateUser, ReadUser } from '../services/userService.jsx';
+import { ReadUser, UpdateUser } from '../services/userService.jsx';
+import { data } from 'autoprefixer';
 
 
 const AdminPage = () => {
@@ -51,6 +52,7 @@ const AdminPage = () => {
     projects: [],
     skills: []
   });
+
   const [formDataAbout, setFormDataAbout] = useState({
     title: '',
     description: '',
@@ -73,14 +75,17 @@ const AdminPage = () => {
       }
     } catch (error) {
       FailedNotif('Error', error)
+      console.log(error);
+
     }
   };
 
-  const saveDataAbout = () => {
+  const saveDataAbout = async () => {
     try {
-      
+      await UpdateUser(formDataAbout);
+      SuccessNotif('Success', 'Berhasil Update About')
     } catch (error) {
-      
+      FailedNotif('Error', error)
     }
   }
 
@@ -94,13 +99,10 @@ const AdminPage = () => {
   //   }, 1000);
   // };
 
-  const handleInputChange = (section, field, value) => {
-    setFormData(prev => ({
+  const handleInputChange = (setter, field, value) => {
+    setter(prev => ({
       ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: value
-      }
+      [field]: value
     }));
   };
 
@@ -127,12 +129,13 @@ const AdminPage = () => {
     }));
   };
 
-  const handleImageUpload = (event, section, field) => {
+  const handleImageUpload = (event, setter, field) => {
     const file = event.target.files[0];
+    
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        handleInputChange(section, field, e.target.result);
+        handleInputChange(setter, field, e.target.result);
       };
       reader.readAsDataURL(file);
     }
@@ -214,6 +217,8 @@ const AdminPage = () => {
                   data={formDataAbout}
                   onChange={handleInputChange}
                   onImageUpload={handleImageUpload}
+                  saveDataAbout={saveDataAbout}
+                  setFormDataAbout={setFormDataAbout}
                 />
               )}
 

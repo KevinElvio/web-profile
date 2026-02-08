@@ -2,7 +2,7 @@
 import React from 'react';
 import { FiUpload, FiSave } from 'react-icons/fi';
 
-const AboutSection = ({data, onChange, onImageUpload }) => {
+const AboutSection = ({data, onChange, onImageUpload, saveDataAbout, setFormDataAbout}) => {
 
 
   return (
@@ -27,7 +27,7 @@ const AboutSection = ({data, onChange, onImageUpload }) => {
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => onImageUpload(e, 'about', 'image')}
+                onChange={(e) => onImageUpload(e, setFormDataAbout, 'image')}
                 className="hidden"
                 id="profileImage"
               />
@@ -50,7 +50,7 @@ const AboutSection = ({data, onChange, onImageUpload }) => {
           <input
             type="text"
             value={data.title || ''}
-            onChange={(e) => onChange('about', 'title', e.target.value)}
+            onChange={(e) => onChange(setFormDataAbout, 'title', e.target.value)}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Contoh: Full Stack Developer"
           />
@@ -63,7 +63,7 @@ const AboutSection = ({data, onChange, onImageUpload }) => {
           </label>
           <textarea
             value={data.description || ''}
-            onChange={(e) => onChange('about', 'description', e.target.value)}
+            onChange={(e) => onChange(setFormDataAbout, 'description', e.target.value)}
             rows={8}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Tulis deskripsi tentang diri Anda..."
@@ -71,7 +71,7 @@ const AboutSection = ({data, onChange, onImageUpload }) => {
         </div>
         <div className='flex justify-end'>
           <button
-            // onClick={saveData}
+            onClick={saveDataAbout}
             // disabled={isLoading}
             className="mt-6 bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2 disabled:opacity-50"
           >
