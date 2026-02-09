@@ -18,17 +18,16 @@ import ExperienceSection from '../components/Admin/ExperienceAdminComponent.jsx'
 import ProjectsSection from '../components/Admin/ProjectAdminComponent.jsx';
 import SkillsSection from '../components/Admin/SkillAdminComponent.jsx';
 import ImageGallerySection from '../components/Admin/GalleryAdminComponent.jsx';
-import { useUser } from '../components/context/UserContext.jsx';
+// import { useUser } from '../components/context/UserContext.jsx';
 import { FailedNotif, SuccessNotif } from '../components/notification/Notification.jsx';
 import Cookies from 'js-cookie';
 import { ReadUser, UpdateUser } from '../services/userService.jsx';
-import { data } from 'autoprefixer';
 
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('about');
   const [isLoading, setIsLoading] = useState(false);
-  const { user, setUser } = useUser();
+  // const { user, setUser } = useUser();
 
   // Initial state untuk semua data
   const [formData, setFormData] = useState({
@@ -94,8 +93,7 @@ const AdminPage = () => {
       if (formDataAbout.image instanceof File) {
         formData.append('image', formDataAbout.image);
       }
-
-      await UpdateUser(formData);
+      await UpdateUser(formData, 1);
 
       SuccessNotif('Success', 'Berhasil Update About');
       loadDataAbout();
@@ -171,8 +169,7 @@ const AdminPage = () => {
 
   const logout = () => {
     Cookies.remove('token')
-    setUser(null);
-    <Navigate to="/login" replace />
+    Navigate('/login')
   };
 
   return (

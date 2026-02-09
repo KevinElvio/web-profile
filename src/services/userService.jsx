@@ -22,9 +22,9 @@ export const ReadMe = async () => {
     }
 };
 
-export const UpdateUser = async (data) => {
+export const UpdateUser = async (data, id) => {
     try {
-        const response = await ApiHelper.put(`/user/1`, data, {  
+        const response = await ApiHelper.put(`/user/${id}`, data, {  
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
