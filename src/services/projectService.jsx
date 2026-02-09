@@ -1,8 +1,8 @@
 import ApiHelper from "../helper/ApiHelper"
 
-const readProject = () => {
+const readProject = async () => {
     try {
-        const data = ApiHelper.get('/projects')
+        const data = await ApiHelper.get('/projects')
         return data
     } catch (error) {
         console.log(error);

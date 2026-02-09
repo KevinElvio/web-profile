@@ -1,8 +1,8 @@
 import ApiHelper from "../helper/ApiHelper"
 
-const readSkill = () => {
+const readSkill = async () => {
     try {
-        const data = ApiHelper.get('/skills')
+        const data = await ApiHelper.get('/skills')
         return data
     } catch (error) {
         console.log(error);

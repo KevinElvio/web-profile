@@ -1,8 +1,8 @@
 import ApiHelper from "../helper/ApiHelper"
 
-const ReadExperience = () => {
+const ReadExperience = async () => {
     try {
-        const data = ApiHelper.get('/experiences')
+        const data = await ApiHelper.get('/experiences')
         return data;
     } catch (error) {
         console.log(error);
