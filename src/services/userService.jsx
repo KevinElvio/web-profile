@@ -2,9 +2,9 @@ import ApiHelper from "../helper/ApiHelper";
 import { FailedNotif } from "../components/notification/Notification";
 import { data } from "autoprefixer";
 
-export const ReadUser = () => {
+export const ReadUser = async () => {
     try {
-        const response = ApiHelper.get("/user")
+        const response = await ApiHelper.get("/user")
         return response;
     } catch (error) {
         console.log(error);
@@ -12,9 +12,9 @@ export const ReadUser = () => {
     }
 }
 
-export const ReadMe = () => {
+export const ReadMe = async () => {
     try {
-        const response = ApiHelper.get('/user/me');
+        const response = await ApiHelper.get('/user/me');
         return response;
     } catch (error) {
         console.log(error);
@@ -22,9 +22,13 @@ export const ReadMe = () => {
     }
 };
 
-export const UpdateUser = (data) => {
+export const UpdateUser = async (data) => {
     try {
-        const response = ApiHelper.put(`/user/1`, data);
+        const response = await ApiHelper.put(`/user/1`, data, {  
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         return response;
     } catch (error) {
         console.log(error);

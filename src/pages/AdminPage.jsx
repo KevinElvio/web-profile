@@ -35,7 +35,8 @@ const AdminPage = () => {
     about: {
       title: '',
       description: '',
-      image: ''
+      image: '',
+
     },
     contact: {
       email: '',
@@ -53,10 +54,13 @@ const AdminPage = () => {
     skills: []
   });
 
+
+
   const [formDataAbout, setFormDataAbout] = useState({
     title: '',
     description: '',
-    image: ''
+    image: '',
+    imagePrev: ''
   });
 
   // Temporary state untuk form input
@@ -81,14 +85,24 @@ const AdminPage = () => {
   };
 
   const saveDataAbout = async () => {
+    const formData = new FormData();
+
     try {
-      await UpdateUser(formDataAbout);
-      SuccessNotif('Success', 'Berhasil Update About')
+      formData.append('title', formDataAbout.title);
+      formData.append('description', formDataAbout.description);
+
+      if (formDataAbout.image instanceof File) {
+        formData.append('image', formDataAbout.image);
+      }
+
+      await UpdateUser(formData);
+
+      SuccessNotif('Success', 'Berhasil Update About');
+      loadDataAbout();
     } catch (error) {
-      FailedNotif('Error', error)
+      FailedNotif('Error', error.response?.data?.message || 'Gagal update data');
     }
   }
-
   // const saveData = () => {
   //   setIsLoading(true);
   //   // Simpan ke localStorage atau API
@@ -131,8 +145,9 @@ const AdminPage = () => {
 
   const handleImageUpload = (event, setter, field) => {
     const file = event.target.files[0];
-    
+
     if (file) {
+      handleInputChange(setter, 'image', file);
       const reader = new FileReader();
       reader.onload = (e) => {
         handleInputChange(setter, field, e.target.result);

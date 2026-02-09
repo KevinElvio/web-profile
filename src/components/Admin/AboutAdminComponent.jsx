@@ -27,7 +27,7 @@ const AboutSection = ({data, onChange, onImageUpload, saveDataAbout, setFormData
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => onImageUpload(e, setFormDataAbout, 'image')}
+                onChange={(e) => onImageUpload(e, setFormDataAbout, 'imagePrev')}
                 className="hidden"
                 id="profileImage"
               />
