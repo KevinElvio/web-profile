@@ -1,9 +1,53 @@
-// AboutSection.jsx
-import React from 'react';
 import { FiUpload, FiSave } from 'react-icons/fi';
+import { ReadUser, UpdateUser } from '../../services/userService';
+import { useEffect } from 'react';
+import { FailedNotif, SuccessNotif } from '../notification/Notification';
+import { useState } from 'react';
 
-const AboutSection = ({data, onChange, onImageUpload, saveDataAbout, setFormDataAbout}) => {
+const AboutSection = ({onChange, onImageUpload }) => {
 
+  const [formDataAbout, setFormDataAbout] = useState({
+    title: '',
+    description: '',
+    image: '',
+    imagePrev: ''
+  });
+
+  useEffect(() => {
+    loadDataAbout();
+  }, []);
+
+  const loadDataAbout = async () => {
+    try {
+      const savedData = await ReadUser();
+      if (savedData) {
+        setFormDataAbout(savedData.data.data);
+      }
+    } catch (error) {
+      FailedNotif('Error', error)
+      console.log(error);
+
+    }
+  };
+
+  const saveDataAbout = async () => {
+    const formData = new FormData();
+
+    try {
+      formData.append('title', formDataAbout.title);
+      formData.append('description', formDataAbout.description);
+
+      if (formDataAbout.image instanceof File) {
+        formData.append('image', formDataAbout.image);
+      }
+      await UpdateUser(formData, 1);
+
+      SuccessNotif('Success', 'Berhasil Update About');
+      loadDataAbout();
+    } catch (error) {
+      FailedNotif('Error', error.response?.data?.message || 'Gagal update data');
+    }
+  }
 
   return (
     <div>
@@ -16,9 +60,9 @@ const AboutSection = ({data, onChange, onImageUpload, saveDataAbout, setFormData
             Foto Profil
           </label>
           <div className="flex items-center space-x-4">
-            {data.image && (
+            {formDataAbout.image && (
               <img
-                src={data.image}
+                src={formDataAbout.image}
                 alt="Profile"
                 className="w-32 h-32 rounded-full object-cover border-4 border-gray-200"
               />
@@ -49,7 +93,7 @@ const AboutSection = ({data, onChange, onImageUpload, saveDataAbout, setFormData
           </label>
           <input
             type="text"
-            value={data.title || ''}
+            value={formDataAbout.title || ''}
             onChange={(e) => onChange(setFormDataAbout, 'title', e.target.value)}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Contoh: Full Stack Developer"
@@ -62,7 +106,7 @@ const AboutSection = ({data, onChange, onImageUpload, saveDataAbout, setFormData
             Deskripsi
           </label>
           <textarea
-            value={data.description || ''}
+            value={formDataAbout.description || ''}
             onChange={(e) => onChange(setFormDataAbout, 'description', e.target.value)}
             rows={8}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"

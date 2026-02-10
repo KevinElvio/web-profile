@@ -1,7 +1,18 @@
 // ContactSection.jsx
+import { number } from 'prop-types';
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-const ContactSection = ({ data, onChange }) => {
+const ContactSection = ({onChange }) => {
+  const [data, setData] = useState({
+    number: '',
+    github: '',
+    linkedin: '',
+    instagram: '',
+    cv: '',
+  })
+
   const fields = [
     { key: 'email', label: 'Email', type: 'email' },
     { key: 'phone', label: 'Telepon', type: 'tel' },
@@ -9,6 +20,11 @@ const ContactSection = ({ data, onChange }) => {
     { key: 'linkedin', label: 'LinkedIn', type: 'url' },
     { key: 'github', label: 'GitHub', type: 'url' }
   ];
+
+
+  useEffect(()=> {
+    
+  }, [])
 
   return (
     <div>

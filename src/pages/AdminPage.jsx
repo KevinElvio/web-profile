@@ -31,12 +31,6 @@ const AdminPage = () => {
 
   // Initial state untuk semua data
   const [formData, setFormData] = useState({
-    about: {
-      title: '',
-      description: '',
-      image: '',
-
-    },
     contact: {
       email: '',
       phone: '',
@@ -53,63 +47,12 @@ const AdminPage = () => {
     skills: []
   });
 
-
-
-  const [formDataAbout, setFormDataAbout] = useState({
-    title: '',
-    description: '',
-    image: '',
-    imagePrev: ''
-  });
-
   // Temporary state untuk form input
   // const [tempData, setTempData] = useState({});
   // const [editingIndex, setEditingIndex] = useState(null);
 
-  useEffect(() => {
-    loadDataAbout();
-  }, []);
 
-  const loadDataAbout = async () => {
-    try {
-      const savedData = await ReadUser();
-      if (savedData) {
-        setFormDataAbout(savedData.data.data);
-      }
-    } catch (error) {
-      FailedNotif('Error', error)
-      console.log(error);
 
-    }
-  };
-
-  const saveDataAbout = async () => {
-    const formData = new FormData();
-
-    try {
-      formData.append('title', formDataAbout.title);
-      formData.append('description', formDataAbout.description);
-
-      if (formDataAbout.image instanceof File) {
-        formData.append('image', formDataAbout.image);
-      }
-      await UpdateUser(formData, 1);
-
-      SuccessNotif('Success', 'Berhasil Update About');
-      loadDataAbout();
-    } catch (error) {
-      FailedNotif('Error', error.response?.data?.message || 'Gagal update data');
-    }
-  }
-  // const saveData = () => {
-  //   setIsLoading(true);
-  //   // Simpan ke localStorage atau API
-  //   localStorage.setItem('profileData', JSON.stringify(formData));
-  //   setTimeout(() => {
-  //     setIsLoading(false);
-  //     alert('Data berhasil disimpan!');
-  //   }, 1000);
-  // };
 
   const handleInputChange = (setter, field, value) => {
     setter(prev => ({
@@ -226,11 +169,8 @@ const AdminPage = () => {
             <div className="bg-white rounded-lg shadow-md p-6">
               {activeTab === 'about' && (
                 <AboutSection
-                  data={formDataAbout}
                   onChange={handleInputChange}
                   onImageUpload={handleImageUpload}
-                  saveDataAbout={saveDataAbout}
-                  setFormDataAbout={setFormDataAbout}
                 />
               )}
 
