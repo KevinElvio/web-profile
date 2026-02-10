@@ -176,7 +176,6 @@ const AdminPage = () => {
 
               {activeTab === 'contact' && (
                 <ContactSection
-                  data={formData.contact}
                   onChange={handleInputChange}
                 />
               )}
