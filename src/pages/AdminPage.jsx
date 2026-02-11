@@ -97,18 +97,18 @@ const AdminPage = () => {
     }
   };
 
-  const handleFileUpload = (event, section) => {
-    const file = event.target.files[0];
-    if (file) {
-      setFormData(prev => ({
-        ...prev,
-        [section]: {
-          file: URL.createObjectURL(file),
-          fileName: file.name
-        }
-      }));
-    }
-  };
+  // const handleFileUpload = (event, section) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     setFormData(prev => ({
+  //       ...prev,
+  //       [section]: {
+  //         file: URL.createObjectURL(file),
+  //         fileName: file.name
+  //       }
+  //     }));
+  //   }
+  // };
 
   const logout = () => {
     Cookies.remove('token')
@@ -140,13 +140,13 @@ const AdminPage = () => {
             <div className="bg-white rounded-lg shadow-md p-4">
               <nav className="space-y-2">
                 {[
-                  { id: 'about', name: 'Tentang Saya', icon: FiUser },
-                  { id: 'contact', name: 'Kontak', icon: FiMail },
-                  { id: 'cv', name: 'CV', icon: FiFileText },
-                  { id: 'experience', name: 'Pengalaman', icon: FiBriefcase },
-                  { id: 'projects', name: 'Proyek', icon: FiFolder },
+                  { id: 'about', name: 'About', icon: FiUser },
+                  { id: 'contact', name: 'Contact', icon: FiMail },
+                  // { id: 'cv', name: 'CV', icon: FiFileText },
+                  { id: 'experience', name: 'Experience', icon: FiBriefcase },
+                  { id: 'projects', name: 'Project', icon: FiFolder },
                   { id: 'skills', name: 'Skill', icon: FiAward },
-                  { id: 'images', name: 'Gambar', icon: FiImage }
+                  // { id: 'images', name: 'Gambar', icon: FiImage }
                 ].map((item) => (
                   <button
                     key={item.id}
@@ -180,12 +180,12 @@ const AdminPage = () => {
                 />
               )}
 
-              {activeTab === 'cv' && (
+              {/* {activeTab === 'cv' && (
                 <CVSection
                   data={formData.cv}
                   onFileUpload={handleFileUpload}
                 />
-              )}
+              )} */}
 
               {activeTab === 'experience' && (
                 <ExperienceSection
@@ -216,12 +216,12 @@ const AdminPage = () => {
                 />
               )}
 
-              {activeTab === 'images' && (
+              {/* {activeTab === 'images' && (
                 <ImageGallerySection
                   data={formData}
                   onImageUpload={handleImageUpload}
                 />
-              )}
+              )} */}
             </div>
           </div>
         </div>

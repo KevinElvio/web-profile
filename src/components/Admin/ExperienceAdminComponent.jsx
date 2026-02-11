@@ -1,27 +1,33 @@
 // ExperienceSection.jsx
 import React, { useState } from 'react';
 import { FiPlus, FiEdit, FiTrash2 } from 'react-icons/fi';
+import { FailedNotif } from '../notification/Notification';
+import { ReadExperience } from '../../services/experienceService';
+import { useEffect } from 'react';
 
-const ExperienceSection = ({ data, onAdd, onUpdate, onDelete }) => {
+const ExperienceSection = ({onAdd, onUpdate, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [formData, setFormData] = useState({
     company: '',
     position: '',
-    startDate: '',
-    endDate: '',
-    description: '',
-    current: false
+    start_date: '',
+    end_date: '',
+    description_job: '',
+    still_working: '',
+    image: ''
   });
+  const [Data, setData] = useState([]);
 
   const resetForm = () => {
     setFormData({
       company: '',
       position: '',
-      startDate: '',
-      endDate: '',
-      description: '',
-      current: false
+      start_date: '',
+      end_date: '',
+      description_job: '',
+      still_working: '',
+      image: ''
     });
     setIsEditing(false);
     setEditingIndex(null);
@@ -42,6 +48,19 @@ const ExperienceSection = ({ data, onAdd, onUpdate, onDelete }) => {
     setIsEditing(true);
     setEditingIndex(index);
   };
+
+  useEffect(() => {
+    LoadDataExperience()
+  },[])
+
+  const LoadDataExperience = async () => {
+    try {
+      const res = await ReadExperience();
+      setData(res.data.data);
+    } catch (error) {
+      FailedNotif('Error', error)
+    }
+  }
 
   return (
     <div>
@@ -83,8 +102,8 @@ const ExperienceSection = ({ data, onAdd, onUpdate, onDelete }) => {
             </label>
             <input
               type="month"
-              value={formData.startDate}
-              onChange={(e) => setFormData(prev => ({ ...prev, startDate: e.target.value }))}
+              value={formData.start_date}
+              onChange={(e) => setFormData(prev => ({ ...prev, start_date: e.target.value }))}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             />
@@ -95,24 +114,24 @@ const ExperienceSection = ({ data, onAdd, onUpdate, onDelete }) => {
             </label>
             <input
               type="month"
-              value={formData.endDate}
-              onChange={(e) => setFormData(prev => ({ ...prev, endDate: e.target.value }))}
-              disabled={formData.current}
+              value={formData.end_date}
+              onChange={(e) => setFormData(prev => ({ ...prev, end_date: e.target.value }))}
+              disabled={formData.still_working}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
             />
             <div className="flex items-center mt-2">
               <input
                 type="checkbox"
-                id="current"
-                checked={formData.current}
-                onChange={(e) => setFormData(prev => ({ 
-                  ...prev, 
-                  current: e.target.checked,
+                id="still_working"
+                checked={formData.still_working}
+                onChange={(e) => setFormData(prev => ({
+                  ...prev,
+                  still_working: e.target.checked,
                   endDate: e.target.checked ? '' : prev.endDate
                 }))}
                 className="mr-2"
               />
-              <label htmlFor="current" className="text-sm text-gray-700">
+              <label htmlFor="still_working" className="text-sm text-gray-700">
                 Masih bekerja di sini
               </label>
             </div>
@@ -154,7 +173,7 @@ const ExperienceSection = ({ data, onAdd, onUpdate, onDelete }) => {
 
       {/* List */}
       <div className="space-y-4">
-        {data.map((experience, index) => (
+        {Data.map((experience, index) => (
           <div key={index} className="border border-gray-200 rounded-lg p-4">
             <div className="flex justify-between items-start mb-2">
               <div>
@@ -179,9 +198,9 @@ const ExperienceSection = ({ data, onAdd, onUpdate, onDelete }) => {
               </div>
             </div>
             <p className="text-sm text-gray-500 mb-2">
-              {experience.startDate} - {experience.current ? 'Sekarang' : experience.endDate}
+              {experience.start_date} - {experience.still_working ? 'Sekarang' : experience.end_date}
             </p>
-            <p className="text-gray-700">{experience.description}</p>
+            <p className="text-gray-700">{experience.description_job}</p>
           </div>
         ))}
       </div>
