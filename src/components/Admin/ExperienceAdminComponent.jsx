@@ -1,14 +1,15 @@
 // ExperienceSection.jsx
 import React, { useState } from 'react';
 import { FiPlus, FiEdit, FiTrash2 } from 'react-icons/fi';
-import { FailedNotif } from '../notification/Notification';
-import { ReadExperience } from '../../services/experienceService';
+import { FailedNotif, SuccessNotif } from '../notification/Notification';
+import { AddExperience, ReadExperience, UpdateExperience, DeleteExperience } from '../../services/experienceService';
 import { useEffect } from 'react';
 
-const ExperienceSection = ({onAdd, onUpdate, onDelete }) => {
+const ExperienceSection = ({onAdd, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [formData, setFormData] = useState({
+    userId: 1,
     company: '',
     position: '',
     start_date: '',
@@ -52,12 +53,45 @@ const ExperienceSection = ({onAdd, onUpdate, onDelete }) => {
   useEffect(() => {
     LoadDataExperience()
   },[])
+  
 
   const LoadDataExperience = async () => {
     try {
       const res = await ReadExperience();
       setData(res.data.data);
     } catch (error) {
+      FailedNotif('Error', error)
+    }
+  }
+
+  const SaveButton = async () => {
+    try {
+      if(isEditing === true){
+        await UpdateExperience(editingIndex, formData);
+        SuccessNotif('Success', 'Berhasil Update Experience');
+        return;
+      }
+      await AddExperience(formData);
+      SuccessNotif('Success', 'Berhasil Tambah Experience')
+      return;
+
+    } catch (error) {
+      FailedNotif('Error', error)
+      console.log(error);
+      
+    }
+  }
+
+  const OnDelete = async (id) => {
+    try {
+      if(id){
+        await DeleteExperience(id);
+        SuccessNotif('Success', 'Berhasil Delete Experience')
+        return;
+      }
+      return;
+    } catch (error) {
+      console.log(error);
       FailedNotif('Error', error)
     }
   }
@@ -101,7 +135,7 @@ const ExperienceSection = ({onAdd, onUpdate, onDelete }) => {
               Tanggal Mulai
             </label>
             <input
-              type="month"
+              type="date"
               value={formData.start_date}
               onChange={(e) => setFormData(prev => ({ ...prev, start_date: e.target.value }))}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -113,7 +147,7 @@ const ExperienceSection = ({onAdd, onUpdate, onDelete }) => {
               Tanggal Selesai
             </label>
             <input
-              type="month"
+              type="date"
               value={formData.end_date}
               onChange={(e) => setFormData(prev => ({ ...prev, end_date: e.target.value }))}
               disabled={formData.still_working}
@@ -154,6 +188,7 @@ const ExperienceSection = ({onAdd, onUpdate, onDelete }) => {
         <div className="flex space-x-3">
           <button
             type="submit"
+            onClick={SaveButton}
             className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
           >
             <FiPlus className="w-4 h-4" />
@@ -184,13 +219,13 @@ const ExperienceSection = ({onAdd, onUpdate, onDelete }) => {
               </div>
               <div className="flex space-x-2">
                 <button
-                  onClick={() => handleEdit(index, experience)}
+                  onClick={() => handleEdit(experience.id, experience)}
                   className="text-blue-600 hover:text-blue-800"
                 >
                   <FiEdit className="w-5 h-5" />
                 </button>
                 <button
-                  onClick={() => onDelete('experiences', index)}
+                  onClick={() => OnDelete(experience.id)}
                   className="text-red-600 hover:text-red-800"
                 >
                   <FiTrash2 className="w-5 h-5" />
