@@ -1,16 +1,18 @@
 
 import { useState } from 'react';
 import { FiPlus, FiEdit, FiTrash2, FiUpload } from 'react-icons/fi';
+import { readSkill } from '../../services/skillService';
+import { FailedNotif } from '../notification/Notification';
+import { useEffect } from 'react';
 
-const SkillsSection = ({ data, onAdd, onUpdate, onDelete, onImageUpload }) => {
+const SkillsSection = ({ onAdd, onUpdate, onDelete, onImageUpload }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
-    level: 'Pemula', // Pemula, Menengah, Mahir, Expert
-    category: 'Technical', // Technical, Soft Skills, Tools
-    image: ''
+    link_image: ''
   });
+  const [data, setData] = useState()
 
   const levels = ['Pemula', 'Menengah', 'Mahir', 'Expert'];
   const categories = ['Technical', 'Soft Skills', 'Tools'];
@@ -18,9 +20,7 @@ const SkillsSection = ({ data, onAdd, onUpdate, onDelete, onImageUpload }) => {
   const resetForm = () => {
     setFormData({
       name: '',
-      level: 'Pemula',
-      category: 'Technical',
-      image: ''
+      link_image: ''
     });
     setIsEditing(false);
     setEditingIndex(null);
@@ -60,6 +60,19 @@ const SkillsSection = ({ data, onAdd, onUpdate, onDelete, onImageUpload }) => {
       default: return 'border-l-gray-500';
     }
   };
+
+  useEffect(() => {
+    loadDataSkill()
+  }, [])
+
+  const loadDataSkill = async () => {
+    try {
+      const res = await readSkill();
+      setData(res.data.data);
+    } catch (error) {
+      FailedNotif('Error', error)
+    }
+  }
 
   return (
     <div>
@@ -129,47 +142,13 @@ const SkillsSection = ({ data, onAdd, onUpdate, onDelete, onImageUpload }) => {
             </label>
             <input
               type="text"
-              value={formData.name}
-              onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+              value={formData.link_image}
+              onChange={(e) => setFormData(prev => ({ ...prev, link_image: e.target.value }))}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Contoh: https://react.js"
               required
             />
           </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-          {/* Level */}
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Tingkat Kemampuan
-            </label>
-            <select
-              value={formData.level}
-              onChange={(e) => setFormData(prev => ({ ...prev, level: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              {levels.map(level => (
-                <option key={level} value={level}>{level}</option>
-              ))}
-            </select>
-          </div> */}
-
-          {/* Category */}
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Kategori
-            </label>
-            <select
-              value={formData.category}
-              onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              {categories.map(category => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-            </select>
-          </div> */}
         </div>
 
         <div className="flex space-x-3 mt-6">
@@ -193,54 +172,39 @@ const SkillsSection = ({ data, onAdd, onUpdate, onDelete, onImageUpload }) => {
       </form>
 
       {/* Skills List by Category */}
-      {categories.map(category => {
-        const categorySkills = data.filter(skill => skill.category === category);
-        if (categorySkills.length === 0) return null;
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {data?.map((skill, index) => (
+          <div key={skill.id || index} className="p-2 border rounded-lg hover:shadow-sm transition-shadow">
+            <div className="flex justify-between items-start mb-3">
+              <div className="flex items-center space-x-3">
+                {skill.link_image && (
+                  <img
+                    src={skill.link_image}
+                    alt={skill.name}
+                    className="w-10 h-10 object-cover rounded"
+                  />
+                )}
+                <h4 className="font-semibold text-gray-800">{skill.name}</h4>
+              </div>
 
-        return (
-          <div key={category} className="mb-8">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">{category}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {categorySkills.map((skill, index) => (
-                <div 
-                  key={index} 
-                  className={`border-l-4 ${getCategoryColor(skill.category)} bg-white border border-gray-200 rounded-lg p-4`}
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => handleEdit(skill.id, skill)}
+                  className="text-blue-600 hover:text-blue-800"
                 >
-                  <div className="flex justify-between items-start mb-3">
-                    <div className="flex items-center space-x-3">
-                      {skill.image && (
-                        <img 
-                          src={skill.image} 
-                          alt={skill.name}
-                          className="w-10 h-10 object-cover rounded"
-                        />
-                      )}
-                      <h4 className="font-semibold text-gray-800">{skill.name}</h4>
-                    </div>
-                    <div className="flex space-x-2">
-                      <button
-                        onClick={() => handleEdit(index, skill)}
-                        className="text-blue-600 hover:text-blue-800"
-                      >
-                        <FiEdit className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => onDelete('skills', index)}
-                        className="text-red-600 hover:text-red-800"
-                      >
-                        <FiTrash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                  <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getLevelColor(skill.level)}`}>
-                    {skill.level}
-                  </span>
-                </div>
-              ))}
+                  <FiEdit className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => onDelete('skills', skill.id)} // Gunakan ID lebih aman daripada index
+                  className="text-red-600 hover:text-red-800"
+                >
+                  <FiTrash2 className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
-        );
-      })}
+        ))}
+      </div>
     </div>
   );
 };
