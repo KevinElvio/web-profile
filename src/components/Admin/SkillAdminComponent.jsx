@@ -69,7 +69,7 @@ const SkillsSection = ({ data, onAdd, onUpdate, onDelete, onImageUpload }) => {
       <form onSubmit={handleSubmit} className="bg-gray-50 p-6 rounded-lg mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Image Upload */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Icon Skill
             </label>
@@ -107,7 +107,7 @@ const SkillsSection = ({ data, onAdd, onUpdate, onDelete, onImageUpload }) => {
                 </label>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Skill Name */}
           <div>
@@ -123,11 +123,24 @@ const SkillsSection = ({ data, onAdd, onUpdate, onDelete, onImageUpload }) => {
               required
             />
           </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Link Skill
+            </label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Contoh: https://react.js"
+              required
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
           {/* Level */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Tingkat Kemampuan
             </label>
@@ -140,10 +153,10 @@ const SkillsSection = ({ data, onAdd, onUpdate, onDelete, onImageUpload }) => {
                 <option key={level} value={level}>{level}</option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           {/* Category */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Kategori
             </label>
@@ -156,7 +169,7 @@ const SkillsSection = ({ data, onAdd, onUpdate, onDelete, onImageUpload }) => {
                 <option key={category} value={category}>{category}</option>
               ))}
             </select>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex space-x-3 mt-6">

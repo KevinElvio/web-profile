@@ -62,7 +62,7 @@ const AboutSection = ({onChange, onImageUpload }) => {
           <div className="flex items-center space-x-4">
             {formDataAbout.image && (
               <img
-                src={formDataAbout.image}
+                src={import.meta.env.VITE_API_IMG+formDataAbout.image}
                 alt="Profile"
                 className="w-32 h-32 rounded-full object-cover border-4 border-gray-200"
               />
