@@ -6,7 +6,7 @@ import { createProject, deleteProject, readProject, updateProject } from '../../
 import { FailedNotif, SuccessNotif } from '../notification/Notification';
 import { readSkill } from '../../services/skillService';
 
-const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
+const ProjectsSection = () => {
   const [skill, setSkill] = useState([])
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
@@ -36,8 +36,8 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
 
 
   const options = skill.map((item) => ({
-    value: item.id,      // Biasanya ID digunakan sebagai value
-    label: item.name     // Nama skill digunakan sebagai label yang muncul di layar
+    value: item.id,     
+    label: item.name     
   }));
 
   // const handleSubmit = async (e) => {
@@ -96,6 +96,8 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
     try {
       if (id) {
         await deleteProject(id)
+        SuccessNotif('Success', 'Berhasil menghapus data')
+        await LoadDataProject();
         return;
       }
       FailedNotif('Error', 'Gagal Delete Data')
@@ -122,10 +124,12 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
 
       if (isEditing) {
         await updateProject(editingIndex, payload)
+        await LoadDataProject();
         SuccessNotif('Success', 'Berhasil Update data')
         return;
       }
       await createProject(payload)
+      await LoadDataProject();
       SuccessNotif('Success', 'Berhasil membuat data')
       return;
     } catch (error) {
@@ -255,7 +259,6 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
 
         <div className="flex space-x-3">
           <button
-            type="submit"
             onClick={submitData}
             className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
           >
