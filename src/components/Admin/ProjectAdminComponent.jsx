@@ -138,11 +138,16 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
                 onChange={(e) => {
                   const file = e.target.files[0];
                   if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                      setFormData(prev => ({ ...prev, image: e.target.result }));
-                    };
-                    reader.readAsDataURL(file);
+                    setFormData(prev => ({ 
+                      ...prev, 
+                      image: file,
+                      preview: URL.createObjectURL(file) 
+                    }));
+                    // const reader = new FileReader();
+                    // reader.onload = (e) => {
+                      
+                    // };
+                    // reader.readAsDataURL(file);
                   }
                 }}
                 className="hidden"
