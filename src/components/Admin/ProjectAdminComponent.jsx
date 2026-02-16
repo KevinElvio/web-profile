@@ -85,10 +85,10 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
   }
 
   const submitData = async (e) => {
-    e.preventDefault();
     const payload = new FormData();
-
+    
     try {
+      e.preventDefault();
       payload.append('title', formData.title);
       payload.append('description', formData.description);
       payload.append('techUsed', formData.techUsed);
@@ -100,7 +100,7 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
       }
       console.log(payload);
 
-      if(isEditing === true){
+      if(isEditing){
         await updateProject(editingIndex, payload)
         SuccessNotif('Success', 'Berhasil Update data')
         return;
@@ -118,7 +118,7 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Proyek</h2>
 
       {/* Form */}
-      <form onSubmit={submitData} className="bg-gray-50 p-6 rounded-lg mb-6">
+      <form className="bg-gray-50 p-6 rounded-lg mb-6">
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Gambar Proyek
@@ -205,8 +205,8 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
             </label>
             <input
               type="url"
-              value={formData.githubUrl}
-              onChange={(e) => setFormData(prev => ({ ...prev, githubUrl: e.target.value }))}
+              value={formData.githubLink}
+              onChange={(e) => setFormData(prev => ({ ...prev, githubLink: e.target.value }))}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
@@ -228,6 +228,7 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
         <div className="flex space-x-3">
           <button
             type="submit"
+            onClick={submitData}
             className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
           >
             <FiPlus className="w-4 h-4" />
