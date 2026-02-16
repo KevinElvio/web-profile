@@ -1,11 +1,13 @@
-// ProjectsSection.jsx
+import Select from "react-select";
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { FiPlus, FiEdit, FiTrash2, FiUpload } from 'react-icons/fi';
 import { createProject, deleteProject, readProject, updateProject } from '../../services/projectService';
 import { FailedNotif, SuccessNotif } from '../notification/Notification';
+import { readSkill } from '../../services/skillService';
 
 const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
+  const [skill, setSkill] = useState([])
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [formData, setFormData] = useState({
@@ -32,6 +34,12 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
     setEditingIndex(null);
   };
 
+
+  const options = skill.map((item) => ({
+    value: item.id,      // Biasanya ID digunakan sebagai value
+    label: item.name     // Nama skill digunakan sebagai label yang muncul di layar
+  }));
+
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
   //   const projectData = {
@@ -45,7 +53,7 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
   //   } else {
   //     await createProject(projectData)
   //     SuccessNotif('Success', 'Berhasil Buat data')
-      
+
   //   }
   //   resetForm();
   // };
@@ -53,10 +61,20 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
   const handleEdit = (index, project) => {
     setFormData({
       ...project,
-      techUsed: project.techUsed.map(item => item.name).join(', ')
+      techUsed: project.techUsed.map(item => item.id).join(', ')
     });
     setIsEditing(true);
     setEditingIndex(index);
+
+  };
+
+  const handleSelectChange = (selectedOptions) => {
+    const values = selectedOptions ? selectedOptions.map(opt => opt.value).join(', ') : '';
+    
+    setFormData({
+      ...formData,
+      techUsed: values
+    });
   };
 
   useEffect(() => {
@@ -66,7 +84,9 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
   const LoadDataProject = async () => {
     try {
       const data = await readProject();
+      const dataSkill = await readSkill();
       setData(data.data.data);
+      setSkill(dataSkill.data.data);
     } catch (error) {
       FailedNotif('Error', error)
     }
@@ -86,21 +106,21 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
 
   const submitData = async (e) => {
     const payload = new FormData();
-    
+
     try {
       e.preventDefault();
       payload.append('title', formData.title);
       payload.append('description', formData.description);
       payload.append('techUsed', formData.techUsed);
       payload.append('githubLink', formData.githubLink);
-      payload.append('userId',1);
+      payload.append('userId', 1);
 
       if (formData.image instanceof File) {
         payload.append('image', formData.image);
       }
       console.log(payload);
 
-      if(isEditing){
+      if (isEditing) {
         await updateProject(editingIndex, payload)
         SuccessNotif('Success', 'Berhasil Update data')
         return;
@@ -138,14 +158,14 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
                 onChange={(e) => {
                   const file = e.target.files[0];
                   if (file) {
-                    setFormData(prev => ({ 
-                      ...prev, 
+                    setFormData(prev => ({
+                      ...prev,
                       image: file,
-                      preview: URL.createObjectURL(file) 
+                      preview: URL.createObjectURL(file)
                     }));
                     // const reader = new FileReader();
                     // reader.onload = (e) => {
-                      
+
                     // };
                     // reader.readAsDataURL(file);
                   }
@@ -164,7 +184,7 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 gap-4 mb-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Judul Proyek
@@ -177,19 +197,22 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
               required
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Teknologi (pisahkan dengan koma)
+          <div className="space-y-3">
+            <label className="block text-sm font-semibold text-gray-800">
+              Teknologi
             </label>
-            <input
-              type="text"
-              value={formData.techUsed}
-              onChange={(e) => setFormData(prev => ({ ...prev, techUsed: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="React, Node.js, MongoDB"
-              required
+
+            <Select
+              isMulti
+              options={options}
+              className="text-sm"
+              value={options.filter(opt =>
+                formData.techUsed.includes(opt.value)
+              )}
+              onChange={handleSelectChange}
             />
           </div>
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -269,7 +292,7 @@ const ProjectsSection = ({ onAdd, onUpdate, onImageUpload }) => {
                 </h3>
                 <div className="flex space-x-2">
                   <button
-                    onClick={() => handleEdit(index, project)}
+                    onClick={() => handleEdit(project.id, project)}
                     className="text-blue-600 hover:text-blue-800"
                   >
                     <FiEdit className="w-4 h-4" />
