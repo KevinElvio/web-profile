@@ -120,18 +120,21 @@ const ProjectsSection = () => {
       if (formData.image instanceof File) {
         payload.append('image', formData.image);
       }
-      console.log(payload);
 
       if (isEditing) {
         await updateProject(editingIndex, payload)
-        await LoadDataProject();
         SuccessNotif('Success', 'Berhasil Update data')
+        await LoadDataProject();
+        return;
+      }else {
+      if (!(formData.image instanceof File)) {
+        FailedNotif('Error', 'Gambar wajib diunggah untuk proyek baru');
         return;
       }
-      await createProject(payload)
+      await createProject(payload);
       await LoadDataProject();
-      SuccessNotif('Success', 'Berhasil membuat data')
-      return;
+      SuccessNotif('Success', 'Berhasil membuat data');
+    }
     } catch (error) {
       FailedNotif('Error', error)
     }
