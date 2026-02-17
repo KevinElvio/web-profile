@@ -74,47 +74,6 @@ const SkillsSection = () => {
       {/* Form */}
       <form onSubmit={handleSubmit} className="bg-gray-50 p-6 rounded-lg mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Image Upload */}
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Icon Skill
-            </label>
-            <div className="flex items-center space-x-4">
-              {formData.image && (
-                <img 
-                  src={formData.image} 
-                  alt="Skill preview" 
-                  className="w-16 h-16 object-cover rounded-lg border"
-                />
-              )}
-              <div>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      const reader = new FileReader();
-                      reader.onload = (e) => {
-                        setFormData(prev => ({ ...prev, image: e.target.result }));
-                      };
-                      reader.readAsDataURL(file);
-                    }
-                  }}
-                  className="hidden"
-                  id="skillImage"
-                />
-                <label
-                  htmlFor="skillImage"
-                  className="cursor-pointer bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
-                >
-                  <FiUpload className="w-4 h-4" />
-                  <span>Upload Icon</span>
-                </label>
-              </div>
-            </div>
-          </div> */}
-
           {/* Skill Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">

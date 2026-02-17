@@ -14,7 +14,6 @@ const ProjectsSection = () => {
     title: '',
     description: '',
     techUsed: '',
-    // projectUrl: '',
     githubLink: '',
     image: ''
   });
@@ -26,7 +25,6 @@ const ProjectsSection = () => {
       title: '',
       description: '',
       techUsed: '',
-      // projectUrl: '',
       githubLink: '',
       image: ''
     });
@@ -39,24 +37,6 @@ const ProjectsSection = () => {
     value: item.id,     
     label: item.name     
   }));
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const projectData = {
-  //     ...formData,
-  //     techUsed: formData.techUsed.split(',').map(tech => tech.trim())
-  //   };
-
-  //   if (isEditing) {
-  //     await updateProject(editingIndex, projectData)
-  //     SuccessNotif('Success', 'Berhasil Update data')
-  //   } else {
-  //     await createProject(projectData)
-  //     SuccessNotif('Success', 'Berhasil Buat data')
-
-  //   }
-  //   resetForm();
-  // };
 
   const handleEdit = (index, project) => {
     setFormData({
@@ -170,11 +150,6 @@ const ProjectsSection = () => {
                       image: file,
                       preview: URL.createObjectURL(file)
                     }));
-                    // const reader = new FileReader();
-                    // reader.onload = (e) => {
-
-                    // };
-                    // reader.readAsDataURL(file);
                   }
                 }}
                 className="hidden"
@@ -223,17 +198,6 @@ const ProjectsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              URL Proyek
-            </label>
-            <input
-              type="url"
-              value={formData.projectUrl}
-              onChange={(e) => setFormData(prev => ({ ...prev, projectUrl: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div> */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               URL GitHub
