@@ -1,21 +1,18 @@
 
 import { useState } from 'react';
 import { FiPlus, FiEdit, FiTrash2, FiUpload } from 'react-icons/fi';
-import { readSkill } from '../../services/skillService';
-import { FailedNotif } from '../notification/Notification';
+import { createSkill, deleteSkill, readSkill, updateSkill } from '../../services/skillService';
+import { FailedNotif, SuccessNotif } from '../notification/Notification';
 import { useEffect } from 'react';
 
-const SkillsSection = ({ onAdd, onUpdate, onDelete, onImageUpload }) => {
+const SkillsSection = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
-    link_image: ''
+    link_image: '',
   });
   const [data, setData] = useState()
-
-  const levels = ['Pemula', 'Menengah', 'Mahir', 'Expert'];
-  const categories = ['Technical', 'Soft Skills', 'Tools'];
 
   const resetForm = () => {
     setFormData({
@@ -26,12 +23,16 @@ const SkillsSection = ({ onAdd, onUpdate, onDelete, onImageUpload }) => {
     setEditingIndex(null);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isEditing) {
-      onUpdate('skills', editingIndex, formData);
+      await updateSkill(editingIndex, formData);
+      SuccessNotif('Success','Berhasil update data' )
+      loadDataSkill();
     } else {
-      onAdd('skills', formData);
+      await createSkill(formData);
+      SuccessNotif('Success','Berhasil membuat data' );
+      loadDataSkill();
     }
     resetForm();
   };
@@ -42,25 +43,6 @@ const SkillsSection = ({ onAdd, onUpdate, onDelete, onImageUpload }) => {
     setEditingIndex(index);
   };
 
-  const getLevelColor = (level) => {
-    switch (level) {
-      case 'Pemula': return 'bg-green-100 text-green-800';
-      case 'Menengah': return 'bg-blue-100 text-blue-800';
-      case 'Mahir': return 'bg-purple-100 text-purple-800';
-      case 'Expert': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const getCategoryColor = (category) => {
-    switch (category) {
-      case 'Technical': return 'border-l-blue-500';
-      case 'Soft Skills': return 'border-l-green-500';
-      case 'Tools': return 'border-l-purple-500';
-      default: return 'border-l-gray-500';
-    }
-  };
-
   useEffect(() => {
     loadDataSkill()
   }, [])
@@ -69,6 +51,17 @@ const SkillsSection = ({ onAdd, onUpdate, onDelete, onImageUpload }) => {
     try {
       const res = await readSkill();
       setData(res.data.data);
+    } catch (error) {
+      FailedNotif('Error', error)
+    }
+  }
+
+
+  const onDelete = async (editingIndex) => {
+    try {
+      await deleteSkill(editingIndex);
+      SuccessNotif('Success','Berhasil menghapus data' );
+      loadDataSkill()
     } catch (error) {
       FailedNotif('Error', error)
     }
@@ -141,7 +134,7 @@ const SkillsSection = ({ onAdd, onUpdate, onDelete, onImageUpload }) => {
               Link Skill
             </label>
             <input
-              type="text"
+              type="link"
               value={formData.link_image}
               onChange={(e) => setFormData(prev => ({ ...prev, link_image: e.target.value }))}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -195,7 +188,7 @@ const SkillsSection = ({ onAdd, onUpdate, onDelete, onImageUpload }) => {
                   <FiEdit className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => onDelete('skills', skill.id)} // Gunakan ID lebih aman daripada index
+                  onClick={() => onDelete(skill.id)}
                   className="text-red-600 hover:text-red-800"
                 >
                   <FiTrash2 className="w-4 h-4" />
