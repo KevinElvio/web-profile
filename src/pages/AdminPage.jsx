@@ -1,27 +1,20 @@
-import { useState, useEffect, Navigate } from 'react';
+import { useState, Navigate } from 'react';
 import {
-  FiImage,
   FiUser,
-  FiFileText,
   FiMail,
   FiBriefcase,
   FiFolder,
   FiAward,
-  FiSave,
   FiLogOut,
 } from 'react-icons/fi';
 
 import AboutSection from '../components/Admin/AboutAdminComponent.jsx';
 import ContactSection from '../components/Admin/ContactAdminComponent.jsx';
-import CVSection from '../components/Admin/CVAdminComponent.jsx';
 import ExperienceSection from '../components/Admin/ExperienceAdminComponent.jsx';
 import ProjectsSection from '../components/Admin/ProjectAdminComponent.jsx';
 import SkillsSection from '../components/Admin/SkillAdminComponent.jsx';
-import ImageGallerySection from '../components/Admin/GalleryAdminComponent.jsx';
-// import { useUser } from '../components/context/UserContext.jsx';
 import { FailedNotif, SuccessNotif } from '../components/notification/Notification.jsx';
 import Cookies from 'js-cookie';
-import { ReadUser, UpdateUser } from '../services/userService.jsx';
 
 
 const AdminPage = () => {
