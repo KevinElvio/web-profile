@@ -13,16 +13,12 @@ import ContactSection from '../components/Admin/ContactAdminComponent.jsx';
 import ExperienceSection from '../components/Admin/ExperienceAdminComponent.jsx';
 import ProjectsSection from '../components/Admin/ProjectAdminComponent.jsx';
 import SkillsSection from '../components/Admin/SkillAdminComponent.jsx';
-import { FailedNotif, SuccessNotif } from '../components/notification/Notification.jsx';
 import Cookies from 'js-cookie';
 
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('about');
   const [isLoading, setIsLoading] = useState(false);
-  // const { user, setUser } = useUser();
-
-  // Initial state untuk semua data
   const [formData, setFormData] = useState({
     contact: {
       email: '',
@@ -39,10 +35,6 @@ const AdminPage = () => {
     projects: [],
     skills: []
   });
-
-  // Temporary state untuk form input
-  // const [tempData, setTempData] = useState({});
-  // const [editingIndex, setEditingIndex] = useState(null);
 
 
 
@@ -90,19 +82,6 @@ const AdminPage = () => {
     }
   };
 
-  // const handleFileUpload = (event, section) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     setFormData(prev => ({
-  //       ...prev,
-  //       [section]: {
-  //         file: URL.createObjectURL(file),
-  //         fileName: file.name
-  //       }
-  //     }));
-  //   }
-  // };
-
   const logout = () => {
     Cookies.remove('token')
     Navigate('/login')
@@ -135,11 +114,9 @@ const AdminPage = () => {
                 {[
                   { id: 'about', name: 'About', icon: FiUser },
                   { id: 'contact', name: 'Contact', icon: FiMail },
-                  // { id: 'cv', name: 'CV', icon: FiFileText },
                   { id: 'experience', name: 'Experience', icon: FiBriefcase },
                   { id: 'projects', name: 'Project', icon: FiFolder },
                   { id: 'skills', name: 'Skill', icon: FiAward },
-                  // { id: 'images', name: 'Gambar', icon: FiImage }
                 ].map((item) => (
                   <button
                     key={item.id}
@@ -173,13 +150,6 @@ const AdminPage = () => {
                 />
               )}
 
-              {/* {activeTab === 'cv' && (
-                <CVSection
-                  data={formData.cv}
-                  onFileUpload={handleFileUpload}
-                />
-              )} */}
-
               {activeTab === 'experience' && (
                 <ExperienceSection
                   data={formData.experiences}
@@ -208,13 +178,6 @@ const AdminPage = () => {
                   onImageUpload={handleImageUpload}
                 />
               )}
-
-              {/* {activeTab === 'images' && (
-                <ImageGallerySection
-                  data={formData}
-                  onImageUpload={handleImageUpload}
-                />
-              )} */}
             </div>
           </div>
         </div>
