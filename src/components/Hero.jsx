@@ -59,8 +59,8 @@ export default function Hero({ heroRef, dataUser }) {
                                 className="bg-yellow-500 text-black px-8 py-3 rounded-xl font-semibold hover:bg-yellow-400 transition-all shadow-lg shadow-yellow-500/25"
                                 whileHover={{ scale: 1.05, y: -2 }}
                                 whileTap={{ scale: 0.95 }}
-                            >
-                                Contact Me
+                            > <a href="https://www.linkedin.com/in/kevin-elvio-403486255/" target="_blank">Contact Me
+                            </a>
                             </motion.button>
                         </motion.div>
                     </motion.div>
