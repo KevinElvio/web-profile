@@ -69,10 +69,12 @@ const ExperienceSection = ({onAdd, onUpdate }) => {
       if(isEditing === true){
         await UpdateExperience(editingIndex, formData);
         SuccessNotif('Success', 'Berhasil Update Experience');
+        LoadDataExperience()
         return;
       }
       await AddExperience(formData);
       SuccessNotif('Success', 'Berhasil Tambah Experience')
+      LoadDataExperience()
       return;
 
     } catch (error) {
