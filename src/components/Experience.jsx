@@ -39,7 +39,7 @@ export default function ExperienceSection({ experienceRef }) {
               className="bg-gray-800/50 backdrop-blur-sm rounded-3xl p-8 border border-gray-700 hover:border-yellow-400/50 transition-all"
             >
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                <h3 className="text-2xl font-semibold text-yellow-400">{exp?.position}</h3>
+                <h3 className="text-2xl font-semibold text-yellow-400">{exp?.company}</h3>
                 <span className="text-gray-400 bg-gray-700 px-4 py-1 rounded-full">
                   {exp?.still_working == true? formatDate(exp?.start_date)+' - Sekarang' : formatDate(exp?.start_date)+' - '+formatDate(exp?.end_date)}
                 </span>
@@ -47,7 +47,7 @@ export default function ExperienceSection({ experienceRef }) {
               <p className="text-gray-300 mb-4">{exp?.description_job}</p>
               <div className="flex flex-wrap gap-2">
                 <span className="bg-yellow-400/10 text-yellow-400 px-3 py-1 rounded-full text-sm">
-                  {exp?.company}
+                  {exp?.position}
                 </span>
 
               </div>

@@ -14,7 +14,7 @@ const ExperienceSection = ({onAdd, onUpdate }) => {
     position: '',
     start_date: '',
     end_date: '',
-    description_job: '',
+    description: '',
     still_working: '',
     image: ''
   });
@@ -26,7 +26,7 @@ const ExperienceSection = ({onAdd, onUpdate }) => {
       position: '',
       start_date: '',
       end_date: '',
-      description_job: '',
+      description: '',
       still_working: '',
       image: ''
     });
