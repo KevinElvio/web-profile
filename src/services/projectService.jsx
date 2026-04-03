@@ -12,11 +12,7 @@ export const readProject = async () => {
 
 export const createProject = async (data) => {
     try {
-        const res = await ApiHelper.post('/projects/add', data, {  
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        })
+        const res = await ApiHelper.post('/projects/add', data)
         return res;
     } catch (error) {
         console.log(error);

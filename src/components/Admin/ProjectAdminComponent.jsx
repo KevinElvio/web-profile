@@ -109,16 +109,22 @@ const ProjectsSection = () => {
         });
         const uploadData = await response.json()
         const signedUrl = uploadData.url
-        payload.append('image', formData.image);  
-
+      
+        payload.append('image', formData.image);
         const uploadResponse = await fetch(signedUrl, {
           method: "PUT",
           body: payload
         })
-
+        
         const imageData = await uploadResponse.json()
         const imageUrl = imageData.url
-        
+        if(imageUrl){
+          payload.append('image', imageUrl);
+        }
+        else{
+          console.log("GAGAL BANG");
+          
+        }
       }
 
       if (isEditing) {
@@ -270,7 +276,7 @@ const ProjectsSection = () => {
           <div key={index} className="border border-gray-200 rounded-lg overflow-hidden">
             {project?.image && (
               <img
-                src={import.meta.env.VITE_API_IMG + project.image}
+                src={project.image}
                 alt={project.title}
                 className="w-full h-48 object-cover"
               />
