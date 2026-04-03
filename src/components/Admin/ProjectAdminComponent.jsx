@@ -34,8 +34,8 @@ const ProjectsSection = () => {
 
 
   const options = skill.map((item) => ({
-    value: item.id,     
-    label: item.name     
+    value: item.id,
+    label: item.name
   }));
 
   const handleEdit = (index, project) => {
@@ -50,7 +50,7 @@ const ProjectsSection = () => {
 
   const handleSelectChange = (selectedOptions) => {
     const values = selectedOptions ? selectedOptions.map(opt => opt.value).join(', ') : '';
-    
+
     setFormData({
       ...formData,
       techUsed: values
@@ -88,6 +88,7 @@ const ProjectsSection = () => {
 
   const submitData = async (e) => {
     const payload = new FormData();
+    const { name, size } = formData.image;
 
     try {
       e.preventDefault();
@@ -98,7 +99,26 @@ const ProjectsSection = () => {
       payload.append('userId', 1);
 
       if (formData.image instanceof File) {
-        payload.append('image', formData.image);
+        const response = await fetch('http://localhost:4000/prepare-upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fileName: name,
+            fileSize: size,
+          })
+        });
+        const uploadData = await response.json()
+        const signedUrl = uploadData.url
+        payload.append('image', formData.image);  
+
+        const uploadResponse = await fetch(signedUrl, {
+          method: "PUT",
+          body: payload
+        })
+
+        const imageData = await uploadResponse.json()
+        const imageUrl = imageData.url
+        
       }
 
       if (isEditing) {
@@ -106,15 +126,15 @@ const ProjectsSection = () => {
         SuccessNotif('Success', 'Berhasil Update data')
         await LoadDataProject();
         return;
-      }else {
-      if (!(formData.image instanceof File)) {
-        FailedNotif('Error', 'Gambar wajib diunggah untuk proyek baru');
-        return;
+      } else {
+        if (!(formData.image instanceof File)) {
+          FailedNotif('Error', 'Gambar wajib diunggah untuk proyek baru');
+          return;
+        }
+        await createProject(payload);
+        await LoadDataProject();
+        SuccessNotif('Success', 'Berhasil membuat data');
       }
-      await createProject(payload);
-      await LoadDataProject();
-      SuccessNotif('Success', 'Berhasil membuat data');
-    }
     } catch (error) {
       FailedNotif('Error', error)
     }
