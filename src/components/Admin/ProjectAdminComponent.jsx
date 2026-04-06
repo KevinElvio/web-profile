@@ -87,11 +87,11 @@ const ProjectsSection = () => {
   }
 
   const submitData = async (e) => {
+    e.preventDefault();
     const payload = new FormData();
     const { name, size } = formData.image;
 
     try {
-      e.preventDefault();
       payload.append('title', formData.title);
       payload.append('description', formData.description);
       payload.append('techUsed', formData.techUsed);
@@ -131,6 +131,7 @@ const ProjectsSection = () => {
         await updateProject(editingIndex, payload)
         SuccessNotif('Success', 'Berhasil Update data')
         await LoadDataProject();
+        resetForm();
         return;
       } else {
         if (!(formData.image instanceof File)) {
@@ -140,6 +141,7 @@ const ProjectsSection = () => {
         await createProject(payload);
         await LoadDataProject();
         SuccessNotif('Success', 'Berhasil membuat data');
+        resetForm();
       }
     } catch (error) {
       FailedNotif('Error', error)

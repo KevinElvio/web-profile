@@ -1,57 +1,79 @@
-# 🚀 Personal Web Portfolio
+# Personal Web Profile & Portfolio
 
-Selamat datang di repositori web portfolio saya! Proyek ini bukan sekadar profil statis, melainkan representasi dari perjalanan teknis saya dalam pengembangan web dan riset *Machine Learning*.
+Website ini adalah **Web Profile & Portofolio Personal** yang interaktif dan dinamis, dibangun menggunakan ekosistem modern **React (Vite)** dan **Tailwind CSS**. Aplikasi ini tidak hanya menyediakan halaman publik untuk menampilkan profil, tetapi juga memiliki **Dashboard Admin** (CMS) untuk mengelola seluruh konten secara _real-time_.
 
----
+## 🚀 Tech Stack Utama
 
-## 🛠️ Tech Stack
+- **Frontend Framework**: [React](https://react.dev/) + [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Routing**: React Router DOM (v7)
+- **Animasi**: [Framer Motion](https://www.framer.com/motion/)
+- **State & Data Fetching**: Context API, Axios
+- **Manajemen Sesi**: Cookies (`react-cookie`, `js-cookie`)
+- **Database/ORM (Adapter)**: LibSQL, Prisma Adapter
+- **Pemberitahuan/Alerts**: [SweetAlert2](https://sweetalert2.github.io/)
 
-Aplikasi ini dibangun dengan fokus pada performa, skalabilitas, dan efisiensi pengembangan:
+## 📌 Fitur Utama
 
-- **Frontend:** [React.js](https://reactjs.org/) & Tailwind CSS
-- **Backend:** [Node.js](https://nodejs.org/) (Express/Fastify)
-- **ORM:** [Prisma](https://www.prisma.io/) (PostgreSQL)
-- **Containerization:** [Docker](https://www.docker.com/)
-- **Environment:** Developed on Linux (Ubuntu/Parrot OS)
+### 1. Halaman Publik (Landing Page)
+- **Hero & About**: Pengenalan singkat profil dan ringkasan karier.
+- **Skills**: Menampilkan daftar keahlian tenis/soft-skills yang dikuasai.
+- **Experience**: Perjalanan dan riwayat pengalaman kerja/pendidikan.
+- **Projects**: Showcase proyek-proyek terbaik beserta detail framework/tools yang digunakan.
+- **Contact**: Menampilkan informasi kontak sosial dan form pengiriman pesan.
 
-## ✨ Fitur Utama
+### 2. Dashboard Admin (CMS)
+- **Secure Authentication**: Sistem login menggunakan JWT/Auth token yang diamankan dengan `PrivateRoute`.
+- **Manajemen Konten (CRUD)**:
+  - Kelola Data About (`AboutAdminComponent.jsx`)
+  - Kelola Data Skills (`SkillAdminComponent.jsx`)
+  - Kelola Data Experience (`ExperienceAdminComponent.jsx`)
+  - Kelola Data Projects (`ProjectAdminComponent.jsx`)
+  - Kelola Data Contacts (`ContactAdminComponent.jsx`)
+- **Interactive UI**: Integrasi *SweetAlert2* untuk konfirmasi aksi (Update/Delete) dan pop-up *loading/notification*.
 
-- **Responsive UI:** Dioptimalkan untuk berbagai ukuran layar.
-- **Project Showcase:** Daftar proyek pilihan yang terintegrasi dengan data dinamis.
-- **Thesis Highlight:** Bagian khusus yang memaparkan riset saya tentang **Deteksi Phishing** menggunakan algoritma **XGBoost**.
-- **Dark Mode Support:** Nyaman untuk mata pengembang.
-- **Docker Ready:** Siap di-deploy menggunakan container.
+## 🏗️ Struktur Proyek
 
----
+```text
+src/
+├── assets/         # Aset statis berupa gambar, icon, dsb.
+├── components/     # UI Component utama (Navbar, Hero, About, dsb)
+│   ├── Admin/      # Component khusus untuk Dashboard Admin (CMS)
+│   ├── context/    # React Context (UserContext)
+│   └── notification/ # Sistem notifikasi komponen
+├── helper/         # Fungsi-fungsi helper (Format Date, konfigurasi API)
+├── pages/          # Halaman utama aplikasi (LandingPage, Login, AdminPage)
+└── services/       # Modul API service untuk berinteraksi dengan Backend (axios base)
+```
 
-## 🔬 Research Spotlight: Phishing Detection
+## 🛠️ Cara Menjalankan Aplikasi (Getting Started)
 
-Selain pengembangan web, saya mendalami bidang keamanan siber dan *Machine Learning*. Proyek utama saya saat ini adalah:
-> **"Phishing Website Detection using XGBoost Algorithm"**
-> 
-> Fokus pada optimasi fitur menggunakan **RFECV** dan tuning hyperparameter dengan **Hyperopt** untuk mencapai akurasi tertinggi dalam mengidentifikasi ancaman web.
+1. **Clone Repository (bila menggunakan git):**
+   ```bash
+   git clone <url-repo-anda>
+   cd web-profile
+   ```
 
----
+2. **Install Dependencies:**
+   Pastikan Anda sudah menginstal Node.js, kemudian jalankan:
+   ```bash
+   npm install
+   ```
 
-## 🚀 Cara Menjalankan Proyek
+3. **Inisialisasi Environment:**
+   Siapkan file `.env` di root folder. Berisi URL endpoint API, misalnya:
+   ```properties
+   VITE_API_URL=http://localhost:5000/api
+   ```
 
-### 1. Prasyarat
-Pastikan Anda sudah menginstal:
-- Node.js (v18+)
-- Docker & Docker Compose
-- PostgreSQL (jika tidak menggunakan Docker)
+4. **Jalankan Development Server:**
+   ```bash
+   npm run dev
+   ```
+   Buka `http://localhost:5173` di browser Anda.
 
-### 2. Instalasi & Setup Lokal
-```bash
-# Clone repositori
-git clone [https://github.com/username/portfolio-web.git](https://github.com/username/portfolio-web.git)
-cd portfolio-web
-
-# Instalasi dependensi
-npm install
-
-# Setup environment variable
-cp .env.example .env
-
-# Jalankan migrasi database (Prisma)
-npx prisma migrate dev
+5. **Build untuk Production:**
+   ```bash
+   npm run build
+   ```
+   *Proyek ini sudah dilengkapi dengan konfigurasi `vercel.json`, yang membuatnya sangat mudah dan siap di-deploy langsung ke Vercel.*
