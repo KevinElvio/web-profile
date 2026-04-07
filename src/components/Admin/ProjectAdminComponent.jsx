@@ -58,29 +58,38 @@ const ProjectsSection = () => {
   };
 
   useEffect(() => {
+    LoadDataSkills()
     LoadDataProject()
   }, [])
+
+  const LoadDataSkills = async () => {
+    try {
+      const dataSkill = await readSkill();
+      setSkill(dataSkill.data.data);
+    } catch (error) {
+      FailedNotif('Error', error)
+    }
+  }
 
   const LoadDataProject = async () => {
     try {
       const data = await readProject();
-      const dataSkill = await readSkill();
-
-      if (data?.status === 404) {
+      if (data.status === 404) {
         console.log("Data Project Ga ada");
         setData([]);
       } else {
         setData(data.data.data);
       }
 
-      if (dataSkill?.status === 404) {
-        console.log("Data Skill Ga ada");
-        setSkill([]); 
-      } else {
-        setSkill(dataSkill.data.data);
-      }
+
     } catch (error) {
-      FailedNotif('Error', error)
+
+      if (error.response.status === 404) {
+        FailedNotif('Error','Data Project Ga ada')
+        setData([]);
+      } else {
+        FailedNotif('Error', error)
+      }
     }
   }
 
@@ -151,9 +160,10 @@ const ProjectsSection = () => {
           return;
         }
         await createProject(payload);
-        await LoadDataProject();
         SuccessNotif('Success', 'Berhasil membuat data');
+        await LoadDataProject();
         resetForm();
+        return;
       }
     } catch (error) {
       FailedNotif('Error', error)
