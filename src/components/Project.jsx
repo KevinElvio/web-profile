@@ -41,7 +41,7 @@ export default function Project({ projectRef }) {
               className="bg-gray-800/50 backdrop-blur-sm rounded-3xl overflow-hidden border border-gray-700 hover:border-yellow-400/50 transition-all group"
             >
               <div className="h-48 bg-gradient-to-br from-purple-600 to-yellow-500 relative overflow-hidden">
-                <img src={import.meta.env.VITE_API_IMG + project.image} alt={project.title} />
+                <img src={project.image} alt={project.title} />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all" />
               </div>
               <div className="p-6">

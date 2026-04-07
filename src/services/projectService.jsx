@@ -5,7 +5,6 @@ export const readProject = async () => {
         const res = await ApiHelper.get('/projects')
         return res;
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }

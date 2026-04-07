@@ -65,8 +65,20 @@ const ProjectsSection = () => {
     try {
       const data = await readProject();
       const dataSkill = await readSkill();
-      setData(data.data.data);
-      setSkill(dataSkill.data.data);
+
+      if (data?.status === 404) {
+        console.log("Data Project Ga ada");
+        setData([]);
+      } else {
+        setData(data.data.data);
+      }
+
+      if (dataSkill?.status === 404) {
+        console.log("Data Skill Ga ada");
+        setSkill([]); 
+      } else {
+        setSkill(dataSkill.data.data);
+      }
     } catch (error) {
       FailedNotif('Error', error)
     }
@@ -109,21 +121,21 @@ const ProjectsSection = () => {
         });
         const uploadData = await response.json()
         const signedUrl = uploadData.url
-      
+
         payload.append('image', formData.image);
         const uploadResponse = await fetch(signedUrl, {
           method: "PUT",
           body: payload
         })
-        
+
         const imageData = await uploadResponse.json()
         const imageUrl = imageData.url
-        if(imageUrl){
+        if (imageUrl) {
           payload.append('image', imageUrl);
         }
-        else{
+        else {
           console.log("GAGAL BANG");
-          
+
         }
       }
 

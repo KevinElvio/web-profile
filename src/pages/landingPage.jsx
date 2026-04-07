@@ -52,7 +52,6 @@ const Portfolio = () => {
                 const data = await ReadUser();
                 if (data) {
                     setUser(data.data.data)
-                    // console.log(data.data.data.name);
                 }
             } catch (error) {
                 console.log(error);
