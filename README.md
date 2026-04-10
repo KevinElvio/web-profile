@@ -9,7 +9,7 @@ Website ini adalah **Web Profile & Portofolio Personal** yang interaktif dan din
 - **Routing**: React Router DOM (v7)
 - **Animasi**: [Framer Motion](https://www.framer.com/motion/)
 - **State & Data Fetching**: Context API, Axios
-- **Manajemen Sesi**: Cookies (`react-cookie`, `js-cookie`)
+- **Manajemen Sesi**: Cookies (`react-cookie`)
 - **Database/ORM (Adapter)**: LibSQL, Prisma Adapter
 - **Pemberitahuan/Alerts**: [SweetAlert2](https://sweetalert2.github.io/)
 
@@ -25,11 +25,11 @@ Website ini adalah **Web Profile & Portofolio Personal** yang interaktif dan din
 ### 2. Dashboard Admin (CMS)
 - **Secure Authentication**: Sistem login menggunakan JWT/Auth token yang diamankan dengan `PrivateRoute`.
 - **Manajemen Konten (CRUD)**:
-  - Kelola Data About (`AboutAdminComponent.jsx`)
-  - Kelola Data Skills (`SkillAdminComponent.jsx`)
-  - Kelola Data Experience (`ExperienceAdminComponent.jsx`)
-  - Kelola Data Projects (`ProjectAdminComponent.jsx`)
-  - Kelola Data Contacts (`ContactAdminComponent.jsx`)
+  - Kelola Data About
+  - Kelola Data Skills
+  - Kelola Data Experience
+  - Kelola Data Projects
+  - Kelola Data Contacts
 - **Interactive UI**: Integrasi *SweetAlert2* untuk konfirmasi aksi (Update/Delete) dan pop-up *loading/notification*.
 
 ## 🏗️ Struktur Proyek
@@ -71,9 +71,3 @@ src/
    npm run dev
    ```
    Buka `http://localhost:5173` di browser Anda.
-
-5. **Build untuk Production:**
-   ```bash
-   npm run build
-   ```
-   *Proyek ini sudah dilengkapi dengan konfigurasi `vercel.json`, yang membuatnya sangat mudah dan siap di-deploy langsung ke Vercel.*
