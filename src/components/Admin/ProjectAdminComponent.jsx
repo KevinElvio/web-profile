@@ -6,6 +6,7 @@ import { createProject, deleteProject, readProject, updateProject } from '../../
 import { FailedNotif, SuccessNotif } from '../notification/Notification';
 import { readSkill } from '../../services/skillService';
 
+
 const ProjectsSection = () => {
   const [skill, setSkill] = useState([])
   const [isEditing, setIsEditing] = useState(false);
@@ -85,7 +86,7 @@ const ProjectsSection = () => {
     } catch (error) {
 
       if (error.response.status === 404) {
-        FailedNotif('Error','Data Project Ga ada')
+        FailedNotif('Error', 'Data Project Ga ada')
         setData([]);
       } else {
         FailedNotif('Error', error)
@@ -170,6 +171,51 @@ const ProjectsSection = () => {
     }
   }
 
+
+
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files[0];
+
+    if (file && file.type.startsWith('image/')) {
+      setFormData(prev => ({
+        ...prev,
+        image: file,
+        preview: URL.createObjectURL(file)
+      }));
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      setFormData(prev => ({
+        ...prev,
+        image: file,
+        preview: URL.createObjectURL(file)
+      }));
+    }
+  };
+
+
+
+
+
+
   return (
     <div>
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Proyek</h2>
@@ -180,10 +226,10 @@ const ProjectsSection = () => {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Gambar Proyek
           </label>
-          <div className="flex items-center space-x-4">
+          {/* <div className="flex items-center space-x-4">
             {formData.image && (
               <img
-                src={formData.image}
+                src={formData.preview}
                 alt="Project preview"
                 className="w-20 h-20 object-cover rounded-lg border"
               />
@@ -213,7 +259,48 @@ const ProjectsSection = () => {
                 <span>Upload Gambar</span>
               </label>
             </div>
+          </div> */}
+
+
+          <div
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            className={`flex items-center space-x-4 p-6 border-2 border-dashed rounded-xl transition-colors duration-200 ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 bg-gray-50 hover:bg-gray-100'
+              }`}
+          >
+            {(formData.preview || formData.image) && (
+              <img
+                src={formData.preview || formData.image}
+                alt="Project preview"
+                className="w-20 h-20 object-cover rounded-lg border shadow-sm"
+              />
+            )}
+
+            <div className="flex flex-col">
+              <p className="text-sm text-gray-500 mb-3">
+                Seret & lepas gambar di sini, atau
+              </p>
+
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+                id="projectImage"
+              />
+              <label
+                htmlFor="projectImage"
+                className="cursor-pointer bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 w-max"
+              >
+                <FiUpload className="w-4 h-4" />
+                <span>Pilih Gambar</span>
+              </label>
+            </div>
           </div>
+
+
+
         </div>
 
         <div className="grid grid-cols-1 gap-4 mb-4">
@@ -238,8 +325,14 @@ const ProjectsSection = () => {
               isMulti
               options={options}
               className="text-sm"
-              value={options.filter(opt =>
-                formData.techUsed.includes(opt.value)
+              value={options.filter(opt => {
+                const selectedIds = formData.techUsed
+                  ? String(formData.techUsed).split(',').map(id => id.trim())
+                  : [];
+
+                // 2. Cek apakah ID opsi (dalam bentuk string) ada di dalam array secara eksak/pasti
+                return selectedIds.includes(String(opt.value));
+              }
               )}
               onChange={handleSelectChange}
             />
