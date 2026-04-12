@@ -70,4 +70,4 @@ src/
    ```bash
    npm run dev
    ```
-   Buka `http://localhost:5173` di browser Anda.
+   Buka `http://localhost:5173` di browser.
