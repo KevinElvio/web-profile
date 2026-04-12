@@ -29,7 +29,7 @@ export default function ExperienceSection({ experienceRef }) {
           Work <span className="text-yellow-400">Experience</span>
         </motion.h2>
 
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="max-w-5xl mx-auto space-y-8">
           {experience?.map((exp, index) => (
             <motion.div
               key={index}
