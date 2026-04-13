@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
@@ -24,11 +24,22 @@ const Portfolio = () => {
     const projectRef = useRef(null);
     const skillsRef = useRef(null);
 
-    const isHeroInView = useInView(heroRef, { threshold: 0.5 });
-    const isAboutInView = useInView(aboutRef, { threshold: 0.5 });
-    const isExperienceInView = useInView(experienceRef, { threshold: 0.5 });
-    const isProjectInView = useInView(projectRef, { threshold: 0.5 });
-    const isSkillsInView = useInView(skillsRef, { threshold: 0.5 });
+    const isHeroInView = useInView(heroRef, { amount: 0.45 });
+    const isAboutInView = useInView(aboutRef, { amount: 0.45 });
+    const isExperienceInView = useInView(experienceRef, { amount: 0.45 });
+    const isProjectInView = useInView(projectRef, { amount: 0.45 });
+    const isSkillsInView = useInView(skillsRef, { amount: 0.45 });
+
+    const sections = useMemo(
+        () => [
+            { id: 'home', label: 'Home' },
+            { id: 'about', label: 'About' },
+            { id: 'experience', label: 'Experience' },
+            { id: 'projects', label: 'Projects' },
+            { id: 'skills', label: 'Skills' }
+        ],
+        []
+    );
 
     useEffect(() => {
         if (isHeroInView) setActiveSection('home');
@@ -38,13 +49,20 @@ const Portfolio = () => {
         else if (isSkillsInView) setActiveSection('skills');
     }, [isHeroInView, isAboutInView, isExperienceInView, isProjectInView, isSkillsInView]);
 
-    const floatingElements = Array.from({ length: 50 }, (_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        delay: Math.random() * 5,
-        size: Math.random() * 4 + 1
-    }));
+    const handleNavigate = useCallback((sectionId) => {
+        const sectionMap = {
+            home: heroRef,
+            about: aboutRef,
+            experience: experienceRef,
+            projects: projectRef,
+            skills: skillsRef
+        };
+
+        sectionMap[sectionId]?.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }, []);
 
     useEffect(() => {
         const fetchBioUser = async () => {
@@ -63,64 +81,41 @@ const Portfolio = () => {
 
 
     return (
-        <div className="bg-gradient-to-br from-gray-900 via-gray-950 to-gray-900 text-gray-200 min-h-screen font-sans overflow-hidden relative">
-            <div className="fixed inset-0 pointer-events-none">
-                {floatingElements.map((dot) => (
-                    <motion.div
-                        key={dot.id}
-                        className="absolute rounded-full bg-purple-500 opacity-20"
-                        style={{
-                            width: dot.size,
-                            height: dot.size,
-                            left: `${dot.x}%`,
-                            top: `${dot.y}%`,
-                        }}
-                        animate={{
-                            y: [0, -20, 0],
-                            opacity: [0.2, 0.5, 0.2],
-                        }}
-                        transition={{
-                            duration: 3 + dot.delay,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                        }}
-                    />
-                ))}
+        <div className="bg-[#0b1324] text-slate-200 min-h-screen overflow-hidden relative">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_10%,rgba(14,165,233,0.16)_0%,transparent_30%),radial-gradient(circle_at_10%_95%,rgba(15,23,42,0.9)_0%,transparent_45%)]" />
+            <div className="absolute inset-0 opacity-20 [background-size:24px_24px] [background-image:linear-gradient(to_right,rgba(100,116,139,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,116,139,0.1)_1px,transparent_1px)]" />
+
+            <div className="relative z-10">
+                <Navbar
+                    activeSection={activeSection}
+                    onNavigate={handleNavigate}
+                    sections={sections}
+                />
+
+                <Hero heroRef={heroRef} dataUser={User} onNavigate={handleNavigate} />
+
+                <About aboutRef={aboutRef} dataUser={User} />
+
+                <Experience experienceRef={experienceRef} />
+
+                <Project projectRef={projectRef} />
+
+                <Skills skillsRef={skillsRef} />
+
+                <footer className="py-10 border-t border-slate-700/50 bg-slate-950/60 backdrop-blur-md">
+                    <div className="container mx-auto px-6 text-center">
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            className="text-slate-400"
+                        >
+                            © 2026 Kevin Elvio. Crafted with React and purpose.
+                        </motion.p>
+                    </div>
+                </footer>
             </div>
-
-            {/* Navigation */}
-            <Navbar activeSection={activeSection} />
-
-            {/* Hero Section */}
-            <Hero heroRef={heroRef} dataUser = {User} />
-
-            {/* About Section */}
-            <About aboutRef={aboutRef} dataUser = {User} />
-
-            {/* Experience Section */}
-            <Experience experienceRef={experienceRef} />
-
-            {/* Projects Section */}
-            <Project projectRef={projectRef} />
-
-
-            {/* Skills Section */}
-            <Skills skillsRef={skillsRef} />
-
-            {/* Footer */}
-            <footer className="py-8 border-t border-gray-700 bg-gray-900/80 backdrop-blur-md">
-                <div className="container mx-auto px-6 text-center">
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        className="text-gray-500"
-                    >
-                        © 2025 Kevin Elvio. All Rights Reserved.
-                    </motion.p>
-                </div>
-            </footer>
         </div>
     );
 };
 
-export default Portfolio;
+export default Portfolio;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

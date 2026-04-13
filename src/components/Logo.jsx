@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export default function Logo({domain, alt}) {
     return (
         <img
@@ -7,4 +9,9 @@ export default function Logo({domain, alt}) {
             loading="lazy"
         />
     )
+}
+
+Logo.propTypes = {
+    domain: PropTypes.string,
+    alt: PropTypes.string
 }
