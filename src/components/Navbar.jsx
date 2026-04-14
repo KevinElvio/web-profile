@@ -19,7 +19,7 @@ export default function Navbar({ activeSection, onNavigate, sections }) {
                             className="text-lg md:text-xl font-bold text-slate-100 tracking-wide"
                             onClick={() => handleNavigate('home')}
                         >
-                            KE<span className="text-sky-400">.Portfolio</span>
+                            K<span className="text-sky-400">.</span>
                         </button>
 
                         <div className="hidden md:flex items-center gap-2">

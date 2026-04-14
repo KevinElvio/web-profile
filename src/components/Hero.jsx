@@ -1,16 +1,34 @@
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion'
 import PropTypes from 'prop-types';
+import Logo from './Logo';
 
 export default function Hero({ heroRef, dataUser, onNavigate }) {
     const fullName = dataUser?.name?.trim() || 'Kevin Elvio';
     const [firstName, ...restNames] = fullName.split(' ');
     const lastName = restNames.join(' ') || 'Elvio';
-    const initials = `${firstName[0] || 'K'}${lastName[0] || 'E'}`;
 
+    useEffect(() => {
+        const fetchSkills = async () => {
+            try {
+                const data = await readSkill();
+                setSkills(data?.data?.data || []);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchSkills();
+    }, []);
     return (
-        <section ref={heroRef} className="min-h-screen pt-28 flex items-center justify-center px-6">
-            <div className="container mx-auto">
-                <div className="grid items-center gap-12 lg:grid-cols-[1.25fr,0.75fr]">
+        <section ref={heroRef} className="relative min-h-screen overflow-hidden pt-28 flex items-center justify-center px-6">
+            <div className="pointer-events-none absolute inset-0">
+                <div className="absolute -left-24 top-24 h-64 w-64 rounded-full bg-sky-300/15 blur-3xl" />
+                <div className="absolute -right-20 bottom-20 h-72 w-72 rounded-full bg-cyan-200/10 blur-3xl" />
+            </div>
+
+            <div className="container mx-auto relative z-10">
+                <div className="grid items-center gap-12 lg:grid-cols-[1.2fr,0.8fr]">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -42,6 +60,22 @@ export default function Hero({ heroRef, dataUser, onNavigate }) {
                         </motion.p>
 
                         <motion.div
+                            className="mb-8 flex flex-wrap gap-3 justify-center lg:justify-start"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.5 }}
+                        >
+                            {['AI', 'Backend', 'Frontend', 'Clean Architecture'].map((skill) => (
+                                <span
+                                    key={skill}
+                                    className="rounded-full border border-slate-600/70 bg-slate-900/40 px-4 py-1.5 text-sm text-slate-200"
+                                >
+                                    {skill}
+                                </span>
+                            ))}
+                        </motion.div>
+
+                        <motion.div
                             className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -63,41 +97,13 @@ export default function Hero({ heroRef, dataUser, onNavigate }) {
                                 className="border border-slate-500/80 text-slate-100 px-8 py-3 rounded-xl font-semibold hover:border-sky-300 hover:text-sky-200 transition-all"
                                 whileHover={{ scale: 1.03, y: -2 }}
                                 whileTap={{ scale: 0.95 }}
-                                onClick={() => onNavigate('projects')}
+                                          onClick={() => onNavigate('projects')}
                             >
                                 View Projects
                             </motion.button>
                         </motion.div>
                     </motion.div>
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 35 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.25 }}
-                        className="relative"
-                    >
-                        <div className="absolute -inset-4 rounded-3xl bg-sky-400/10 blur-2xl" />
-                        <div className="relative rounded-3xl border border-slate-700/60 bg-slate-900/70 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.6)]">
-                            <div className="rounded-2xl border border-slate-700/40 bg-slate-900/60 p-5">
-                                <div className="aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center text-5xl font-bold text-sky-300">
-                                    {dataUser?.image ? (
-                                        <img
-                                            src={dataUser.image}
-                                            alt={fullName}
-                                            className="h-full w-full object-cover"
-                                            loading="lazy"
-                                        />
-                                    ) : (
-                                        initials
-                                    )}
-                                </div>
-                                <div className="mt-4 text-center">
-                                    <p className="text-slate-200 font-semibold">{fullName}</p>
-                                    <p className="text-sm text-slate-400 mt-1">{dataUser?.email || 'Available for collaboration'}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
                 </div>
             </div>
         </section>
@@ -109,7 +115,6 @@ Hero.propTypes = {
     dataUser: PropTypes.shape({
         name: PropTypes.string,
         title: PropTypes.string,
-        image: PropTypes.string,
         email: PropTypes.string
     }),
     onNavigate: PropTypes.func.isRequired

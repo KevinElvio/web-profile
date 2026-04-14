@@ -14,3 +14,21 @@ body {
 	background: rgba(56, 189, 248, 0.35);
 	color: #e2e8f0;
 }
+
+@keyframes skillMarquee {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}
+
+@keyframes skillMarqueeReverse {
+	0% {
+		transform: translateX(-50%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}

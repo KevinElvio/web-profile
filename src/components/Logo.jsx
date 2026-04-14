@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 
-export default function Logo({domain, alt}) {
+export default function Logo({domain, alt, className}) {
     return (
         <img
             src={domain}
             alt={alt}
-            className="h-16 w-16 object-contain"
+            className={className || "h-16 w-16 object-contain"}
             loading="lazy"
         />
     )
@@ -13,5 +13,6 @@ export default function Logo({domain, alt}) {
 
 Logo.propTypes = {
     domain: PropTypes.string,
-    alt: PropTypes.string
+    alt: PropTypes.string,
+    className: PropTypes.string
 }
