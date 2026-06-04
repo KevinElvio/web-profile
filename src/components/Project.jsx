@@ -1,10 +1,11 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import PropTypes from 'prop-types';
 import { readProject } from '../services/projectService';
 import { useState, useEffect } from 'react';
 
 export default function Project({ projectRef }) {
   const [projects, setProject] = useState([]);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -18,6 +19,20 @@ export default function Project({ projectRef }) {
 
     fetchProject();
   }, []);
+
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedProject]);
+
+  const openModal = (project) => setSelectedProject(project);
+  const closeModal = () => setSelectedProject(null);
 
   return (
     <section ref={projectRef} className="py-24 px-6 my-20">
@@ -44,7 +59,8 @@ export default function Project({ projectRef }) {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: index * 0.12 }}
               whileHover={{ y: -10 }}
-              className="bg-slate-900/75 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-700/70 hover:border-sky-300/45 transition-all group"
+              className="bg-slate-900/75 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-700/70 hover:border-sky-300/45 transition-all group cursor-pointer"
+              onClick={() => openModal(project)}
             >
               <div className="h-48 bg-gradient-to-br from-slate-700 to-slate-900 relative overflow-hidden">
                 <img
@@ -79,6 +95,7 @@ export default function Project({ projectRef }) {
                       href={project.githubLink}
                       target="_blank"
                       rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                     >
                       {project.githubLink}
                     </a>
@@ -89,6 +106,96 @@ export default function Project({ projectRef }) {
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={closeModal}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ duration: 0.25 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl border border-slate-700"
+            >
+              {selectedProject?.image && (
+                <div className="h-56 bg-gradient-to-br from-slate-700 to-slate-900 relative overflow-hidden rounded-t-2xl">
+                  <img
+                    src={selectedProject.image}
+                    alt={selectedProject?.title}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              )}
+
+              <div className="flex justify-between items-start px-6 py-4 border-b border-slate-700">
+                <h3 className="text-2xl font-semibold text-slate-100">
+                  {selectedProject?.title}
+                </h3>
+                <button
+                  onClick={closeModal}
+                  className="text-slate-400 hover:text-red-400 transition-colors text-3xl leading-none cursor-pointer"
+                  aria-label="Close modal"
+                >
+                  &times;
+                </button>
+              </div>
+
+              <div className="px-6 py-5 text-slate-300 text-sm leading-relaxed">
+                <p className="whitespace-pre-line">
+                  {selectedProject?.description || 'No description provided.'}
+                </p>
+
+                {selectedProject?.techUsed?.length > 0 && (
+                  <div className="mt-5">
+                    <h4 className="text-slate-100 font-semibold mb-2">Tech Stack:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedProject.techUsed.map((tech, i) => (
+                        <span
+                          key={`modal-tech-${i}`}
+                          className="bg-slate-800 text-slate-200 px-3 py-1 rounded-full text-xs border border-slate-700"
+                        >
+                          {tech?.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {selectedProject?.githubLink && (
+                  <div className="mt-5">
+                    <h4 className="text-slate-100 font-semibold mb-1">Github Link:</h4>
+                    <a
+                      className="text-sky-300 hover:text-sky-200 transition-colors break-all"
+                      href={selectedProject.githubLink}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {selectedProject.githubLink}
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex justify-end gap-3 px-6 py-4 bg-slate-800/50 border-t border-slate-700 rounded-b-2xl">
+                <button
+                  onClick={closeModal}
+                  className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-100 text-sm font-medium rounded-lg transition-colors cursor-pointer"
+                >
+                  Tutup
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
@@ -96,4 +203,3 @@ export default function Project({ projectRef }) {
 Project.propTypes = {
   projectRef: PropTypes.object.isRequired
 }
-
