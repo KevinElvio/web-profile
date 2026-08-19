@@ -1,4 +1,5 @@
-import { useState, Navigate } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FiUser,
   FiMail,
@@ -8,17 +9,18 @@ import {
   FiLogOut,
 } from 'react-icons/fi';
 
-import AboutSection from '../components/Admin/AboutAdminComponent.jsx';
-import ContactSection from '../components/Admin/ContactAdminComponent.jsx';
-import ExperienceSection from '../components/Admin/ExperienceAdminComponent.jsx';
-import ProjectsSection from '../components/Admin/ProjectAdminComponent.jsx';
-import SkillsSection from '../components/Admin/SkillAdminComponent.jsx';
+import AboutSection from '../features/profile/ProfileAdminPanel.jsx';
+import ContactSection from '../features/contact/ContactAdminPanel.jsx';
+import ExperienceSection from '../features/experience/ExperienceAdminPanel.jsx';
+import ProjectsSection from '../features/projects/ProjectsAdminPanel.jsx';
+import SkillsSection from '../features/skills/SkillsAdminPanel.jsx';
 import Cookies from 'js-cookie';
 
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('about');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     contact: {
       email: '',
@@ -84,7 +86,7 @@ const AdminPage = () => {
 
   const logout = () => {
     Cookies.remove('token')
-    Navigate('/login')
+    navigate('/login')
   };
 
   return (
