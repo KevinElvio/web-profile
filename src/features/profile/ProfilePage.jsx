@@ -7,6 +7,7 @@ import Experience from '../experience/ExperienceSection';
 import Project from '../projects/ProjectSection';
 import Skills from '../skills/SkillsSection';
 import { ReadUser } from './api';
+import { ReadContact } from '../contact/api';
 
 
 const Portfolio = () => {
@@ -17,7 +18,8 @@ const Portfolio = () => {
         title: '',
         description: '',
         image: ''
-    })
+    });
+    const [contact, setContact] = useState({ github: '' });
     const heroRef = useRef(null);
     const aboutRef = useRef(null);
     const experienceRef = useRef(null);
@@ -67,9 +69,12 @@ const Portfolio = () => {
     useEffect(() => {
         const fetchBioUser = async () => {
             try {
-                const data = await ReadUser();
-                if (data) {
-                    setUser(data.data.data[0])
+                const [userResult, contactResult] = await Promise.allSettled([ReadUser(), ReadContact()]);
+                if (userResult.status === 'fulfilled') {
+                    setUser(userResult.value.data.data[0]);
+                }
+                if (contactResult.status === 'fulfilled') {
+                    setContact(contactResult.value?.data?.data?.[0] || { github: '' });
                 }
             } catch (error) {
                 console.log(error);
@@ -81,9 +86,8 @@ const Portfolio = () => {
 
 
     return (
-        <div className="bg-[#0b1324] text-slate-200 min-h-screen overflow-hidden relative">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_10%,rgba(14,165,233,0.16)_0%,transparent_30%),radial-gradient(circle_at_10%_95%,rgba(15,23,42,0.9)_0%,transparent_45%)]" />
-            <div className="absolute inset-0 opacity-20 [background-size:24px_24px] [background-image:linear-gradient(to_right,rgba(100,116,139,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,116,139,0.1)_1px,transparent_1px)]" />
+        <div className="comic-page relative min-h-screen overflow-hidden bg-[#fff8e7] text-[#17120d]">
+            <div className="pointer-events-none absolute inset-0 opacity-30 [background-size:18px_18px] [background-image:radial-gradient(#17120d_1px,transparent_1px)]" />
 
             <div className="relative z-10">
                 <Navbar
@@ -91,10 +95,17 @@ const Portfolio = () => {
                     onNavigate={handleNavigate}
                     sections={sections}
                 />
+                <Hero
+                    heroRef={heroRef}
+                    dataUser={User}
+                    onNavigate={handleNavigate}
+                />
 
-                <Hero heroRef={heroRef} dataUser={User} onNavigate={handleNavigate} />
-
-                <About aboutRef={aboutRef} dataUser={User} />
+                <About
+                    aboutRef={aboutRef}
+                    dataUser={User}
+                    github={contact.github}
+                />
 
                 <Experience experienceRef={experienceRef} />
 

@@ -1,96 +1,39 @@
-import { motion } from "framer-motion";
-import Logo from "../../shared/ui/Logo";
+import { motion } from 'framer-motion';
+import Logo from '../../shared/ui/Logo';
 import PropTypes from 'prop-types';
-import { readSkill } from "./api";
-import { useState, useEffect, useMemo } from 'react';
+import { readSkill } from './api';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function Skills({ skillsRef }) {
   const [skills, setSkills] = useState([]);
 
   useEffect(() => {
-    const fetchSkills = async () => {
-      try {
-        const data = await readSkill();
-        setSkills(data?.data?.data || []);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchSkills();
+    readSkill().then((data) => setSkills(data?.data?.data || [])).catch(console.log);
   }, []);
 
-  const marqueeSkills = useMemo(() => {
-    if (skills.length === 0) return [];
-    return [...skills, ...skills];
-  }, [skills]);
+  const marqueeSkills = useMemo(() => [...skills, ...skills], [skills]);
 
   return (
-    <section ref={skillsRef} className="py-24 px-6 my-20">
-      <div className="container mx-auto max-w-6xl">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-4xl font-bold text-slate-100 mb-12 text-center"
-        >
-          Technical <span className="text-sky-300">Skills</span>
-        </motion.h2>
-
-        <motion.div
-          initial={{ opacity: 0, y: 35 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.50, delay: 1.50 }}
-          className="relative"
-        >
-          <div className="absolute -inset-4 rounded-3xl bg-sky-400/10 blur-2xl" />
-          <div className="relative rounded-3xl border border-slate-700/70 bg-gradient-to-br from-slate-900/90 to-slate-900/50 p-7 shadow-[0_20px_70px_rgba(15,23,42,0.6)] backdrop-blur-sm">
-            {/* <div className="mb-5 flex items-center justify-between border-b border-slate-700/60 pb-4">
-              <p className="text-sm uppercase tracking-[0.2em] text-slate-400">Tech Stack Stream</p>
-              <span className="rounded-full bg-emerald-300/15 px-3 py-1 text-xs text-emerald-200">Open to work</span>
-            </div> */}
-
-            <div className="space-y-6">
-              <div className="group/stream overflow-hidden rounded-2xl border border-slate-700/60 bg-slate-950/55 py-4">
-                <div className="flex w-max gap-3 px-3 [animation:skillMarquee_26s_linear_infinite] group-hover/stream:[animation-play-state:paused]">
-                  {marqueeSkills.map((skill, index) => (
-                    <div
-                      key={`${skill?.id || skill?.name || 'skill'}-main-${index}`}
-                      className="flex items-center gap-3 rounded-xl border border-slate-600/70 bg-slate-900/80 px-4 py-2 text-slate-100"
-                    >
-                      <div className="h-8 w-8 overflow-hidden rounded-md bg-slate-800 flex items-center justify-center">
-                        <Logo domain={skill?.link_image} alt={skill?.name} className="h-6 w-6 object-contain" />
-                      </div>
-                      <p className="text-sm font-medium whitespace-nowrap">{skill?.name || 'Skill'}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="group/stream overflow-hidden rounded-2xl border border-slate-700/60 bg-slate-950/55 py-4">
-                <div className="flex w-max gap-3 px-3 [animation:skillMarqueeReverse_22s_linear_infinite] group-hover/stream:[animation-play-state:paused]">
-                  {marqueeSkills.map((skill, index) => (
-                    <div
-                      key={`${skill?.id || skill?.name || 'skill'}-sub-${index}`}
-                      className="flex items-center gap-3 rounded-xl border border-sky-300/30 bg-slate-900/85 px-4 py-2 text-slate-100"
-                    >
-                      <div className="h-7 w-7 overflow-hidden rounded-md bg-slate-800 flex items-center justify-center">
-                        <Logo domain={skill?.link_image} alt={skill?.name} className="h-5 w-5 object-contain" />
-                      </div>
-                      <p className="text-xs font-medium uppercase tracking-wide whitespace-nowrap text-sky-100">{skill?.name || 'Skill'}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+    <section ref={skillsRef} className="comic-section overflow-hidden px-6 py-20 sm:px-8 sm:py-24 lg:px-12">
+      <div className="mx-auto max-w-6xl">
+        <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 text-center">
+          <p className="comic-kicker">Toolbox</p>
+          <h2 className="comic-title text-4xl sm:text-6xl">TECHNICAL <span className="text-[#e85d04]">SKILLS</span></h2>
+          <p className="mx-auto mt-6 max-w-2xl font-medium leading-7 text-[#392b20]">Teknologi yang saya gunakan untuk membangun produk digital.</p>
         </motion.div>
       </div>
+      {skills.length === 0 ? <div className="comic-card mx-auto max-w-xl bg-white p-8 text-center font-bold">Skills akan tampil di sini.</div> : <div className="space-y-5">
+        <div className="comic-marquee"><div className="comic-marquee-track">{marqueeSkills.map((skill, index) => <SkillCard key={`${skill?.id || skill?.name}-${index}`} skill={skill} color={index % 3} />)}</div></div>
+        <div className="comic-marquee"><div className="comic-marquee-track comic-marquee-reverse">{marqueeSkills.map((skill, index) => <SkillCard key={`${skill?.id || skill?.name}-reverse-${index}`} skill={skill} color={(index + 1) % 3} />)}</div></div>
+      </div>}
     </section>
   );
 }
 
-Skills.propTypes = {
-  skillsRef: PropTypes.object.isRequired
+function SkillCard({ skill, color }) {
+  const colors = ['#ffffff', '#ff9f1c', '#ffe08a'];
+  return <div className="comic-marquee-card" style={{ backgroundColor: colors[color] }}><div className="flex h-11 w-11 items-center justify-center border-2 border-[#17120d] bg-[#fff8e7] p-2"><Logo domain={skill?.link_image} alt={skill?.name} className="h-full w-full object-contain" /></div><p className="whitespace-nowrap font-black">{skill?.name || 'Skill'}</p></div>;
 }
 
-
+SkillCard.propTypes = { skill: PropTypes.object, color: PropTypes.number.isRequired };
+Skills.propTypes = { skillsRef: PropTypes.object.isRequired };

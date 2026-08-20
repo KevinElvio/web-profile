@@ -1,80 +1,36 @@
 import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
 import { ReadExperience } from './api';
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { formatDate } from '../../shared/lib/DateHelper';
 
 export default function ExperienceSection({ experienceRef }) {
   const [experience, setExperience] = useState([]);
 
   useEffect(() => {
-    const fetchExperience = async () => {
-      try {
-        const data = await ReadExperience();
-        setExperience(data?.data?.data || []);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchExperience();
+    ReadExperience().then((data) => setExperience(data?.data?.data || [])).catch(console.log);
   }, []);
 
+  const sortedExperience = useMemo(() => [...experience].sort((a, b) => new Date(b?.start_date || 0) - new Date(a?.start_date || 0)), [experience]);
+
   return (
-    <section ref={experienceRef} className="py-24 px-6 my-20">
-      <div className="container mx-auto max-w-6xl">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-4xl font-bold text-slate-100 mb-12 text-center"
-        >
-          Work <span className="text-sky-300">Experience</span>
-        </motion.h2>
-
-        <div className="max-w-5xl mx-auto space-y-6">
-          {experience.length === 0 && (
-            <div className="rounded-2xl border border-dashed border-slate-600/70 bg-slate-900/40 p-8 text-center text-slate-400">
-              Experience data is being updated.
-            </div>
-          )}
-
-          {experience?.map((exp, index) => {
-            const period = exp?.still_working
-              ? `${formatDate(exp?.start_date)} - Sekarang`
-              : `${formatDate(exp?.start_date)} - ${formatDate(exp?.end_date)}`;
-
-            return (
-              <motion.div
-                key={`${exp?.company || 'company'}-${index}`}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, delay: index * 0.12 }}
-                className="rounded-3xl border border-slate-700/60 bg-slate-900/70 p-8 backdrop-blur-sm hover:border-sky-300/40 transition-all"
-              >
-                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-4">
-                  <h3 className="text-2xl font-semibold text-sky-300">{exp?.company}</h3>
-                  <span className="text-slate-300 bg-slate-800 px-4 py-1.5 rounded-full text-sm border border-slate-700/60">
-                    {period}
-                  </span>
-                </div>
-
-                <p className="text-slate-300 mb-5 leading-relaxed">{exp?.description_job}</p>
-
-                <div className="flex flex-wrap gap-2">
-                  <span className="bg-sky-300/10 text-sky-200 px-3 py-1.5 rounded-full text-sm border border-sky-300/25">
-                    {exp?.position}
-                  </span>
-                </div>
-              </motion.div>
-            );
+    <section ref={experienceRef} className="comic-section px-6 py-20 sm:px-8 sm:py-24 lg:px-12">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-12 text-center"><p className="comic-kicker">Perjalanan karier</p><h2 className="comic-title text-4xl sm:text-6xl">WORK <span className="text-[#e85d04]">EXPERIENCE</span></h2></div>
+        {sortedExperience.length === 0 ? <div className="comic-card bg-white p-8 text-center font-black">Experience data is being updated.</div> : <div className="comic-timeline">
+          {sortedExperience.map((exp, index) => {
+            const period = exp?.still_working ? `${formatDate(exp?.start_date)} - Sekarang` : `${formatDate(exp?.start_date)} - ${formatDate(exp?.end_date)}`;
+            return <motion.article key={`${exp?.company}-${index}`} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className={`comic-timeline-item ${index % 2 ? 'comic-timeline-right' : ''}`}>
+              <span className="comic-timeline-dot" />
+              <div className={`comic-card p-6 sm:p-7 ${index % 3 === 1 ? 'bg-[#ff9f1c]' : index % 3 === 2 ? 'bg-[#ffe08a]' : 'bg-white'}`}>
+                <span className="comic-date">{period}</span><h3 className="mt-4 text-2xl font-black">{exp?.company}</h3><p className="mt-1 font-bold text-[#e85d04]">{exp?.position}</p><p className="mt-4 leading-relaxed text-[#392b20]">{exp?.description_job}</p>
+              </div>
+            </motion.article>;
           })}
-        </div>
+        </div>}
       </div>
     </section>
   );
-};
-
-ExperienceSection.propTypes = {
-  experienceRef: PropTypes.object.isRequired
 }
 
+ExperienceSection.propTypes = { experienceRef: PropTypes.object.isRequired };
