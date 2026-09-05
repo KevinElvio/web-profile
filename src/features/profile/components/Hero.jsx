@@ -24,7 +24,7 @@ export default function Hero({ heroRef, dataUser, onNavigate }) {
                         ))}
                     </div>
                     <div className="flex flex-wrap gap-4">
-                        <motion.a href="https://www.linkedin.com/in/kevin-elvio-403486255/" target="_blank" rel="noreferrer" className="comic-button bg-[#ff9f1c]" whileHover={{ scale: 1.04, rotate: -1 }} whileTap={{ scale: 0.96 }}>Contact Me</motion.a>
+                        <motion.a href="https://www.linkedin.com/in/kevin-elvio-403486255/" target="_blank" rel="noreferrer" className="comic-button bg-[#ff9f1c]" whileHover={{ scale: 1.04, rotate: -1 }} whileTap={{ scale: 0.96 }}>Linkedin</motion.a>
                         <motion.button type="button" onClick={() => onNavigate('projects')} className="comic-button bg-white" whileHover={{ scale: 1.04, rotate: 1 }} whileTap={{ scale: 0.96 }}>View Projects</motion.button>
                     </div>
                 </motion.div>
