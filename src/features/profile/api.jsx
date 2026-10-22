@@ -10,6 +10,16 @@ export const ReadUser = async () => {
     }
 }
 
+export const ReadPortfolio = async () => {
+    try {
+        const response = await ApiHelper.get("/portfolio")
+        return response;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 export const ReadMe = async () => {
     try {
         const response = await ApiHelper.get('/user/me');

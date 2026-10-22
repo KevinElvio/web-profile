@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import { readProject } from './api';
 import { useEffect, useState } from 'react';
 
-export default function Project({ projectRef }) {
-  const [projects, setProject] = useState([]);
+export default function Project({ projectRef, projects: projectsProp }) {
+  const [projects, setProject] = useState(projectsProp || []);
   const [selectedProject, setSelectedProject] = useState(null);
-  useEffect(() => { readProject().then((data) => setProject(data?.data?.data || [])).catch(console.log); }, []);
+  useEffect(() => {
+    if (projectsProp) { setProject(projectsProp); return; }
+    readProject().then((data) => setProject(data?.data?.data || [])).catch(console.log);
+  }, [projectsProp]);
   useEffect(() => { document.body.style.overflow = selectedProject ? 'hidden' : ''; return () => { document.body.style.overflow = ''; }; }, [selectedProject]);
 
   return (
@@ -20,4 +23,4 @@ export default function Project({ projectRef }) {
     </section>
   );
 }
-Project.propTypes = { projectRef: PropTypes.object.isRequired };
+Project.propTypes = { projectRef: PropTypes.object.isRequired, projects: PropTypes.array };

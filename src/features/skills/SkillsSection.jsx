@@ -4,12 +4,16 @@ import PropTypes from 'prop-types';
 import { readSkill } from './api';
 import { useEffect, useMemo, useState } from 'react';
 
-export default function Skills({ skillsRef }) {
-  const [skills, setSkills] = useState([]);
+export default function Skills({ skillsRef, skills: skillsProp }) {
+  const [skills, setSkills] = useState(skillsProp || []);
 
   useEffect(() => {
+    if (skillsProp) {
+      setSkills(skillsProp);
+      return;
+    }
     readSkill().then((data) => setSkills(data?.data?.data || [])).catch(console.log);
-  }, []);
+  }, [skillsProp]);
 
   const marqueeSkills = useMemo(() => [...skills, ...skills], [skills]);
 
@@ -36,4 +40,4 @@ function SkillCard({ skill, color }) {
 }
 
 SkillCard.propTypes = { skill: PropTypes.object, color: PropTypes.number.isRequired };
-Skills.propTypes = { skillsRef: PropTypes.object.isRequired };
+Skills.propTypes = { skillsRef: PropTypes.object.isRequired, skills: PropTypes.array };

@@ -6,7 +6,7 @@ import About from './components/About';
 import Experience from '../experience/ExperienceSection';
 import Project from '../projects/ProjectSection';
 import Skills from '../skills/SkillsSection';
-import { ReadUser } from './api';
+import { ReadUser, ReadPortfolio } from './api';
 import { ReadContact } from '../contact/api';
 
 
@@ -20,6 +20,9 @@ const Portfolio = () => {
         image: ''
     });
     const [contact, setContact] = useState({ github: '' });
+    const [experiences, setExperiences] = useState([]);
+    const [projects, setProjects] = useState([]);
+    const [skills, setSkills] = useState([]);
     const heroRef = useRef(null);
     const aboutRef = useRef(null);
     const experienceRef = useRef(null);
@@ -69,15 +72,31 @@ const Portfolio = () => {
     useEffect(() => {
         const fetchBioUser = async () => {
             try {
-                const [userResult, contactResult] = await Promise.allSettled([ReadUser(), ReadContact()]);
-                if (userResult.status === 'fulfilled') {
-                    setUser(userResult.value.data.data[0]);
+                const portfolioResult = await ReadPortfolio();
+                const data = portfolioResult?.data?.data || {};
+                if (Array.isArray(data.user) && data.user.length) {
+                    setUser(data.user[0]);
+                } else if (data.user) {
+                    setUser(data.user);
                 }
-                if (contactResult.status === 'fulfilled') {
-                    setContact(contactResult.value?.data?.data?.[0] || { github: '' });
+                if (Array.isArray(data.contact) && data.contact.length) {
+                    setContact(data.contact[0] || { github: '' });
+                } else if (data.contact) {
+                    setContact(data.contact);
                 }
+                setExperiences(data.experiences || []);
+                setProjects(data.projects || []);
+                setSkills(data.skills || []);
             } catch (error) {
                 console.log(error);
+                // Fallback to individual calls if aggregate fails
+                try {
+                    const [userResult, contactResult] = await Promise.allSettled([ReadUser(), ReadContact()]);
+                    if (userResult.status === 'fulfilled') setUser(userResult.value.data.data[0]);
+                    if (contactResult.status === 'fulfilled') setContact(contactResult.value?.data?.data?.[0] || { github: '' });
+                } catch (e) {
+                    console.log(e);
+                }
             }
         }
 
@@ -107,11 +126,11 @@ const Portfolio = () => {
                     github={contact.github}
                 />
 
-                <Experience experienceRef={experienceRef} />
+                <Experience experienceRef={experienceRef} experiences={experiences} />
 
-                <Project projectRef={projectRef} />
+                <Project projectRef={projectRef} projects={projects} />
 
-                <Skills skillsRef={skillsRef} />
+                <Skills skillsRef={skillsRef} skills={skills} />
 
                 <footer className="py-10 border-t border-slate-700/50 bg-slate-950/60 backdrop-blur-md">
                     <div className="container mx-auto px-6 text-center">
