@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FiMoon, FiSun } from 'react-icons/fi';
+import { useTheme } from '../shared/lib/theme.jsx';
 import {
   FiUser,
   FiMail,
@@ -20,6 +22,7 @@ import Cookies from 'js-cookie';
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('about');
   const [isLoading] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     contact: {
@@ -98,14 +101,24 @@ const AdminPage = () => {
             <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Welcome Admin</h1>
             <p className="text-gray-600 dark:text-gray-300">Kelola konten web profile</p>
           </div>
-          <button
-            onClick={logout}
-            disabled={isLoading}
-            className="bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors font-medium flex items-center justify-center space-x-2 disabled:opacity-50"
-          >
-            <span>{isLoading ? 'Proses...' : 'Logout'}</span>
-            <FiLogOut className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label="Toggle dark mode"
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+            >
+              {theme === 'dark' ? <FiSun className="w-5 h-5" /> : <FiMoon className="w-5 h-5" />}
+            </button>
+            <button
+              onClick={logout}
+              disabled={isLoading}
+              className="bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors font-medium flex items-center justify-center space-x-2 disabled:opacity-50"
+            >
+              <span>{isLoading ? 'Proses...' : 'Logout'}</span>
+              <FiLogOut className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
