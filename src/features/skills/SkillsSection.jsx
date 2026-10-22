@@ -36,7 +36,7 @@ export default function Skills({ skillsRef, skills: skillsProp }) {
 
 function SkillCard({ skill, color }) {
   const colors = ['var(--color-card)', 'var(--color-accent2)', 'var(--color-highlight)'];
-  return <div className="comic-marquee-card" style={{ backgroundColor: colors[color] }}><div className="flex h-11 w-11 items-center justify-center border-2 border-borderc bg-page p-2"><Logo domain={skill?.link_image} alt={skill?.name} className="h-full w-full object-contain" /></div><p className="whitespace-nowrap font-black text-ink">{skill?.name || 'Skill'}</p></div>;
+  return <div className="comic-marquee-card" style={{ backgroundColor: colors[color] }}><div className="flex h-11 w-11 items-center justify-center border-2 border-borderc bg-page p-2"><Logo domain={skill?.link_image} alt={skill?.name} className="h-full w-full object-contain" /></div><p className="whitespace-nowrap font-black text-[#17120d]">{skill?.name || 'Skill'}</p></div>;
 }
 
 SkillCard.propTypes = { skill: PropTypes.object, color: PropTypes.number.isRequired };
