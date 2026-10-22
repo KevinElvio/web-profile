@@ -72,10 +72,10 @@ const SkillsSection = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Skills</h2>
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Skills</h2>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="bg-gray-50 p-6 rounded-lg mb-6">
+      <form onSubmit={handleSubmit} className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Skill Name */}
           <div>
@@ -86,7 +86,7 @@ const SkillsSection = () => {
               type="text"
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Contoh: React.js"
               required
             />
@@ -99,7 +99,7 @@ const SkillsSection = () => {
               type="url"
               value={formData.link_image}
               onChange={(e) => setFormData(prev => ({ ...prev, link_image: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Contoh: https://react.js"
               required
             />
@@ -139,7 +139,7 @@ const SkillsSection = () => {
                     className="w-10 h-10 object-cover rounded"
                   />
                 )}
-                <h4 className="font-semibold text-gray-800">{skill.name}</h4>
+                <h4 className="font-semibold text-gray-800 dark:text-gray-100">{skill.name}</h4>
               </div>
 
               <div className="flex space-x-2">

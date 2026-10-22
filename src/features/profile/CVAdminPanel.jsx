@@ -5,15 +5,15 @@ import { FiUpload, FiDownload } from 'react-icons/fi';
 const CVSection = ({ data, onFileUpload }) => {
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Curriculum Vitae</h2>
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Curriculum Vitae</h2>
       
       <div className="space-y-6">
         {/* Current CV */}
         {data.file && (
-          <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
             <h3 className="font-semibold text-gray-700 mb-2">CV Saat Ini:</h3>
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">{data.fileName}</span>
+              <span className="text-gray-600 dark:text-gray-300">{data.fileName}</span>
               <a
                 href={data.file}
                 download={data.fileName}

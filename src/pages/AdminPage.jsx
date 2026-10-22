@@ -90,13 +90,13 @@ const AdminPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 p-6 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-lg shadow-md px-6 pt-8 pb-12 mb-6 flex justify-between items-start">
+        <div className="bg-white rounded-lg shadow-md px-6 pt-8 pb-12 mb-6 flex justify-between items-start dark:bg-gray-800">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Welcome Admin</h1>
-            <p className="text-gray-600">Kelola konten web profile</p>
+            <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Welcome Admin</h1>
+            <p className="text-gray-600 dark:text-gray-300">Kelola konten web profile</p>
           </div>
           <button
             onClick={logout}
@@ -111,7 +111,7 @@ const AdminPage = () => {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar */}
           <div className="lg:w-1/4">
-            <div className="bg-white rounded-lg shadow-md p-4">
+            <div className="bg-white rounded-lg shadow-md p-4 dark:bg-gray-800">
               <nav className="space-y-2">
                 {[
                   { id: 'about', name: 'About', icon: FiUser },
@@ -124,8 +124,8 @@ const AdminPage = () => {
                     key={item.id}
                     onClick={() => setActiveTab(item.id)}
                     className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-colors ${activeTab === item.id
-                      ? 'bg-blue-100 text-blue-600'
-                      : 'text-gray-600 hover:bg-gray-100'
+                      ? 'bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300'
+                      : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                       }`}
                   >
                     <item.icon className="w-5 h-5" />
@@ -138,7 +138,7 @@ const AdminPage = () => {
 
           {/* Main Content */}
           <div className="lg:w-3/4">
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white rounded-lg shadow-md p-6 dark:bg-gray-800">
               {activeTab === 'about' && (
                 <AboutSection
                   onChange={handleInputChange}
