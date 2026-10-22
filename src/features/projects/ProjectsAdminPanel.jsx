@@ -6,9 +6,23 @@ import { createProject, deleteProject, readProject, updateProject, uploadImagePr
 import { FailedNotif, SuccessNotif } from '../../shared/ui/Notification';
 import { readSkill } from '../skills/api';
 import { useUploadThing } from "../../utils/uploadthing";
+import { useTheme } from '../../shared/lib/theme.jsx';
 
 
 const ProjectsSection = () => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+  const selectStyles = {
+    control: (base) => ({ ...base, backgroundColor: isDark ? '#1f2937' : '#ffffff', borderColor: isDark ? '#4b5563' : '#d1d5db', color: isDark ? '#f9fafb' : '#111827', minHeight: '42px' }),
+    menu: (base) => ({ ...base, backgroundColor: isDark ? '#1f2937' : '#ffffff', color: isDark ? '#f9fafb' : '#111827' }),
+    option: (base, state) => ({ ...base, backgroundColor: state.isFocused ? (isDark ? '#374151' : '#e5e7eb') : 'transparent', color: isDark ? '#f9fafb' : '#111827' }),
+    multiValue: (base) => ({ ...base, backgroundColor: isDark ? '#374151' : '#e5e7eb' }),
+    multiValueLabel: (base) => ({ ...base, color: isDark ? '#f9fafb' : '#111827' }),
+    multiValueRemove: (base) => ({ ...base, color: isDark ? '#f9fafb' : '#111827', ':hover': { backgroundColor: isDark ? '#4b5563' : '#d1d5db', color: isDark ? '#ffffff' : '#000000' } }),
+    input: (base) => ({ ...base, color: isDark ? '#f9fafb' : '#111827' }),
+    singleValue: (base) => ({ ...base, color: isDark ? '#f9fafb' : '#111827' }),
+    placeholder: (base) => ({ ...base, color: isDark ? '#9ca3af' : '#6b7280' }),
+  };
   const [skill, setSkill] = useState([])
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
@@ -356,6 +370,7 @@ const ProjectsSection = () => {
             <Select
               isMulti
               options={options}
+              styles={selectStyles}
               className="text-sm"
               value={options.filter(opt => {
                 const selectedIds = formData.techUsed
