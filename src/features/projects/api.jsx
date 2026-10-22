@@ -1,6 +1,6 @@
 import ApiHelper from "../../shared/api/ApiHelper"
 
-export const readProject = () => ApiHelper.get('/projects')
+export const readProject = (params) => ApiHelper.get('/projects', { params })
 
 export const createProject = async (data) => {
     try {

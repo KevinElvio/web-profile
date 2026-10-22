@@ -22,6 +22,10 @@ const ProjectsSection = () => {
   });
 
   const [data, setData] = useState([])
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [loadingData, setLoadingData] = useState(false)
+  const LIMIT = 8
 
   const resetForm = () => {
     setFormData({
@@ -63,8 +67,11 @@ const ProjectsSection = () => {
 
   useEffect(() => {
     LoadDataSkills()
-    LoadDataProject()
   }, [])
+
+  useEffect(() => {
+    LoadDataProject(page)
+  }, [page])
 
   const LoadDataSkills = async () => {
     try {
@@ -75,25 +82,28 @@ const ProjectsSection = () => {
     }
   }
 
-  const LoadDataProject = async () => {
+  const LoadDataProject = async (p = page) => {
+    setLoadingData(true)
     try {
-      const data = await readProject();
+      const data = await readProject({ page: p, limit: LIMIT });
       if (data.status === 404) {
         console.log("Data Project Ga ada");
         setData([]);
+        setTotalPages(1);
       } else {
         setData(data.data.data);
+        if (data.data.meta) setTotalPages(data.data.meta.totalPages);
       }
-
-
     } catch (error) {
-
-      if (error.response.status === 404) {
+      if (error?.response?.status === 404) {
         FailedNotif('Error', 'Data Project Ga ada')
         setData([]);
+        setTotalPages(1);
       } else {
         FailedNotif('Error', error)
       }
+    } finally {
+      setLoadingData(false)
     }
   }
 
@@ -102,7 +112,7 @@ const ProjectsSection = () => {
       if (id) {
         await deleteProject(id, key)
         SuccessNotif('Success', 'Berhasil menghapus data')
-        await LoadDataProject();
+        await LoadDataProject(page);
         return;
       }
       FailedNotif('Error', 'Gagal Delete Data')
@@ -158,7 +168,7 @@ const ProjectsSection = () => {
           "Berhasil Update data"
         );
 
-        await LoadDataProject();
+        await LoadDataProject(page);
         resetForm();
 
         return;
@@ -180,7 +190,7 @@ const ProjectsSection = () => {
         "Berhasil membuat data"
       );
 
-      await LoadDataProject();
+      await LoadDataProject(page);
       resetForm();
 
     } catch (error) {
@@ -479,6 +489,29 @@ const ProjectsSection = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="mt-6 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={() => setPage((p) => Math.max(1, p - 1))}
+          disabled={page <= 1 || loadingData}
+          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
+        >
+          Prev
+        </button>
+        <span className="text-sm text-gray-600 dark:text-gray-300">
+          Halaman {page} dari {totalPages}
+        </span>
+        <button
+          type="button"
+          onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          disabled={page >= totalPages || loadingData}
+          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
+        >
+          Next
+        </button>
       </div>
     </div>
   );

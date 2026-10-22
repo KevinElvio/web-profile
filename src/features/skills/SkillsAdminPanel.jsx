@@ -13,6 +13,10 @@ const SkillsSection = () => {
     link_image: '',
   });
   const [data, setData] = useState([])
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [loadingData, setLoadingData] = useState(false)
+  const LIMIT = 10
 
   const resetForm = () => {
     setFormData({
@@ -33,7 +37,7 @@ const SkillsSection = () => {
         await createSkill(formData);
         SuccessNotif('Success','Berhasil membuat data' );
       }
-      await loadDataSkill();
+      await loadDataSkill(page);
       resetForm();
     } catch (error) {
       FailedNotif('Error', error);
@@ -47,15 +51,29 @@ const SkillsSection = () => {
   };
 
   useEffect(() => {
-    loadDataSkill()
-  }, [])
+    loadDataSkill(page)
+  }, [page])
 
-  const loadDataSkill = async () => {
+  const loadDataSkill = async (p = page) => {
+    setLoadingData(true)
     try {
-      const res = await readSkill();
-      setData(res.data.data);
+      const res = await readSkill({ page: p, limit: LIMIT });
+      if (res.status === 404) {
+        setData([]);
+        setTotalPages(1);
+      } else {
+        setData(res.data.data);
+        if (res.data.meta) setTotalPages(res.data.meta.totalPages);
+      }
     } catch (error) {
-      FailedNotif('Error', error)
+      if (error?.response?.status === 404) {
+        setData([]);
+        setTotalPages(1);
+      } else {
+        FailedNotif('Error', error)
+      }
+    } finally {
+      setLoadingData(false)
     }
   }
 
@@ -64,7 +82,7 @@ const SkillsSection = () => {
     try {
       await deleteSkill(editingIndex);
       SuccessNotif('Success','Berhasil menghapus data' );
-      loadDataSkill()
+      loadDataSkill(page)
     } catch (error) {
       FailedNotif('Error', error)
     }
@@ -159,6 +177,28 @@ const SkillsSection = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="mt-6 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={() => setPage((p) => Math.max(1, p - 1))}
+          disabled={page <= 1 || loadingData}
+          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
+        >
+          Prev
+        </button>
+        <span className="text-sm text-gray-600 dark:text-gray-300">
+          Halaman {page} dari {totalPages}
+        </span>
+        <button
+          type="button"
+          onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          disabled={page >= totalPages || loadingData}
+          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
+        >
+          Next
+        </button>
       </div>
     </div>
   );
