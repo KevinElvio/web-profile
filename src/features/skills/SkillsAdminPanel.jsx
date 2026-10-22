@@ -97,27 +97,27 @@ const SkillsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Skill Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Nama Skill
             </label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Contoh: React.js"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Link Skill
             </label>
             <input
               type="url"
               value={formData.link_image}
               onChange={(e) => setFormData(prev => ({ ...prev, link_image: e.target.value }))}
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Contoh: https://react.js"
               required
             />
@@ -184,7 +184,7 @@ const SkillsSection = () => {
           type="button"
           onClick={() => setPage((p) => Math.max(1, p - 1))}
           disabled={page <= 1 || loadingData}
-          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
+          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 dark:text-gray-300 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
         >
           Prev
         </button>
@@ -195,7 +195,7 @@ const SkillsSection = () => {
           type="button"
           onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
           disabled={page >= totalPages || loadingData}
-          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
+          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 dark:text-gray-300 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
         >
           Next
         </button>

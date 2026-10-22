@@ -57,8 +57,8 @@ const ContactSection = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {fields.map((field) => (
           <div key={field.key}>
-            <label className="block text-sm font-medium text-gray-700 mb-2">{field.label}</label>
-            <input type={field.type} value={contact[field.key] || ''} onChange={(event) => updateField(field.key, event.target.value)} className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder={`Masukkan ${field.label.toLowerCase()}`} />
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{field.label}</label>
+            <input type={field.type} value={contact[field.key] || ''} onChange={(event) => updateField(field.key, event.target.value)} className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder={`Masukkan ${field.label.toLowerCase()}`} />
           </div>
         ))}
         <div className='flex justify-end'>

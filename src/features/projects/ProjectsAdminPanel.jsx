@@ -255,7 +255,7 @@ const ProjectsSection = () => {
       {/* Form */}
       <form className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg mb-6">
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Gambar Proyek
           </label>
           {/* <div className="flex items-center space-x-4">
@@ -337,14 +337,14 @@ const ProjectsSection = () => {
 
         <div className="grid grid-cols-1 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Judul Proyek
             </label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             />
           </div>
@@ -374,27 +374,27 @@ const ProjectsSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               URL GitHub
             </label>
             <input
               type="url"
               value={formData.githubLink}
               onChange={(e) => setFormData(prev => ({ ...prev, githubLink: e.target.value }))}
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Deskripsi Proyek
           </label>
           <textarea
             value={formData.description}
             onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
             rows={4}
-            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
           />
         </div>
@@ -451,7 +451,7 @@ const ProjectsSection = () => {
                 </div>
               </div>
 
-              <p className="text-gray-700 mb-3 text-sm">{project.description}</p>
+              <p className="text-gray-700 dark:text-gray-300 mb-3 text-sm">{project.description}</p>
 
               <div className="flex flex-wrap gap-1 mb-3">
                 {project.techUsed.map((tech, techIndex) => (
@@ -497,7 +497,7 @@ const ProjectsSection = () => {
           type="button"
           onClick={() => setPage((p) => Math.max(1, p - 1))}
           disabled={page <= 1 || loadingData}
-          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
+          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 dark:text-gray-300 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
         >
           Prev
         </button>
@@ -508,7 +508,7 @@ const ProjectsSection = () => {
           type="button"
           onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
           disabled={page >= totalPages || loadingData}
-          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
+          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 dark:text-gray-300 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
         >
           Next
         </button>

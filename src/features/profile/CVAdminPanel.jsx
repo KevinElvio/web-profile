@@ -11,7 +11,7 @@ const CVSection = ({ data, onFileUpload }) => {
         {/* Current CV */}
         {data.file && (
           <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-            <h3 className="font-semibold text-gray-700 mb-2">CV Saat Ini:</h3>
+            <h3 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">CV Saat Ini:</h3>
             <div className="flex items-center justify-between">
               <span className="text-gray-600 dark:text-gray-300">{data.fileName}</span>
               <a
@@ -28,7 +28,7 @@ const CVSection = ({ data, onFileUpload }) => {
 
         {/* Upload New CV */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Upload CV Baru (PDF)
           </label>
           <input

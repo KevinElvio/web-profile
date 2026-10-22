@@ -84,33 +84,33 @@ const ExperienceSection = () => {
       <form onSubmit={handleSubmit} className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Perusahaan</label>
-            <input type="text" value={formData.company} onChange={(event) => updateField('company', event.target.value)} className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Perusahaan</label>
+            <input type="text" value={formData.company} onChange={(event) => updateField('company', event.target.value)} className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Posisi</label>
-            <input type="text" value={formData.position} onChange={(event) => updateField('position', event.target.value)} className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Posisi</label>
+            <input type="text" value={formData.position} onChange={(event) => updateField('position', event.target.value)} className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
-            <input type="date" value={formData.start_date} onChange={(event) => updateField('start_date', event.target.value)} className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tanggal Mulai</label>
+            <input type="date" value={formData.start_date} onChange={(event) => updateField('start_date', event.target.value)} className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Tanggal Selesai</label>
-            <input type="date" value={formData.end_date} onChange={(event) => updateField('end_date', event.target.value)} disabled={formData.still_working} className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 dark:bg-gray-700" />
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tanggal Selesai</label>
+            <input type="date" value={formData.end_date} onChange={(event) => updateField('end_date', event.target.value)} disabled={formData.still_working} className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 dark:bg-gray-700" />
             <div className="flex items-center mt-2">
               <input type="checkbox" id="still_working" checked={formData.still_working} onChange={(event) => setFormData((current) => ({ ...current, still_working: event.target.checked, end_date: event.target.checked ? '' : current.end_date }))} className="mr-2" />
-              <label htmlFor="still_working" className="text-sm text-gray-700">Masih bekerja di sini</label>
+              <label htmlFor="still_working" className="text-sm text-gray-700 dark:text-gray-300">Masih bekerja di sini</label>
             </div>
           </div>
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Deskripsi Pekerjaan</label>
-          <textarea value={formData.description} onChange={(event) => updateField('description', event.target.value)} rows={4} className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Deskripsi Pekerjaan</label>
+          <textarea value={formData.description} onChange={(event) => updateField('description', event.target.value)} rows={4} className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
         </div>
 
         <div className="flex space-x-3">
@@ -136,7 +136,7 @@ const ExperienceSection = () => {
               </div>
             </div>
             <p className="text-sm text-gray-500 mb-2">{experience.start_date} - {experience.still_working ? 'Sekarang' : experience.end_date}</p>
-            <p className="text-gray-700">{experience.description_job}</p>
+            <p className="text-gray-700 dark:text-gray-300">{experience.description_job}</p>
           </div>
         ))}
       </div>

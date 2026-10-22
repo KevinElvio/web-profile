@@ -56,7 +56,7 @@ const AboutSection = () => {
       <div className="space-y-6">
         {/* Image Upload */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Foto Profil
           </label>
           <div className="flex items-center space-x-4">
@@ -93,28 +93,28 @@ const AboutSection = () => {
 
         {/* Title */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Judul
           </label>
           <input
             type="text"
             value={formDataAbout.title || ''}
             onChange={(e) => setFormDataAbout((current) => ({ ...current, title: e.target.value }))}
-            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Contoh: Full Stack Developer"
           />
         </div>
 
         {/* Description */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Deskripsi
           </label>
           <textarea
             value={formDataAbout.description || ''}
             onChange={(e) => setFormDataAbout((current) => ({ ...current, description: e.target.value }))}
             rows={8}
-            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Tulis deskripsi tentang diri Anda..."
           />
         </div>
