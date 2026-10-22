@@ -105,8 +105,8 @@ const Portfolio = () => {
 
 
     return (
-        <div className="comic-page relative min-h-screen overflow-hidden bg-[#fff8e7] text-[#17120d]">
-            <div className="pointer-events-none absolute inset-0 opacity-30 [background-size:18px_18px] [background-image:radial-gradient(#17120d_1px,transparent_1px)]" />
+        <div className="comic-page relative min-h-screen overflow-hidden bg-page text-ink">
+            <div className="pointer-events-none absolute inset-0 opacity-30 [background-size:18px_18px] [background-image:radial-gradient(var(--color-border)_1px,transparent_1px)]" />
 
             <div className="relative z-10">
                 <Navbar
@@ -132,12 +132,12 @@ const Portfolio = () => {
 
                 <Skills skillsRef={skillsRef} skills={skills} />
 
-                <footer className="py-10 border-t border-slate-700/50 bg-slate-950/60 backdrop-blur-md">
+                <footer className="py-10 border-t border-borderc/50 bg-card/60 backdrop-blur-md">
                     <div className="container mx-auto px-6 text-center">
                         <motion.p
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
-                            className="text-slate-400"
+                            className="text-body"
                         >
                             © 2026 Kevin Elvio.
                         </motion.p>

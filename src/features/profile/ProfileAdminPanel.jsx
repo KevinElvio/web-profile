@@ -51,7 +51,7 @@ const AboutSection = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Tentang Saya</h2>
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Tentang Saya</h2>
 
       <div className="space-y-6">
         {/* Image Upload */}
@@ -100,7 +100,7 @@ const AboutSection = () => {
             type="text"
             value={formDataAbout.title || ''}
             onChange={(e) => setFormDataAbout((current) => ({ ...current, title: e.target.value }))}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Contoh: Full Stack Developer"
           />
         </div>
@@ -114,7 +114,7 @@ const AboutSection = () => {
             value={formDataAbout.description || ''}
             onChange={(e) => setFormDataAbout((current) => ({ ...current, description: e.target.value }))}
             rows={8}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Tulis deskripsi tentang diri Anda..."
           />
         </div>

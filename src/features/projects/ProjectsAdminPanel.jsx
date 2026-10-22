@@ -240,10 +240,10 @@ const ProjectsSection = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Proyek</h2>
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Proyek</h2>
 
       {/* Form */}
-      <form className="bg-gray-50 p-6 rounded-lg mb-6">
+      <form className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg mb-6">
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Gambar Proyek
@@ -288,7 +288,7 @@ const ProjectsSection = () => {
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            className={`flex items-center space-x-4 p-6 border-2 border-dashed rounded-xl transition-colors duration-200 ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 bg-gray-50 hover:bg-gray-100'
+            className={`flex items-center space-x-4 p-6 border-2 border-dashed rounded-xl transition-colors duration-200 ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:bg-gray-700'
               }`}
           >
             {(formData.preview || formData.image) && (
@@ -334,12 +334,12 @@ const ProjectsSection = () => {
               type="text"
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             />
           </div>
           <div className="space-y-3">
-            <label className="block text-sm font-semibold text-gray-800">
+            <label className="block text-sm font-semibold text-gray-800 dark:text-gray-100">
               Teknologi
             </label>
 
@@ -371,7 +371,7 @@ const ProjectsSection = () => {
               type="url"
               value={formData.githubLink}
               onChange={(e) => setFormData(prev => ({ ...prev, githubLink: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -384,7 +384,7 @@ const ProjectsSection = () => {
             value={formData.description}
             onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
             rows={4}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
           />
         </div>
@@ -422,7 +422,7 @@ const ProjectsSection = () => {
             )}
             <div className="p-4">
               <div className="flex justify-between items-start mb-2">
-                <h3 className="font-semibold text-lg text-gray-800">
+                <h3 className="font-semibold text-lg text-gray-800 dark:text-gray-100">
                   {project.title}
                 </h3>
                 <div className="flex space-x-2">
@@ -470,7 +470,7 @@ const ProjectsSection = () => {
                     href={project.githubLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-600 hover:text-gray-800"
+                    className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:text-gray-100"
                   >
                     GitHub: <span className='text-blue-500'>{project.githubLink}</span>
                   </a>
