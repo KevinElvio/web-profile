@@ -4,12 +4,16 @@ import { ReadExperience } from './api';
 import { useEffect, useMemo, useState } from 'react';
 import { formatDate } from '../../shared/lib/DateHelper';
 
-export default function ExperienceSection({ experienceRef }) {
-  const [experience, setExperience] = useState([]);
+export default function ExperienceSection({ experienceRef, experiences }) {
+  const [experience, setExperience] = useState(experiences || []);
 
   useEffect(() => {
+    if (experiences) {
+      setExperience(experiences);
+      return;
+    }
     ReadExperience().then((data) => setExperience(data?.data?.data || [])).catch(console.log);
-  }, []);
+  }, [experiences]);
 
   const sortedExperience = useMemo(() => [...experience].sort((a, b) => new Date(b?.start_date || 0) - new Date(a?.start_date || 0)), [experience]);
 
@@ -33,4 +37,4 @@ export default function ExperienceSection({ experienceRef }) {
   );
 }
 
-ExperienceSection.propTypes = { experienceRef: PropTypes.object.isRequired };
+ExperienceSection.propTypes = { experienceRef: PropTypes.object.isRequired, experiences: PropTypes.array };
