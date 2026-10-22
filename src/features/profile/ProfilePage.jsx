@@ -139,7 +139,7 @@ const Portfolio = () => {
                             whileInView={{ opacity: 1 }}
                             className="text-slate-400"
                         >
-                            © 2026 Kevin Elvio. Crafted with React and purpose.
+                            © 2026 Kevin Elvio.
                         </motion.p>
                     </div>
                 </footer>

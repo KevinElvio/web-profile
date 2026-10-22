@@ -7,6 +7,7 @@ export default function Logo({domain, alt, className}) {
             alt={alt}
             className={className || "h-16 w-16 object-contain"}
             loading="lazy"
+            decoding="async"
         />
     )
 }
