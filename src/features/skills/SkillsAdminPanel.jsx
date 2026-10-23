@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 
 const SkillsSection = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -29,6 +30,7 @@ const SkillsSection = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
       if (isEditing) {
         await updateSkill(editingIndex, formData);
@@ -41,6 +43,8 @@ const SkillsSection = () => {
       resetForm();
     } catch (error) {
       FailedNotif('Error', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -127,10 +131,11 @@ const SkillsSection = () => {
         <div className="flex space-x-3 mt-6">
           <button
             type="submit"
-            className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+            disabled={isSubmitting}
+            className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 disabled:opacity-50"
           >
             <FiPlus className="w-4 h-4" />
-            <span>{isEditing ? 'Update' : 'Tambah'} Skill</span>
+            <span>{isSubmitting ? 'Menyimpan...' : (isEditing ? 'Update' : 'Tambah') + ' Skill'}</span>
           </button>
           {isEditing && (
             <button

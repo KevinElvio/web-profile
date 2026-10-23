@@ -12,6 +12,7 @@ const initialProfile = {
 
 const AboutSection = () => {
   const [formDataAbout, setFormDataAbout] = useState(initialProfile);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     loadDataAbout();
@@ -32,7 +33,7 @@ const AboutSection = () => {
 
   const saveDataAbout = async () => {
     const formData = new FormData();
-
+    setIsSubmitting(true);
     try {
       formData.append('title', formDataAbout.title);
       formData.append('description', formDataAbout.description);
@@ -46,6 +47,8 @@ const AboutSection = () => {
       loadDataAbout();
     } catch (error) {
       FailedNotif('Error', error.response?.data?.message || 'Gagal update data');
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -121,11 +124,11 @@ const AboutSection = () => {
         <div className='flex justify-end'>
           <button
             onClick={saveDataAbout}
-            // disabled={isLoading}
+            disabled={isSubmitting}
             className="mt-6 bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2 disabled:opacity-50"
           >
             <FiSave className="w-5 h-5" />
-            <span>{'Simpan'}</span>
+            <span>{isSubmitting ? 'Menyimpan...' : 'Simpan'}</span>
           </button>
         </div>
 

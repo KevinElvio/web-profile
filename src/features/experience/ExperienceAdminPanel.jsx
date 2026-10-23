@@ -19,6 +19,7 @@ const ExperienceSection = () => {
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState(initialExperience);
   const [experiences, setExperiences] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const loadExperiences = async () => {
     try {
@@ -51,7 +52,7 @@ const ExperienceSection = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setIsSubmitting(true);
     try {
       if (isEditing) {
         await UpdateExperience(editingId, formData);
@@ -64,6 +65,8 @@ const ExperienceSection = () => {
       resetForm();
     } catch (error) {
       FailedNotif('Error', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -114,9 +117,9 @@ const ExperienceSection = () => {
         </div>
 
         <div className="flex space-x-3">
-          <button type="submit" className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
+          <button type="submit" disabled={isSubmitting} className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 disabled:opacity-50">
             <FiPlus className="w-4 h-4" />
-            <span>{isEditing ? 'Update' : 'Tambah'} Pengalaman</span>
+            <span>{isSubmitting ? 'Menyimpan...' : (isEditing ? 'Update' : 'Tambah') + ' Pengalaman'}</span>
           </button>
           {isEditing && <button type="button" onClick={resetForm} className="bg-gray-600 text-white py-2 px-6 rounded-lg hover:bg-gray-700 transition-colors">Batal</button>}
         </div>

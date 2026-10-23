@@ -36,6 +36,7 @@ const ProjectsSection = () => {
   });
 
   const [data, setData] = useState([])
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [loadingData, setLoadingData] = useState(false)
@@ -139,7 +140,7 @@ const ProjectsSection = () => {
 
   const submitData = async (e) => {
     e.preventDefault();
-
+    setIsSubmitting(true);
     try {
       let imageUrl = null;
       let imageKey = null;
@@ -214,6 +215,8 @@ const ProjectsSection = () => {
         "Error",
         error?.message || "Terjadi kesalahan"
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -417,10 +420,11 @@ const ProjectsSection = () => {
         <div className="flex space-x-3">
           <button
             onClick={submitData}
-            className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+            disabled={isSubmitting}
+            className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 disabled:opacity-50"
           >
             <FiPlus className="w-4 h-4" />
-            <span>{isEditing ? 'Update' : 'Tambah'} Proyek</span>
+            <span>{isSubmitting ? 'Menyimpan...' : (isEditing ? 'Update' : 'Tambah') + ' Proyek'}</span>
           </button>
           {isEditing && (
             <button
