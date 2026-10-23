@@ -12,6 +12,7 @@ const initialProfile = {
 
 const AboutSection = () => {
   const [formDataAbout, setFormDataAbout] = useState(initialProfile);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     loadDataAbout();
@@ -32,7 +33,7 @@ const AboutSection = () => {
 
   const saveDataAbout = async () => {
     const formData = new FormData();
-
+    setIsSubmitting(true);
     try {
       formData.append('title', formDataAbout.title);
       formData.append('description', formDataAbout.description);
@@ -46,6 +47,8 @@ const AboutSection = () => {
       loadDataAbout();
     } catch (error) {
       FailedNotif('Error', error.response?.data?.message || 'Gagal update data');
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -56,7 +59,7 @@ const AboutSection = () => {
       <div className="space-y-6">
         {/* Image Upload */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Foto Profil
           </label>
           <div className="flex items-center space-x-4">
@@ -93,39 +96,39 @@ const AboutSection = () => {
 
         {/* Title */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Judul
           </label>
           <input
             type="text"
             value={formDataAbout.title || ''}
             onChange={(e) => setFormDataAbout((current) => ({ ...current, title: e.target.value }))}
-            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Contoh: Full Stack Developer"
           />
         </div>
 
         {/* Description */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Deskripsi
           </label>
           <textarea
             value={formDataAbout.description || ''}
             onChange={(e) => setFormDataAbout((current) => ({ ...current, description: e.target.value }))}
             rows={8}
-            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Tulis deskripsi tentang diri Anda..."
           />
         </div>
         <div className='flex justify-end'>
           <button
             onClick={saveDataAbout}
-            // disabled={isLoading}
+            disabled={isSubmitting}
             className="mt-6 bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2 disabled:opacity-50"
           >
             <FiSave className="w-5 h-5" />
-            <span>{'Simpan'}</span>
+            <span>{isSubmitting ? 'Menyimpan...' : 'Simpan'}</span>
           </button>
         </div>
 

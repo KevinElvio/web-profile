@@ -6,9 +6,23 @@ import { createProject, deleteProject, readProject, updateProject, uploadImagePr
 import { FailedNotif, SuccessNotif } from '../../shared/ui/Notification';
 import { readSkill } from '../skills/api';
 import { useUploadThing } from "../../utils/uploadthing";
+import { useTheme } from '../../shared/lib/theme.jsx';
 
 
 const ProjectsSection = () => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+  const selectStyles = {
+    control: (base) => ({ ...base, backgroundColor: isDark ? '#1f2937' : '#ffffff', borderColor: isDark ? '#4b5563' : '#d1d5db', color: isDark ? '#f9fafb' : '#111827', minHeight: '42px' }),
+    menu: (base) => ({ ...base, backgroundColor: isDark ? '#1f2937' : '#ffffff', color: isDark ? '#f9fafb' : '#111827' }),
+    option: (base, state) => ({ ...base, backgroundColor: state.isFocused ? (isDark ? '#374151' : '#e5e7eb') : 'transparent', color: isDark ? '#f9fafb' : '#111827' }),
+    multiValue: (base) => ({ ...base, backgroundColor: isDark ? '#374151' : '#e5e7eb' }),
+    multiValueLabel: (base) => ({ ...base, color: isDark ? '#f9fafb' : '#111827' }),
+    multiValueRemove: (base) => ({ ...base, color: isDark ? '#f9fafb' : '#111827', ':hover': { backgroundColor: isDark ? '#4b5563' : '#d1d5db', color: isDark ? '#ffffff' : '#000000' } }),
+    input: (base) => ({ ...base, color: isDark ? '#f9fafb' : '#111827' }),
+    singleValue: (base) => ({ ...base, color: isDark ? '#f9fafb' : '#111827' }),
+    placeholder: (base) => ({ ...base, color: isDark ? '#9ca3af' : '#6b7280' }),
+  };
   const [skill, setSkill] = useState([])
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
@@ -22,6 +36,11 @@ const ProjectsSection = () => {
   });
 
   const [data, setData] = useState([])
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [loadingData, setLoadingData] = useState(false)
+  const LIMIT = 8
 
   const resetForm = () => {
     setFormData({
@@ -63,8 +82,11 @@ const ProjectsSection = () => {
 
   useEffect(() => {
     LoadDataSkills()
-    LoadDataProject()
   }, [])
+
+  useEffect(() => {
+    LoadDataProject(page)
+  }, [page])
 
   const LoadDataSkills = async () => {
     try {
@@ -75,25 +97,28 @@ const ProjectsSection = () => {
     }
   }
 
-  const LoadDataProject = async () => {
+  const LoadDataProject = async (p = page) => {
+    setLoadingData(true)
     try {
-      const data = await readProject();
+      const data = await readProject({ page: p, limit: LIMIT });
       if (data.status === 404) {
         console.log("Data Project Ga ada");
         setData([]);
+        setTotalPages(1);
       } else {
         setData(data.data.data);
+        if (data.data.meta) setTotalPages(data.data.meta.totalPages);
       }
-
-
     } catch (error) {
-
-      if (error.response.status === 404) {
+      if (error?.response?.status === 404) {
         FailedNotif('Error', 'Data Project Ga ada')
         setData([]);
+        setTotalPages(1);
       } else {
         FailedNotif('Error', error)
       }
+    } finally {
+      setLoadingData(false)
     }
   }
 
@@ -102,7 +127,7 @@ const ProjectsSection = () => {
       if (id) {
         await deleteProject(id, key)
         SuccessNotif('Success', 'Berhasil menghapus data')
-        await LoadDataProject();
+        await LoadDataProject(page);
         return;
       }
       FailedNotif('Error', 'Gagal Delete Data')
@@ -115,7 +140,7 @@ const ProjectsSection = () => {
 
   const submitData = async (e) => {
     e.preventDefault();
-
+    setIsSubmitting(true);
     try {
       let imageUrl = null;
       let imageKey = null;
@@ -158,7 +183,7 @@ const ProjectsSection = () => {
           "Berhasil Update data"
         );
 
-        await LoadDataProject();
+        await LoadDataProject(page);
         resetForm();
 
         return;
@@ -180,7 +205,7 @@ const ProjectsSection = () => {
         "Berhasil membuat data"
       );
 
-      await LoadDataProject();
+      await LoadDataProject(page);
       resetForm();
 
     } catch (error) {
@@ -190,6 +215,8 @@ const ProjectsSection = () => {
         "Error",
         error?.message || "Terjadi kesalahan"
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -245,7 +272,7 @@ const ProjectsSection = () => {
       {/* Form */}
       <form className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg mb-6">
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Gambar Proyek
           </label>
           {/* <div className="flex items-center space-x-4">
@@ -327,14 +354,14 @@ const ProjectsSection = () => {
 
         <div className="grid grid-cols-1 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Judul Proyek
             </label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             />
           </div>
@@ -346,6 +373,7 @@ const ProjectsSection = () => {
             <Select
               isMulti
               options={options}
+              styles={selectStyles}
               className="text-sm"
               value={options.filter(opt => {
                 const selectedIds = formData.techUsed
@@ -364,27 +392,27 @@ const ProjectsSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               URL GitHub
             </label>
             <input
               type="url"
               value={formData.githubLink}
               onChange={(e) => setFormData(prev => ({ ...prev, githubLink: e.target.value }))}
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Deskripsi Proyek
           </label>
           <textarea
             value={formData.description}
             onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
             rows={4}
-            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
           />
         </div>
@@ -392,10 +420,11 @@ const ProjectsSection = () => {
         <div className="flex space-x-3">
           <button
             onClick={submitData}
-            className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+            disabled={isSubmitting}
+            className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 disabled:opacity-50"
           >
             <FiPlus className="w-4 h-4" />
-            <span>{isEditing ? 'Update' : 'Tambah'} Proyek</span>
+            <span>{isSubmitting ? 'Menyimpan...' : (isEditing ? 'Update' : 'Tambah') + ' Proyek'}</span>
           </button>
           {isEditing && (
             <button
@@ -441,7 +470,7 @@ const ProjectsSection = () => {
                 </div>
               </div>
 
-              <p className="text-gray-700 mb-3 text-sm">{project.description}</p>
+              <p className="text-gray-700 dark:text-gray-300 mb-3 text-sm">{project.description}</p>
 
               <div className="flex flex-wrap gap-1 mb-3">
                 {project.techUsed.map((tech, techIndex) => (
@@ -479,6 +508,29 @@ const ProjectsSection = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="mt-6 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={() => setPage((p) => Math.max(1, p - 1))}
+          disabled={page <= 1 || loadingData}
+          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 dark:text-gray-300 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
+        >
+          Prev
+        </button>
+        <span className="text-sm text-gray-600 dark:text-gray-300">
+          Halaman {page} dari {totalPages}
+        </span>
+        <button
+          type="button"
+          onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          disabled={page >= totalPages || loadingData}
+          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 dark:text-gray-300 disabled:opacity-50 dark:bg-gray-700 dark:text-gray-200"
+        >
+          Next
+        </button>
       </div>
     </div>
   );

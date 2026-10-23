@@ -1,8 +1,8 @@
 import ApiHelper from "../../shared/api/ApiHelper"
 
-export const readSkill = async () => {
+export const readSkill = async (params) => {
     try {
-        const res = await ApiHelper.get('/skills')
+        const res = await ApiHelper.get('/skills', { params })
         return res
     } catch (error) {
         console.log(error);
